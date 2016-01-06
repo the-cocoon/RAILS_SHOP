@@ -1,0 +1,64 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  .m20= render partial: 'users/left_sidebar'
+
+.ptz--theme-0.m20
+  .mt20.mb20.fs14
+    span.mr15= link_to 'Кабинет', cabinet_path
+    span.mr15 &raquo;
+    span.mr15= link_to 'Управлять заказами', manage_orders_path
+
+  table.ptz--table-0.w100p
+    thead
+      tr
+        th.p10.fs15.br-off Номер заказа
+        th.p10.fs15.br-off= link_to 'Кол-во ↕', simple_sort_url(:order_items_counter)
+
+        th.p10.fs15.br-off.tal Товары
+
+        th.p10.fs15.br-off= link_to 'Статус ↕', simple_sort_url(:state)
+        th.p10.fs15.br-off= link_to 'Цена ↕', simple_sort_url(:total_price)
+
+        th.p10.fs15.br-off= link_to 'Дата создания ↕', simple_sort_url(:created_at)
+        th.p10
+          i.fs14.fa.fa-pencil
+        th.p10
+          i.fs14.fa.fa-trash
+
+    tbody
+      - @orders.each do |order|
+        tr
+          td.p10.vam
+            = link_to order.uid.upcase, order, class: 'link--block fs15 pt0 lh120'
+
+          td.p10.vam
+            .fs15.pt0.lh120 = order.order_items_counter
+
+          td.p10.vam.w100p
+            .fs15
+              - order.products.each do |product|
+                - product = product.item
+                = image_tag product.main_image_url(:v100x100), width: '30', title: product.title
+          td.p10.vam
+            .fs15.nobr= t order.state, scope: %w[ rails_shop orders state ]
+          td.p10.vam.br-off
+            .fs15
+              span.ml10(title='Полная цена')= money_to_text order.total_price
+              span.ml10 |
+              span.ml10(title='Цена товаров')= money_to_text order.products_price
+              span.ml10 |
+              span.ml10(title='Цена доставки')= money_to_text order.delivery_price
+              span.ml10 |
+              span.ml10(title='Скидка')= money_to_text order.discount
+
+          td.p10.vam.br-off
+            .fs15= order.created_at.strftime('%d.%m.%Y %H:%M')
+          th.p10.vam
+            = link_to [:edit, order] do
+              i.fs14.fa.fa-pencil
+          th.p10.vam
+            = link_to order, method: :delete, data: { confirm: 'Удалить заказ?' } do
+              i.fs14.fa.fa-trash
+
+  = render template: 'rails_shop/common/paginator', locals: { items: @orders }

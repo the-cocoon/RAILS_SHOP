@@ -1,0 +1,37 @@
+= render partial: 'users/header_footer'
+
+- content_for :left_sidebar do
+  = render partial: 'users/left_sidebar'
+
+.ml20
+  table.table-light--table.w100p
+    tr.table-light--tr
+      th.table-light--th.fs15 Номер заказа
+      th.table-light--th.fs15= link_to 'Позиций ↕', simple_sort_url(:cart_items_counter)
+      th.table-light--th.fs15 Товары
+      th.table-light--th.fs15 Статус
+      th.table-light--th.fs15= link_to 'Дата создания ↕', simple_sort_url(:created_at)
+      th.table-light--th
+
+    - @carts.each do |cart|
+      tr.table-light--tr
+        td.table-light--td.vam
+          = link_to cart.uid.upcase, cart, class: 'link--block fs15 pt0 lh120'
+        td.table-light--td.vam
+          .fs15= cart.cart_items_counter
+        td.table-light--td.vam.w100p
+          .fs15
+            - cart.products.each do |product|
+              - product = product.item
+              = image_tag product.main_image_url(:v100x100), width: '30', title: product.title
+
+        td.table-light--td.vam
+          .fs15
+            = cart.active? ? 'Активна' : 'Просрочена'
+        td.table-light--td.vam
+          .fs15= cart.created_at.strftime('%d.%m.%Y %H:%M')
+        td.table-light--td.vam
+          = link_to cart, method: :delete, data: { confirm: 'Удалить корзину?' } do
+            i.fs14.fa.fa-trash
+
+  = render template: 'rails_shop/common/paginator', locals: { items: @carts }

@@ -1,0 +1,8 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  = render partial: 'users/left_sidebar'
+
+.m20
+  = form_for @order do |f|
+    .fs15= @order.id

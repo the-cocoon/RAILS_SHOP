@@ -1,0 +1,21 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- @main_content_block_class = 'shop-cart--background'
+
+.w800.ma.shop-cart--list
+
+  .ml20.mr20
+    h3.fs24.mb20  Поздравляем! Ваш заказ успешно оплачен!
+    .fs16.mb15.lh130 В ближайшее время мы начнем собирать ваш заказ и постараемся приступить к доставке как можно скорее.
+    .fs16.mb25.lh130 Обо всех важных этпах исполнения заказа мы будем сообщать вам на указаный вами Email.
+
+    .fs16.mb25.lh130 А сейчас вы можете:
+
+    ul.ul.mb35
+      li.fs16.mb15
+        | Посмотреть другие товары в нашем магазине
+        '
+        = link_to 'sitename.com', '#'
+
+    .fs22
+      | Номер вашего заказа: #{ @order.uid.to_s.upcase }

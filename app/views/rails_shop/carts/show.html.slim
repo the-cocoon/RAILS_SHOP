@@ -1,0 +1,125 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- @main_content_block_class = 'shop-cart--background'
+
+- if @cart.cart_items.products.empty?
+  .shop-cart--empty
+    .info-block--notice.p20
+      .fs17
+        p.b В вашей корзине еще нет товаров
+        p
+          | Однако, это легко исправить. Перейдите на
+          '
+          span.u= link_to 'главную страницу', shop_url
+          '
+          | магазина и подберите себе что-нибудь интересное и полезное
+
+- else
+  .order-process-steps.mt20
+    .order-process-steps--item.current 1. Корзина
+    .order-process-steps--item 2. Доставка
+    .order-process-steps--item 3. Оплата
+
+  .shop-cart
+    ul.shop-cart--list
+      li.shop-cart--title
+        h3.fs24 Корзина
+
+      li.shop-cart--headers
+        .shop-cart--header Информация о товаре
+        .shop-cart--header.w20p Количество
+        .shop-cart--header.w15p Цена
+        .shop-cart--header.w5p
+
+      - @cart.cart_items.products.each do |cart_item|
+        - product = cart_item.item
+        li.shop-cart--position
+          .shop-cart--position-cell
+            - img = product.main_image_url(:v100x100)
+            .shop-cart--image(style="background-image:url(#{ img })")
+
+            = link_to product.title, product, class: 'link--block shop-cart--product-name'
+            .shop-cart--product-info
+              = product.equipment
+
+          .shop-cart--position-cell.w20p
+
+            .mb10.nobr
+              - minus_disabled = :disabled if cart_item.amount == 1
+              = button_to amount_decrement_cart_path(@cart, product_id: product), method: :patch, disabled: minus_disabled, form_class: 'iblock amount-manager--form', class: 'ptz--btn ptz--size-14 ptz--btn--side-left w40 b' do
+                |&ndash;
+
+              = text_field_tag :count, cart_item.amount, maxlength: 1, min: 0, max: 9, readonly: :readonly, autocomplete: :off, class: 'ptz--input ptz--size-14 brn w40 tac'
+
+              - plus_disabled = :disabled if product.amount < cart_item.amount.next
+              = button_to amount_increment_cart_path(@cart, product_id: product), method: :patch, disabled: plus_disabled, form_class: 'iblock amount-manager--form', class: 'iblock  ptz--btn ptz--size-14 ptz--btn--side-right w40 b' do
+                |+
+
+            .mt10.fs13
+              | На складе:
+              '
+              = product.amount
+
+          .shop-cart--position-cell.w15p
+             .shop-cart--position-price
+              = money_to_text(cart_item.total_price)
+
+          .shop-cart--position-cell.w5p
+            = link_to remove_from_cart_path(product, cart_id: @cart), method: :delete, class: 'link--block shop-cart--position-delete' do
+              i.fa.fa-trash-o
+
+      li.cart-delivery-info
+        h3.fs18.mt15.mb15 Доставка:
+        a name='delivery_form'
+        = form_tag set_delivery_type_cart_path(@cart, anchor: :delivery_form), method: :patch, data: { role: 'delivery-type--form-options' } do
+          - selected_dt = @cart.cart_items.deliveries.first.try(:item)
+          - DeliveryType.published.order(price: :desc).each do |dt|
+            .cart-delivery-info--radio-btn
+              = radio_button_tag :delivery_type_id, dt.id, (selected_dt == dt), class: 'radio-btn radio-btn--info-line', id: "delivery_type_#{ dt.id }", autocomplete: :off
+              label(for="delivery_type_#{ dt.id }")
+                - if !dt.special?
+                  = "#{ money_to_text dt.price } руб."
+                  '
+                = dt.intro
+
+      li.shop-cart--total
+        .cell
+          .fs15.mt10.mb10
+            - products_count = @cart.products.count
+            - positions_plur = t(:positions_count_text, scope: %w[ rails_shop ], count: products_count)
+            | #{ products_count } #{ positions_plur } на
+            '
+            span.fs24
+              = money_to_text(@cart.products_total_price)
+              '
+              'руб.
+
+          - if !@cart.products_discount.zero?
+            .fs14
+              | Ваша скидка:
+              '
+              = money_to_text(@cart.products_discount)
+              '
+              'руб.
+
+          hr
+
+          .fs15.mt30.mb10
+            | Итого:
+            '
+            span.fs24= money_to_text(@cart.total_price)
+            '
+            'руб.
+
+        .cell.w250.tar
+          - if @cart.active?
+            = link_to 'Оформить заказ', orders_path(cart_id: @cart), method: :post, class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
+          - else
+            .ptz--btn.ptz--size-22 Корзина Просрочена
+
+
+  .w900.ma.mb20.clearfix
+    .pull-right
+      = link_to reset_cart_path, method: :delete, data: { confirm: "Вы действительно хотите полностью очистить корзину?" }, class: 'ptz--btn ptz--size-14' do
+        i.fa.fa-ban.ptz--btn--icon
+        | Начать новую корзину

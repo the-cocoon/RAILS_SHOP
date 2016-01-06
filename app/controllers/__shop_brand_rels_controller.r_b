@@ -1,0 +1,31 @@
+class ShopBrandRelsController < RailsShopController
+  include ::TheSortableTreeController::ReversedRebuild
+
+  before_action :user_require,   except: %w[ ]
+  before_action :owner_required, except: %w[ ]
+  before_action :admin_require,  except: %w[ ]
+
+  before_action :set_product, except: %w[ rebuild ]
+
+  def create
+    checked = params[:checked].to_i == 1
+    checked ? create_product_brand_item_rels(params) : destroy_product_brand_item_rels(params)
+  end
+
+  # Restricted area
+
+  def create_product_brand_item_rels params
+    ::ProductBrandRel.create(product_brand_id: params[:product_brand_id], product_id: @product.id)
+    # @product.keep_consistency!
+    render template: 'product_brand_rels/json/create.success.json.jbuilder'
+  end
+
+  def destroy_product_brand_item_rels params
+    ::ProductBrandRel.where(product_brand_id: params[:product_brand_id], product_id: @product.id).delete_all
+    render template: 'product_brand_rels/json/destroy.success.json.jbuilder'
+  end
+
+  def set_product
+    @product = ::Product.find params[:product_id]
+  end
+end

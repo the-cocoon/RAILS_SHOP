@@ -1,0 +1,135 @@
+- if product.editor_type == 'ckeditor'
+  = render template: 'common/editor/ckeditor'
+
+- if product.editor_type == 'ptz_editor'
+  = render template: 'common/editor/ptz_editor'
+
+.ptz--div-0.p20
+  = form_for product, html: { class: '' } do |f|
+    = render partial: 'notifications/form', locals: { object: product }
+
+    .mb30
+      = f.label :title, 'Название', class: 'block fs13 mb10'
+      = f.text_field :title, class: 'ptz--input ptz--size-15 w100p'
+
+    .mb20
+      = f.label :raw_intro, 'Краткое описание товара', class: 'block fs13 mb10'
+      = f.text_area :raw_intro, rows: 7, id: 'redactor_intro', class: 'ptz--textarea ptz--size-15 w100p'
+
+    .mb20
+      = f.label :raw_content, 'Подробное описание товара', class: 'block fs13 mb10'
+      = f.text_area :raw_content, rows: 7, id: 'redactor_content', class: 'ptz--textarea ptz--size-15 w100p'
+
+    div
+      = f.label :equipment, 'Комплектация', class: 'block fs13 mb10'
+      = f.text_area :equipment, class: 'ptz--textarea ptz--size-15 w100p'
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .fs18.mb20 Цена
+
+    .mb25.clearfix
+      .pull-left.mr30
+        = f.label :rur_price, 'Руб. цена (комплекта)', class: 'block fs13 mb10'
+        = f.number_field :rur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+      .pull-left.mr30
+        = f.label :eur_price, 'EUR цена (комплекта)', class: 'block fs13 mb10'
+        = f.number_field :eur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+      .pull-left.mr30
+        = f.label :usd_price, 'USD цена (комплекта)', class: 'block fs13 mb10'
+        = f.number_field :usd_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+
+    .mb10.clearfix
+      .pull-left.mr30
+        = f.label :min_active_price, 'MIN руб. цена', class: 'block fs13 mb10'
+        = f.number_field :min_active_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+      .pull-left.mr30
+        = f.label :max_active_price, 'MAX руб. цена', class: 'block fs13 mb10'
+        = f.number_field :max_active_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+      .pull-left
+        = f.label :discount_percent, 'Скидка (проценты)', class: 'block fs13 mb10'
+        = f.number_field :discount_percent, class: 'ptz--input ptz--size-15 w150', maxlength: 2, min: 0, max: 90, placeholder: '20', autocomplete: :off
+
+    / .mb20.clearfix
+    /   .pull-left.mr30
+    /     = f.label :price_text, 'Текстовая цена', class: 'block fs13 mb5'
+    /     = f.text_field :price_text, class: 'ptz--input ptz--size-15 w150 ', maxlength: 200, placeholder: '1000 за 6 штук', autocomplete: :off
+
+    .clearfix.mb20
+      .pull-left.lh130.w300.fs13
+        | При выходе за данный диапазон, цена будет установлена в MIN или MAX значение
+
+    .clearfix
+      - if product.total_price == product.active_price.to_f
+        .pull-right
+          .fs13.b.mb10 Итоговая цена:
+          .fs20.tar= product.total_price
+      - else
+        .pull-right
+          .fs13.b.mb10 Итоговая цена:
+          .fs20.tar= product.total_price
+
+        .pull-right.mr40
+          .fs13.b.mb10 Цена без скидки:
+          .fs20.tar(style='text-decoration:line-through')= product.active_price.to_f
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .clearfix
+      .pull-left.mr30
+        = f.label :sku, 'Артикул', class: 'block fs13 mb10'
+        = f.text_field :sku, class: 'ptz--input ptz--size-15 w200 ', maxlength: 10, placeholder: 'SSA-000001'
+
+      .pull-left.mr30
+        = f.label :vendor_sku, 'Артикул производителя', class: 'block fs13 mb10'
+        = f.text_field :vendor_sku, class: 'ptz--input ptz--size-15 w400 ', maxlength: 10, placeholder: ''
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .clearfix
+      .pull-left.mr30
+        = f.label :amount, 'В наличии', class: 'block fs13 mb10'
+        = f.number_field :amount, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, placeholder: '0', autocomplete: :off
+
+      .pull-left.mr30
+        = f.label :weight, 'Вес (кило)', class: 'block fs13 mb10'
+        = f.number_field :weight, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '15', autocomplete: :off
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .clearfix.mb20
+      .pull-left.mr30
+        = f.label        :dimension_x, 'Размер X (см)', class: 'block fs13 mb10'
+        = f.number_field :dimension_x, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '5'
+
+      .pull-left.mr30
+        = f.label        :dimension_y, 'Размер Y (см)', class: 'block fs13 mb10'
+        = f.number_field :dimension_y, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '10'
+
+      .pull-left
+        = f.label        :dimension_z, 'Размер Z (см)', class: 'block fs13 mb10'
+        = f.number_field :dimension_z, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '15'
+
+    .clearfix.mb30
+      .pull-left
+        = f.label      :dimensions, 'Размеры текстом', class: 'block fs13 mb10'
+        = f.text_field :dimensions, class: 'ptz--input ptz--size-15 w510', placeholder: 'Ширина 5 см, Высота 10 см, Глубина 15 см'
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .clearfix
+      .pull-left.mr30
+        = f.label :state, 'Видимость', class: 'block fs13 mb10'
+        - options = options_for_select({ 'Черновик' => :draft, 'Опубликовано' => :published }, product.state)
+        = f.select :state, options, {}, autocomplete: :off, class: 'ptz--size-15 w150 ptz--select'
+
+      .pull-left
+        = f.label :special_marker, 'Специальная отметка', class: 'block fs13 mb10'
+        - options = options_for_select({ 'Нет отметки' => '', 'Новинка' => :new, 'Рекомендуемое' => :recommended }, product.special_marker)
+        = f.select :special_marker, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w200 ptz--select'
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .clearfix
+      .pull-right
+        = f.submit 'Обновить товар', class: 'ptz--btn ptz--size-22'

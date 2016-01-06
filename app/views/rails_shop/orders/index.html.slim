@@ -1,0 +1,41 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  = render partial: 'users/left_sidebar'
+
+table.table-light--table.w100p
+  tr.table-light--tr
+    th.table-light--th.fs15 Номер заказа
+    th.table-light--th.fs15= link_to 'Кол-во ↕', simple_sort_url(:order_items_counter)
+
+    th.table-light--th.fs15 Товары
+
+    th.table-light--th.fs15= link_to 'Статус ↕', simple_sort_url(:state)
+    th.table-light--th.fs15= link_to 'Цена ↕', simple_sort_url(:total_price)
+
+    th.table-light--th.fs15= link_to 'Дата создания ↕', simple_sort_url(:created_at)
+
+  - @orders.each do |order|
+    tr.table-light--tr
+      td.table-light--td.vam
+        = link_to order.uid.upcase, order, class: 'link--block fs15 pt0 lh120'
+
+      td.table-light--td.vam
+        .fs15.pt0.lh120 = order.order_items_counter
+
+      td.table-light--td.vam.w100p
+        .fs15
+          - order.products.each do |product|
+            - product = product.item
+
+            = image_tag product.main_image_url(:v100x100), width: '30', title: product.title
+      td.table-light--td.vam
+        .fs15.nobr= t order.state, scope: %w[ rails_shop orders state ]
+      td.table-light--td.vam
+        .fs15
+          span.ml10(title='Полная цена')= money_to_text order.total_price
+
+      td.table-light--td.vam
+        .fs15= order.created_at.strftime('%d.%m.%Y %H:%M')
+
+= render template: 'rails_shop/common/paginator', locals: { items: @orders }

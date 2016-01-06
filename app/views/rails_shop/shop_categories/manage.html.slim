@@ -1,0 +1,13 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  .m20.ptz--theme-0
+    div= link_to 'Кабинет',  cabinet_path, class: 'ptz--btn ptz--size-16 w100p'
+    hr.ptz--hr-0
+    div= link_to 'Новая Категория', new_shop_category_url, class: 'ptz--btn ptz--size-16 w100p'
+
+.ptz--theme-0.m20
+  h3.mt20.mb40.fs18 Редактировать категорию товаров
+
+  ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5, rebuild_url: rebuild_shop_categories_path })
+    = sortable_tree @shop_categories

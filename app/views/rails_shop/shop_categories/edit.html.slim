@@ -1,0 +1,32 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  .ptz--theme-0.m20
+    div= link_to 'Кабинет',  cabinet_path, class: 'ptz--btn ptz--size-16 w100p'
+    hr.ptz--hr-0
+    div= link_to 'Категории', manage_shop_categories_path, class: 'ptz--btn ptz--size-16 w100p'
+    hr.ptz--hr-0
+    div= link_to 'Просмотр категории', @shop_category, class: 'ptz--btn ptz--size-16 w100p'
+
+.ptz--theme-0.m20
+  .w800
+    h3.mt20.mb20.fs18 Редактировать категорию товаров
+
+    .ptz--div-0.p20
+      = form_for @shop_category, html: { class: '' } do |f|
+        = render partial: 'notifications/form', locals: { object: @shop_category }
+
+        .mb15
+          = f.label :title, 'Название', class: 'block fs13 mb5'
+          = f.text_field :title, class: 'ptz--input ptz--size-15 w500 '
+
+        .mb15
+          = f.label :state, 'Видимость', class: 'block fs13 mb10'
+          - options = options_for_select({ 'Черновик' => :draft, 'Опубликовано' => :published }, @shop_category.state)
+          = f.select :state, options, {}, autocomplete: :off, class: 'ptz--size-15 w150 ptz--select'
+
+        hr.ptz--hr-0
+
+        .clearfix
+          .pull-right
+            = f.submit 'Обновить категорию', class: 'ptz--btn ptz--size-20'

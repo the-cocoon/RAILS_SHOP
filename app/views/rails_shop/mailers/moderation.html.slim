@@ -1,0 +1,27 @@
+.letter--header.tac.arial.p15.fs20
+  = @subject.mb_chars.upcase
+
+.letter--body.m20.tal.arial
+
+  .letter-body--text.mb15
+    p.mb15.lh130 Ваш заказ номер: <b>#{ @order.uid.upcase }</b> успешно сформирован.
+    p.mb15.lh130 Перед тем как он будет готов к оплате, oн должен быть дополнительно обработан.
+    p.mb15.lh130 Скорее всего это потребовалось, потому что указанный вами способ доставки требует дополнительного расчета и согласования.
+    p.mb25.lh130 В ближайшее время мы проверим данные вашего заказа и сообщим вам результаты.
+
+    p.mb10 Так же вы можете следить за состоянием вашего заказа на следующей странице:
+
+  .letter-body--activation.tac
+    table.w100p
+      tr
+        td.w50p
+        td
+          .letter-body--activation-border
+            span.nobr= link_to "Перейти к заказу #{ @order.uid.upcase }", order_url(@order), class: 'letter-body--activation-link'
+        td.w50p
+
+  .letter-body--text.mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:
+
+  .letter-body--plain-activation= order_url(@order)
+
+  = render partial: 'rails_shop/mailers/products_list', locals: { order: @order }

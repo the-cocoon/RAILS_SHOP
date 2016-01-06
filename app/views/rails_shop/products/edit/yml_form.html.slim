@@ -1,0 +1,95 @@
+.ptz--div-0.p20
+  = form_for product, html: { class: '' } do |f|
+
+    .fs18.mb40 Участие в Яндекс Маркет
+
+    .clearfix
+      .pull-left.mr50
+        = f.label :ym_available, 'Доступно для выгрузки в Маркет', class: 'fs13 mr10'
+        = f.check_box :ym_available, class: 'ptz--input', autocomplete: :off
+
+      .pull-left
+        = f.label :ym_cpa, 'Заказ с Маркета', class: 'fs13 mr10'
+        = f.check_box :ym_cpa, class: 'ptz--input', autocomplete: :off
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .clearfix.mb20
+      .pull-left.mr30
+        = f.label :ym_vendor, 'Вендор', class: 'block fs13 mb10'
+        = f.text_field :ym_vendor, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Canon'
+
+      .pull-left.mr30
+        = f.label :ym_model, 'Модель', class: 'block fs13 mb10'
+        = f.text_field :ym_model, class: 'ptz--input ptz--size-15 w200', maxlength: 100, placeholder: 'Mark 2'
+
+      .pull-left
+        = f.label :ym_vendor_code, 'Код модели', class: 'block fs13 mb10'
+        = f.text_field :ym_vendor_code, class: 'ptz--input ptz--size-15 w200', maxlength: 100, placeholder: 'СM-2'
+
+    .clearfix
+      .pull-left.mr30
+        = f.label :ym_type_prefix, 'Тип товара', class: 'block fs13 mb10'
+        = f.text_field :ym_type_prefix, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Фотоаппарат'
+
+      .pull-left.mr30
+        = f.label :ym_country_of_origin, 'Страна производитель', class: 'block fs13 mb10'
+        = f.text_field :ym_country_of_origin, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Китай'
+
+      .pull-left
+        = f.label :ym_manufacturer_warranty, 'Гарантия производителя', class: 'fs13 mr10'
+        .pt20
+          = f.check_box :ym_manufacturer_warranty, class: 'ptz--input', autocomplete: :off
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .clearfix
+      .pull-left.mr40
+        = f.label :ym_receiving_delivery, 'Доставка курьером', class: 'fs13 mr10'
+        = f.check_box :ym_receiving_delivery, class: 'ptz--input', autocomplete: :off
+
+      .pull-left.mr40
+        = f.label :ym_receiving_pickup, 'Самовывоз', class: 'fs13 mr10'
+        = f.check_box :ym_receiving_pickup, class: 'ptz--input', autocomplete: :off
+
+      .pull-left
+        = f.label :ym_receiving_pickup, 'Получение в магазине', class: 'fs13 mr10'
+        = f.check_box :ym_receiving_pickup, class: 'ptz--input', autocomplete: :off
+
+    hr.ptz--hr-0.mt25.mb25
+
+    .clearfix
+      .mb20
+        = f.label :ym_market_category, 'Категория маркета', class: 'block fs13 mb10'
+        = f.text_field :ym_market_category, class: 'ptz--input ptz--size-15 w500', maxlength: 150, placeholder: 'Все товары/Электроника/Фото и видеокамеры'
+
+      .mb20
+        = f.label :ym_sales_notes, 'Заметки продавца', class: 'block fs13 mb10'
+        = f.text_field :ym_sales_notes, class: 'ptz--input ptz--size-15 w500', maxlength: 50, placeholder: 'Оплата курьеру, безналичный расчет'
+
+      .mb20
+        = f.label :ya_barcode, 'Цифры штрихкода', class: 'block fs13 mb10'
+        = f.text_field :ya_barcode, class: 'ptz--input ptz--size-15 w500', maxlength: 100, placeholder: '49009903482'
+
+    hr.ptz--hr-0.mt25.mb25
+
+    - weight_exists = !product.weight.to_f.zero?
+    - dims_exists   = !product.dimension_x.to_f.zero? && !product.dimension_y.to_f.zero? && !product.dimension_z.to_f.zero?
+
+    - if weight_exists || dims_exists
+      .clearfix
+        - if weight_exists
+          .pull-left.mr40
+            span.fs14.mr10 Вес (кг):
+            span.fs15= product.weight
+
+        - if dims_exists
+          .pull-left.mr40
+            span.fs14.mr10 Габариты (см):
+            span.fs15= [product.dimension_x, product.dimension_y, product.dimension_z].join '/'
+
+      hr.ptz--hr-0.mt25.mb25
+
+    .clearfix
+      .pull-right
+        = f.submit 'Обновить товар', class: 'ptz--btn ptz--size-22'

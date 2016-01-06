@@ -1,0 +1,151 @@
+= render template: 'rails_shop/layouts/items/header_footer', locals: { hide_side_elements: true }
+
+- @main_content_block_class = 'shop-cart--background'
+
+.shop-cart
+  = render partial: 'notifications/form', locals: { object: @order, format: :html }
+
+  .order-process-steps.mt20
+    .order-process-steps--item 1. Корзина
+    .order-process-steps--item.current 2. Доставка
+    .order-process-steps--item 3. Оплата
+
+  = form_for @order, url: completion_order_path(@order), method: :patch do |f|
+    ul.shop-cart--list
+      li.shop-cart--title.clearfix
+        - if current_user.try(:admin?)
+          - if order_user = @order.user
+            .pull-right.fs14
+              .mb10
+                | Владелец:
+                '
+                = link_to order_user.login, order_user
+              .mb10
+                = link_to 'Пересчетать заказ', recalc_price_order_path(@order), method: :patch
+
+
+        h3.fs24.mb10 Заказ: #{ @order.uid.upcase }
+        .fs12.mb20 По этому номеру вы сможете найти свой заказ и отследить его статус
+
+      - if @order.delivery
+        li.cart-delivery-info
+          .fs18.ml5.lh130
+            = @order.delivery.intro
+            - if !@order.delivery.special?
+              |:
+              '
+              span.b
+                = money_to_text @order.delivery.price
+                '
+                | руб.
+
+        li.mt20.mb20.ml15.mr15.fs15 Пожалуйста, аккуратно и достоверно укажите все необходимые данные
+
+        - dkind = @order.delivery.delivery_kind
+        = render partial: "delivery_types/required_fields/#{ dkind }", locals: { f: f }
+
+      li.table.w100p
+        h3.fs24.ml15.mr15.mt15.mb0 Ваш заказ:
+
+      li.shop-cart--headers
+        .shop-cart--header Информация о товаре
+        .shop-cart--header.w20p Количество
+        .shop-cart--header.w15p Цена
+        .shop-cart--header.w5p
+
+      - @order.order_items.products.each do |cart_item|
+        - product = cart_item.item
+        li.shop-cart--position
+          .shop-cart--position-cell
+            - img = product.main_image_url(:v100x100)
+            .shop-cart--image(style="background-image:url(#{ img })")
+
+            .shop-cart--product-name= product.title
+            .shop-cart--product-info
+              = product.equipment
+            .shop-cart--product-info
+              = product.sku
+
+          .shop-cart--position-cell.w20p
+
+            .mt10.fs24
+              |x
+              = cart_item.amount
+
+            .mt10.fs13
+              | На складе:
+              '
+              = product.amount
+
+          .shop-cart--position-cell.w15p
+             .shop-cart--position-price
+              - cart_item_total_price = cart_item.amount * product.active_price.to_f
+              = money_to_text(cart_item_total_price)
+
+          .shop-cart--position-cell.w5p
+
+      li.shop-cart--total.table.pb0
+        .row
+          .cell
+            .clearfix.pt20
+              .pull-left.mr100
+                .fs15.mb10
+                  | Итого:
+                  '
+                  span.fs24= money_to_text(@order.total_price)
+                  '
+                  'руб.
+
+              .pull-left.mr40
+                .fs15.mb10
+                  - products_items = @order.products
+                  | #{ products_items.count } позиции на
+                  '
+                  span.fs24
+                    - products_total = @order.products_price
+                    = money_to_text(products_total)
+                    '
+                    'руб.
+
+                - if !@order.discount.to_f.zero?
+                  .fs14.mt5.p5.ptz--highlight
+                    | Ваша скидка:
+                    '
+                    span.b= money_to_text(@order.discount)
+                    '
+                    'руб.
+
+              .pull-left.mr40
+                .fs15.mb10
+                  | Доставка:
+                  '
+                  span.fs24
+                    = money_to_text @order.delivery_price
+                    '
+                    'руб.
+
+            hr
+
+
+
+        .row
+          .cell
+            .fs12.lh120.mb20 Переходя к оплате заказа вы подтверждаете, что ознакомились с <a href='http://localhost:3000/pages/user-agreement' class='u' target='_blank'>пользовательским соглашением</a> и подтверждаете согласие на обработку персональных данных:
+
+        .row
+          .cell.tac
+
+            / SUBMIT BUTTONS
+            - if @order.moderation?
+
+              .ptz--btn.ptz--size-22 Заказ на Модарации
+
+            - elsif @order.paid?
+
+              .ptz--btn.ptz--size-22 Заказ уже оплачен
+
+            - else
+              - if @order.delivery && @order.delivery.special?
+                = f.submit 'Отправить заказ', class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
+              - else
+                = f.submit 'Оплатить заказ', class: 'ptz--btn ptz--size-22 ptz--style-0--btn'

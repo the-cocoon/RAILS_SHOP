@@ -1,0 +1,24 @@
+nav.catalog-menu.mt20.mr30
+  .catalog-menu--item
+    .catalog-menu--title Разделы
+
+    - if pc = ProductCategory.published.where(id: 11).first
+      - if @shop_category && @shop_category == pc
+        = link_to pc.title, pc, class: 'catalog-menu--link catalog-menu--link-current catalog-menu--special'
+      - else
+        = link_to pc.title, pc, class: 'catalog-menu--link catalog-menu--special'
+
+    - ProductCategory.published.order(title: :asc).each do |pc|
+      - if  pc.id != 11
+        - if @shop_category && @shop_category == pc
+          = link_to pc.title, pc, class: 'catalog-menu--link catalog-menu--link-current'
+        - else
+          = link_to pc.title, pc, class: 'catalog-menu--link'
+
+  .catalog-menu--item
+    .catalog-menu--title Как сделать заказ?
+
+    / = link_to 'О магазинчике',       '/pages/about-shop', class: 'link--block'
+    = link_to 'Как сделать заказ?',  '/pages/how-to-buy', class: 'catalog-menu--link'
+    = link_to 'Способы оплаты',      '/pages/payments',   class: 'catalog-menu--link'
+    = link_to 'Способы доставки',    '/pages/delivery',   class: 'catalog-menu--link'

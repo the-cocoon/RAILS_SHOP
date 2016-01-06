@@ -1,0 +1,5 @@
+- content_for :header do
+  = render template: 'app/layouts/items/header', locals: { current_section: :shop, search_block: false, hide_side_elements: local_assigns[:hide_side_elements] }
+
+- content_for :footer do
+  = render template: 'app/layouts/items/footer'

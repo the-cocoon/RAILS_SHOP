@@ -1,0 +1,22 @@
+- intro_visible   = 'display:none' if  visible
+- content_visible = 'display:none' if !visible
+- gray_style = 'form-classic--lightgray-theme' if !visible
+
+.ptz--div-0.p20@registration-accordion(class=gray_style)
+  @registration-accordion--intro(style=intro_visible)
+
+    @registration-accordion--switcher
+      input#accounted-off-always.radio-btn(type='checkbox' autocomplete='off')
+      label(for='accounted-off')
+        span.fs16 Оформить заказ без регистрации
+
+  @registration-accordion--content(style=content_visible)
+    .table.w100p
+      .row
+        .cell.pl10
+          p.mt0 Я хочу просто закончить оформление заказа:
+          = link_to 'Оформить заказ', @order, class: 'ptz--btn ptz--size-18 ptz--style-0--btn'
+
+  / .cell.pl0.pt10.pr10.w40
+  /   input#accounted-on-always.radio-btn(type='checkbox' checked='checked' autocomplete='off')
+  /   label(for='accounted-on')

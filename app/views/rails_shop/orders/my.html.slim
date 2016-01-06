@@ -1,0 +1,15 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+table.table-light--table.w100p
+  tr.table-light--tr
+    th.table-light--th.fs15 Номер заказа
+    th.table-light--th.fs15= link_to 'Цена ↕',      simple_sort_url(:price)
+    th.table-light--th.fs15 Статус
+    th.table-light--th.fs15 Создан
+
+  - @orders.each do |order|
+    tr.table-light--tr
+      td.table-light--td.fs15= link_to order.uid.upcase, order
+      td.table-light--td.fs15= order.price
+      td.table-light--td.fs15= t order.current_state, scope: %w[ rails_shop orders state ]
+      td.table-light--td.fs15= I18n.l(order.created_at, format: "%-d %B %Y")

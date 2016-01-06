@@ -1,0 +1,55 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  .m20
+    .mb10= link_to 'Главная', '/shop', class: 'ptz--btn ptz--size-16 w100p'
+    .mb10= link_to 'Просмотр типа доставки', @delivery_type, class: 'ptz--btn ptz--size-16 w100p'
+
+.ptz--theme-0.m20
+  h3.mt20.mb20.fs18 Редактировать тип доставки
+
+  = render partial: 'notifications/form', locals: { object: @delivery_type }
+
+  .ptz--div-0.w600
+    = form_for @delivery_type, html: { class: 'form-classic' } do |f|
+      .m20
+
+        .mb15
+          = f.label :title, 'Название', class: 'block fs13 mb5'
+          = f.text_field :title, class: 'ptz--input ptz--size-15 w500 '
+
+        .mb15.clearfix
+          .pull-left.mr30
+            = f.label :price, 'Цена', class: 'block fs13 mb5'
+            = f.number_field :price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, placeholder: '1000', autocomplete: :off
+
+        .mb15
+          = f.label :raw_intro, 'Короткое описание типа доставки', class: 'block fs13 mb5'
+          = f.text_area :raw_intro, class: 'ptz--textarea ptz--size-15 w500 form-classic--textarea'
+
+        .mb15
+          = f.label :raw_content, 'Подробное описание типа доставки', class: 'block fs13 mb5'
+          = f.text_area :raw_content, rows: 7, class: 'ptz--textarea ptz--size-15 w500 form-classic--textarea'
+
+        .mb15
+          = f.label :default_option, 'Тип доставки по умолчанию', class: 'block fs13 mb5'
+          = f.check_box :default_option, class: '', autocomplete: :off
+
+        .mb15
+          = f.label :order_moderation_required, 'Позиция блокирующая оплату заказа', class: 'block fs13 mb5'
+          = f.check_box :order_moderation_required, class: '', autocomplete: :off
+
+        .mb15
+          = f.label :state, 'Видимость', class: 'block fs13 mb5'
+
+          - options = options_for_select({ 'Черновик' => :draft, 'Опубликовано' => :published }, @delivery_type.state)
+          = f.select :state, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w150 form-classic--select'
+
+        .mb15
+          = f.label :delivery_kind, 'Тип доставки', class: 'block fs13 mb5'
+
+          - options = options_for_select(DeliveryType::KINDS.map{|item| [t(item, scope: %w[ rails_shop delivery_kind ]), item] }, @delivery_type.delivery_kind)
+          = f.select :delivery_kind, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w150 form-classic--select'
+
+        div
+          = f.submit 'Обновить тип доставки', class: 'ptz--btn ptz--size-16'

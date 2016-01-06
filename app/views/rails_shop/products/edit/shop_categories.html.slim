@@ -1,0 +1,13 @@
+.ptz--theme-0
+  = form_tag shop_category_rels_path, remote: true, data: { type: :json, role: 'shop-category-rels--form' } do
+    = hidden_field_tag :category_klass, :ShopCategory
+    = hidden_field_tag :category_id, '?'
+
+    = hidden_field_tag :item_klass, item.class
+    = hidden_field_tag :item_id,    item.id
+
+    = hidden_field_tag :checked
+
+  - products_used_categories_ids = item.shop_categories.pluck(:id)
+  ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5, form_role: 'shop-category-rels--form' })
+    = sortable_tree ::ShopCategory.for_manage.nested_set, render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_categories_ids

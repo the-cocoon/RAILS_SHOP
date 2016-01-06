@@ -1,0 +1,21 @@
+.products-list--item
+  - if product.discount_percent.present? && !product.discount_percent.zero?
+    .marker.marker-size-12.marker-type-discount.products-list--marker
+      = raw "&ndash;#{ product.discount_percent }% СКИДКА!"
+  - elsif product.special_marker.present?
+    - if product.special_marker == 'new'
+       .marker.marker-size-12.marker-type-new.products-list--marker Новинка
+    - if product.special_marker == 'recommended'
+      .marker.marker-size-12.marker-type-recommended.products-list--marker Рекомендуем
+
+  - img = product.main_image_url(:v500x500)
+  = link_to '', product, class: 'products-list--image', style: "background-image:url(#{ img })"
+
+  = link_to product, class: 'link--block products-list--title-link' do
+    h3.products-list--title= product.title
+
+  .products-list--price.b
+    - if product.price_text.present?
+      = product.price_text
+    - else
+      = "#{ money_to_text product.active_price } руб"

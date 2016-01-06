@@ -1,0 +1,162 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- @main_content_block_class = 'shop-cart--background'
+
+.order-process-steps.mt20.mb30
+  .order-process-steps--item 1. Корзина
+  .order-process-steps--item 2. Доставка
+  .order-process-steps--item.current 3. Оплата
+
+.fs14.tac Проверьте данные заказа и нажмите кнопку ОПЛАТИТЬ
+
+.w800.ma.shop-cart--list
+
+  .ml20.mr20
+    h3.fs24.mb10 Заказ: #{ @order.uid.upcase }
+    .fs12.mb20 По этому номеру вы сможете найти свой заказ и отследить его статус
+
+  hr
+
+  .m20
+
+    .tac.mt30
+      - shop_payment_url = Settings.rails_shop.yandex_kassa.payment_url
+      - shop_shop_id     = Settings.rails_shop.yandex_kassa.shop_id
+      - shop_scid        = Settings.rails_shop.yandex_kassa.scid
+      - shop_currancy    = Settings.rails_shop.yandex_kassa.currancy
+
+      = form_tag shop_payment_url, data: { role: 'order-payment-form', 'payment-system-url' => payment_system_order_path(@order) } do
+
+        ruby:
+          payment_description = {
+            yadengi: 'Оплата системой Яндекс.Деньги (Яндекс.Кошелек)',
+            card: 'Оплата банковскими картами MASTER CARD и VISA',
+            sberbank: 'Оплата через банк-клиент Сбербанка',
+            web_money: 'Оплата электронными деньгами WebMoney',
+            alfa_bank: 'Оплата через банк-клиент Альфа-Банка',
+            promsvyaz_bank: 'Оплата через банк-клиент ПромСвязьБанка',
+            qiwi: 'Оплата через платежную систему QIWI Wallet',
+            euroset: 'Оплата через салоны ЕВРОСЕТЬ',
+            svyaznoy: 'Оплата через салоны СВЯЗНОЙ'
+          }
+
+        .payment-systems--list
+          .fs20.mb15 Выберите удобный способ оплаты:
+          - Order::PS_NAME_ID.each_pair do |type, value|
+            .payment-systems--item
+              input type="radio" name="paymentType" value=value id="payment_type_#{ type }" class='payment-systems--input' data={ 'role' => 'payment-type-option', 'payment-description' => payment_description[type] }
+              label(for="payment_type_#{ type }", class="payment-systems--label payment-systems--#{ type }") = value
+
+        .tal.hidden
+          .mb5
+            .b ShopId:
+            '
+            = text_field_tag :shopId, shop_shop_id, class: :input
+          .mb5
+            .b SCID:
+            '
+            = text_field_tag :scid, shop_scid, class: :input
+          .mb5
+            .b SUM:
+            '
+            = text_field_tag :sum, money_to_text(@order.total_price), class: :input
+
+          .mb5
+            .b Customer Number:
+            '
+            = text_field_tag :customerNumber, @order.uid, class: :input
+
+          .mb5
+            .b Order Number:
+            '
+            = text_field_tag :orderNumber, @order.uid, class: :input
+
+        .tac.fs14.mb20@payment-type-description
+          | Необходимо выбрать способ оплаты
+        .tac
+
+        - if !@order.paid?
+          - money = money_to_text(@order.total_price)
+          = submit_tag "ОПЛАТИТЬ #{ money } руб.", class: 'ptz--btn ptz--size-22 ptz--style-0--btn', disabled: :disabled, data: { role: 'order-payment-button' }
+        - else
+          .ptz--btn.ptz--size-22 Заказ уже оплачен
+
+  hr.mt30
+
+  .m20
+    h3.fs20 Ваши товары
+
+    .clearfix.mb30
+      - @order.order_items.products.each do |cart_item|
+        - product = cart_item.item
+
+        .pull-left.m10
+          - img = product.main_image_url(:v100x100)
+          .shop-cart--image.mb5(style="background-image:url(#{ img }); width:90px;height:90px;" title=product.title)
+
+          .fs16.tac
+            |x
+            = cart_item.amount
+
+  hr
+
+    .fs15.mt10.mb10.ml20.mr20
+      - products_items = @order.order_items.where(item_type: :Product)
+      - products_count = products_items.count
+      - positions_plur = t(:positions_count_text, scope: %w[ rails_shop ], count: products_count)
+      | #{ products_count } #{ positions_plur } на
+      '
+      span.fs24
+        - products_total = products_items.inject(0){|res, pr| res += (pr.amount * pr.price.to_f) }
+        = money_to_text(products_total)
+        '
+        'руб.
+
+  hr
+
+  .cart-delivery-info
+    .fs18.ml5.lh130
+      = @order.delivery.intro
+      |:
+      '
+      span.b
+        = money_to_text @order.delivery.price
+        '
+        | руб.
+
+  .mt20.ml20.mr20
+    .form-classic.mb0
+      h3.fs24.mb25 Данные для доставки:
+
+      .fs16.mb15.lh130
+        span.b Получатель:
+        '
+        = @order.full_name
+
+      .fs16.mb15.lh150
+        span.b Адрес:
+        '
+        = [ @order.postcode, @order.country, @order.region, @order.city, @order.street, @order.house_number ].delete_if{|i| i.blank?}.join ', '
+
+      .fs16.mb15.lh140
+        .mb15.i Контакты:
+
+        - if @order.phone.present?
+          .mb15
+            '
+            | Тел.:
+            '
+            span.b= @order.phone
+
+        - if @order.email.present?
+          .mb15
+            '
+            | E-MAIL:
+            '
+            span.b= @order.email
+
+      - if @order.delivery_comment.present?
+        .fs16.mb10.lh120
+          span.b Дополнительная информация:
+          '
+          = @order.delivery_comment

@@ -1,0 +1,66 @@
+.payment-systems
+  &--list
+    margin: 20px 0
+
+  &--item
+    display: inline-block
+    margin: 10px
+
+  &--input
+    display: none
+
+  &--input:checked + &--label
+    border-color: #0029f8
+    box-shadow: 0 0 0 3px #0029f8
+    opacity: 1
+
+  &--label
+    width: 200px
+    height: 100px
+    border: 1px solid gray
+    border-radius: 4px
+    opacity: .4
+
+    display: inline-block
+    cursor: pointer
+    font-size: 0
+
+    transition: border-color .2s linear, opacity .1s linear
+
+    &:hover
+      border: 1px solid #0029f8
+      opacity: 1
+
+  // &--ya_money
+  //   background: image-url('/payment-systems/btns/ya_money_w200_h100.png') no-repeat scroll center center transparent
+
+  &--card
+    background: image-url('/payment-systems/btns/mc_visa_w200_h100.png') no-repeat scroll center center transparent
+
+  &--web_money
+    background: image-url('/payment-systems/btns/web_money_w200_h100.png') no-repeat scroll center center transparent
+
+  &--sberbank
+    background: image-url('/payment-systems/btns/sberbank_w200_h100.png') no-repeat scroll center center transparent
+
+  &--alfa_bank
+    background: image-url('/payment-systems/btns/alfa_bank_w200_h100.png') no-repeat scroll center center transparent
+
+  &--promsvyaz_bank
+    background: image-url('/payment-systems/btns/promsvyaz_bank_w200_h100.png') no-repeat scroll center center transparent
+
+  &--promsvyaz_bank
+    background: image-url('/payment-systems/btns/promsvyaz_bank_w200_h100.png') no-repeat scroll center center transparent
+
+  &--qiwi
+    background: image-url('/payment-systems/btns/qiwi_w200_h100.png') no-repeat scroll center center transparent
+
+  &--euroset
+    background: image-url('/payment-systems/btns/euroset_w200_h100.png') no-repeat scroll center center transparent
+
+  &--svyaznoy
+    background: image-url('/payment-systems/btns/svyaznoy_w200_h100.png') no-repeat scroll center center transparent
+
+  &--yadengi
+    background: image-url('/payment-systems/btns/yadengi_w200_h100.png') no-repeat scroll center center transparent
+

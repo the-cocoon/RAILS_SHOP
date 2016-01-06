@@ -1,0 +1,26 @@
+.letter--header.tac.arial.p15.fs20
+  = @subject.mb_chars.upcase
+
+.letter--body.m20.tal.arial
+
+  .letter-body--text.mb15
+    p.mb15.lh130 Ваш заказ номер: <b>#{ @order.uid.upcase }</b> отправлен.
+    p.mb15.lh130 Мы надеемся, что уже совсем скоро вы получите его и будете радоваться своему приобретению!
+    p.mb25.lh130 Если это возможно, то мы указываем на странице заказа код для отслеживания перемещения вашего заказа.
+
+    p.mb10 Вы можете перейти на страницу вашего заказа и узнать подробности:
+
+  .letter-body--activation.tac
+    table.w100p
+      tr
+        td.w50p
+        td
+          .letter-body--activation-border
+            span.nobr= link_to "Перейти к заказу #{ @order.uid.upcase }", order_url(@order), class: 'letter-body--activation-link'
+        td.w50p
+
+  .letter-body--text.mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:
+
+  .letter-body--plain-activation= order_url(@order)
+
+  = render partial: 'rails_shop/mailers/products_list', locals: { order: @order }

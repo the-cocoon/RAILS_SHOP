@@ -1,0 +1,70 @@
+ru:
+  activerecord:
+    models:
+      order: Заказ
+    attributes:
+      order:
+        email: "Email"
+        phone: "Телефон"
+        full_name: "Полное имя"
+        city: "Город"
+        street: "Улица"
+        house_number: "Номер дома"
+        delivery_comment: "Комментарий к доставке"
+
+  rails_shop:
+    title: Мой Магазин
+
+    delivery_kind:
+      special: Модерируемый
+      forein: Зарубежный
+      domestic: По стране
+      local: Местный
+      pickup: Самовывоз
+
+    products_count_text:
+      one:   товар
+      few:   товара
+      many:  товаров
+      other: товаров
+
+    positions_count_text:
+      one:   позиция
+      few:   позиции
+      many:  позиций
+      other: позиций
+
+    sets_count_text:
+      one:   комплект
+      few:   комплекта
+      many:  комплектов
+      other: комплектов
+
+    cart:
+      blank: Корзина пуста
+
+      cart_btn:
+        products_count: В корзине %{count} %{products_plur}
+
+    orders:
+      state:
+        draft: Cформирован
+        paid: Оплачен
+        moderation: На обработке
+        ready_to_payment: Готов к оплате
+        processing: Сборка заказа
+        delivery: Отправлен
+        completed: Выполнен
+        expired: Оплата просрочена
+
+      state_changed:
+        draft: Заказ создан
+        created: "Заказ %{uid} сформирован"
+        moderation: "Заказ %{uid} требует ручной обработки"
+        ready_to_payment: "Заказ %{uid} готов к оплате"
+        paid: "Заказ %{uid} оплачен"
+        processing: "Заказ %{uid} собирается"
+        delivery: "Заказ %{uid} отправлен"
+        completed: "Заказ %{uid} выполнен"
+        expired: Оплата просрочена
+        unexpected_transition: "Смена статуса заказа %{uid}"

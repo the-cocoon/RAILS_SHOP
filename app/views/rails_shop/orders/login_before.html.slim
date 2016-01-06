@@ -1,0 +1,17 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+h3.mt20.mb10.fs20 Мне НЕ нужны дополнительные скидки
+
+.ptz--theme-0
+  .mb50= render partial: 'rails_shop/orders/order_without_login', locals: { visible: true }
+
+h3.mt20.mb10.fs20 Я люблю скидки и хочу их получить!
+
+= render partial: 'notifications/flash', locals: { format: :json }
+
+- callback_path = attach_current_user_to_order_path(@order)
+
+.mt20.mb20= render partial: 'devise/sessions/social_login',          locals: { visible: true,  callback_path: callback_path }
+.mt20.mb20= render partial: 'devise/sessions/email_singup',          locals: { visible: false, callback_path: callback_path }
+.mt20.mb20= render partial: 'devise/sessions/email_login',           locals: { visible: false, callback_path: callback_path }
+.mt20.mb20= render partial: 'devise/sessions/onetime_login_link',    locals: { visible: false, callback_path: callback_path }

@@ -1,0 +1,24 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  | &nbsp;
+  / = render partial: 'rails_shop/layouts/items/left_sidebar'
+
+.m20
+  h3.mt20.mb20.fs18 Редактировать типы доставки
+
+  .mb25= link_to 'Новый тип доставки', new_delivery_type_url, class: 'ptz--btn ptz--size-14'
+
+  ol.ptz--ol
+    - @delivery_types.each do |dt|
+      li.fs15
+        = link_to [:edit, dt], class: 'fs15' do
+          = dt.title
+          - if dt.default_option
+            '
+            | (по умолчанию)
+          - if dt.order_moderation_required
+            '
+            | (Блокирующая позиция)
+          '
+          | (#{ t dt.delivery_kind, scope: %w[ rails_shop delivery_kind ] })

@@ -1,0 +1,13 @@
+.ptz--theme-0
+  = form_tag shop_category_rels_path, remote: true, data: { type: :json, role: 'shop-brand-rels--form' } do
+    = hidden_field_tag :category_klass, :ShopBrand
+    = hidden_field_tag :category_id, '?'
+
+    = hidden_field_tag :item_klass, item.class
+    = hidden_field_tag :item_id,    item.id
+
+    = hidden_field_tag :checked
+
+  - products_used_brands_ids = item.shop_brands.pluck(:id)
+  ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5, form_role: 'shop-brand-rels--form' })
+    = sortable_tree ::ShopBrand.for_manage.min2max(:title), render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_brands_ids

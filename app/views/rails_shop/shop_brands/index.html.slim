@@ -1,0 +1,8 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+.m20.ptz--theme-0
+
+  - @shop_brands.each do |brand|
+    .iblock.fs15.ptz--div-0.p10.mr10.mb10
+      - shop_items_count = brand.shop_category_rels.in_stock.published.where(item_type: [:Product, :ShopComboBox]).count
+      = link_to raw("#{ brand.title } &mdash; #{ shop_items_count }"), brand

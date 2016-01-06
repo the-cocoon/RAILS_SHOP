@@ -1,0 +1,43 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+h3.mt20.mb20.fs18 Курсы Валют
+
+.clearfix.mb20
+  .pull-left= link_to 'Получить курс из ЦБРФ', cbr_get_rate_currency_rates_url, class: 'ptz--btn ptz--size-14'
+
+- items = @currency_rates
+
+.ptz--theme-0
+  - if @currency_rates.any?
+    .clearfix.mb25
+      .pull-right
+        .fs15= render template: 'common/pages_and_reset'
+
+    .ma.w600
+      table.ptz--table.ptz--table-0.mb20
+        tr.tal.fs18
+          th.w150.p20= link_to 'EURO ↕',     simple_sort_url(:rur_eur)
+          th.w150.p20= link_to 'USD ↕',      simple_sort_url(:rur_usd)
+          th.w150.p20= link_to 'Создан ↕',   simple_sort_url(:created_at)
+          th.w150.p20= link_to 'Обновлен ↕', simple_sort_url(:updated_at)
+          th.w50
+
+        - items.each do |item|
+          tr.fs16
+            td.p20
+              = item.rur_eur
+            td.w100.p20
+              = item.rur_usd
+            td.w100.p20
+              .br-off= item.created_at.to_rus_date_2
+            td.w100.p20
+              .br-off= item.updated_at.to_rus_date_2
+            td.p20.tac
+              = link_to [:edit, item] do
+                i.fs14.fa.fa-edit
+
+            / td.p10.tac
+            /   = link_to item, method: :delete, data: { confirm: 'Удалить курс?' } do
+            /     i.fs14.fa.fa-trash
+
+  = render template: 'rails_shop/common/paginator', locals: { items: items }

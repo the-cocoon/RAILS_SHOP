@@ -1,0 +1,12 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  | &nbsp;
+
+.ptz--theme-0.m20
+  h3.mt20.mb20.fs18 Редактировать бренды
+
+  .mb25= link_to 'Новый бренд', new_shop_brand_url, class: 'ptz--btn ptz--size-14'
+
+  ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 1, rebuild_url: rebuild_shop_brands_path })
+    = sortable_tree @shop_brands

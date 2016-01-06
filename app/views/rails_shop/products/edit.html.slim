@@ -1,0 +1,60 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- content_for :left_sidebar do
+  .m20.ptz--theme-0
+    div= link_to 'Кабинет',  cabinet_path, class: 'ptz--btn ptz--size-16 w100p'
+    hr.ptz--hr-0
+    div= link_to 'Просмотр товара', @product, class: 'ptz--btn ptz--size-16 w100p'
+
+.ptz--theme-0.m20
+  .w1000
+    h3.mt20.mb20.fs20 Редактировать товар
+
+    .ptz--tabs(ptz--tabs-scope='page_edit_2')
+      .ptz--tabs--holder
+        .ptz--tabs--item.ptz--tabs--active(ptz--tab-id='form') Основная форма
+        .ptz--tabs--item(ptz--tab-id='yml-form') Я.Маркет
+        .ptz--tabs--item(ptz--tab-id='images')
+          | Картинки
+          '
+          span.js--attached-images--count
+            = !(ai_count = @product.attached_images.count).zero? ? ai_count : nil
+
+        .ptz--tabs--item(ptz--tab-id='tech_params')
+          | Tex. Параметры
+
+        .ptz--tabs--item(ptz--tab-id='shop_categories')
+          | Витрина
+          '
+          span.js--shop-categories--count
+            = !(pc_count = @product.shop_categories.count).zero? ? pc_count : nil
+
+        .ptz--tabs--item(ptz--tab-id='shop_brands')
+          | Бренды
+          '
+          span.js--shop-brands--count
+            = !(br_count = @product.shop_brands.count).zero? ? br_count : nil
+
+        .ptz--tabs--item(ptz--tab-id='additional_params') Другое
+
+      .m20
+        .ptz--tabs--content-item.ptz--tabs--active(ptz--tab-content='form')
+          = render template: 'products/edit/form', locals: { product: @product }
+
+        .ptz--tabs--content-item(ptz--tab-content='yml-form')
+          = render template: 'products/edit/yml_form', locals: { product: @product }
+
+        .ptz--tabs--content-item(ptz--tab-content='images')
+          = render template: 'attached_images/edit/attached_images', locals: { item: @product }
+
+        .ptz--tabs--content-item(ptz--tab-content='tech_params')
+          .fs16 Здесь будет карточка товара
+
+        .ptz--tabs--content-item(ptz--tab-content='shop_categories')
+          = render template: 'products/edit/shop_categories', locals: { item: @product }
+
+        .ptz--tabs--content-item(ptz--tab-content='shop_brands')
+          = render template: 'products/edit/shop_brands', locals: { item: @product }
+
+        .ptz--tabs--content-item(ptz--tab-content='additional_params')
+          = render template: 'products/edit/additional_params', locals: { item: @product }

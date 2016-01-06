@@ -1,0 +1,17 @@
+.letter--header.tac.arial.p15.fs20
+  = @subject
+
+.letter--body.m20.tal.arial
+  .letter-body--text.mb15
+    | Из корзины #{ link_to @cart.uid.upcase, @cart } удален товар
+
+  .mb20
+    .fs15.mb10.b = @product.title
+    - image_file = @product.main_image_path(:v100x100)
+    - fname = "current_#{ image_file }"
+    - attachments.inline[fname] = File.read(image_file)
+    = image_tag attachments[fname].url, title: @product.title
+
+  .mb15.fs18 На данный момент корзина содержит следующие товары:
+
+  = render partial: 'rails_shop/mailers/products_list', locals: { order: @cart }
