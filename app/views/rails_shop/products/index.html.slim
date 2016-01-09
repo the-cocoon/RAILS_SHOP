@@ -1,6 +1,9 @@
 = render template: 'rails_shop/meta_data/products/index'
 = render template: 'rails_shop/layouts/items/header_footer'
 
+- content_for :search_line do
+  = render template: 'rails_shop/shop_search/products_search'
+
 h1.fs20.mb20.mt20 Интернет магазин
 
 .mb15.fs15
