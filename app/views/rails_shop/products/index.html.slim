@@ -1,8 +1,10 @@
-= render template: 'rails_shop/meta_data/products/index'
-= render template: 'rails_shop/layouts/items/header_footer'
-
 - content_for :search_line do
   = render template: 'rails_shop/shop_search/products_search'
+- content_for :cart_btn do
+  = render template: 'rails_shop/carts/cart_btn'
+
+= render template: 'rails_shop/layouts/items/header_footer'
+= render template: 'rails_shop/meta_data/products/index'
 
 h1.fs20.mb20.mt20 Интернет магазин
 
