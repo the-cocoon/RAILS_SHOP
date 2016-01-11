@@ -19,13 +19,13 @@ module ShopCategoryRelsManagerHelper
         "
           <li data-node-id='#{ node.id }'>
             <div class='ptz--div-0 p10'>
-              <div class='table w100p the-sortable-tree--item'>
-                <div class='row'>
-                  <div class='cell vam w30'>
+              <div class='ptz--table w100p the-sortable-tree--item'>
+                <div class='ptz--tr'>
+                  <div class='ptz--td vam w30'>
                     #{ checkbox }
                   </div>
 
-                  <div class='cell vam'>
+                  <div class='ptz--td vam'>
                     #{ show_link }
                   </div>
 
