@@ -44,7 +44,7 @@
         - dkind = @order.delivery.delivery_kind
         = render partial: "delivery_types/required_fields/#{ dkind }", locals: { f: f }
 
-      li.table.w100p
+      li.ptz--table.w100p
         h3.fs24.ml15.mr15.mt15.mb0 Ваш заказ:
 
       li.shop-cart--headers
@@ -84,9 +84,9 @@
 
           .shop-cart--position-cell.w5p
 
-      li.shop-cart--total.table.pb0
-        .row
-          .cell
+      li.shop-cart--total.ptz--table.pb0
+        .ptz--tr
+          .ptz--td
             .clearfix.pt20
               .pull-left.mr100
                 .fs15.mb10
@@ -128,12 +128,12 @@
 
 
 
-        .row
-          .cell
+        .ptz--tr
+          .ptz--td
             .fs12.lh120.mb20 Переходя к оплате заказа вы подтверждаете, что ознакомились с <a href='http://localhost:3000/pages/user-agreement' class='u' target='_blank'>пользовательским соглашением</a> и подтверждаете согласие на обработку персональных данных:
 
-        .row
-          .cell.tac
+        .ptz--tr
+          .ptz--td.tac
 
             / SUBMIT BUTTONS
             - if @order.moderation?
