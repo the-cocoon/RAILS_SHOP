@@ -55,9 +55,7 @@
   #= require attached_images/attached_images
   #= require the_sortable_tree/sortable_ui/base
 
-  #= require app/layout/header
-  #= require app/layout/footer
-  #= require app/layout/left-sidebar
+  #= require app/common_styles
 
   #= require rails_shop/shop-footer
 */
