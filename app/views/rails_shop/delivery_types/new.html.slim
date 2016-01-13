@@ -7,14 +7,14 @@
 .ptz--theme-0.m20
   h3.mt20.mb20.fs18 Новый тип доставки
 
-  = render partial: 'notifications/form', locals: { object: @delivery_type }
+  = render partial: 'notifications/form', locals: { object: @delivery_type, format: :json }
 
   .ptz--div-0.w600
     = form_for @delivery_type, html: { class: '' } do |f|
       .m20
         .mb15
           = f.label :title, 'Название', class: 'block fs13 mb5'
-          = f.text_field :title, class: 'ptz--btn ptz--size-15 w500'
+          = f.text_field :title, class: 'ptz--input ptz--size-15 w500'
 
         div
           = f.submit 'Создать тип доставки', class: 'ptz--btn ptz--size-14'

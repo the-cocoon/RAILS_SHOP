@@ -24,6 +24,9 @@
         form.submit()
 
     ac = $('.js--shop-search--sq-input')
+    return unless ac.length
+
+    ac
       .autocomplete
         minLength: 3
         source: @source

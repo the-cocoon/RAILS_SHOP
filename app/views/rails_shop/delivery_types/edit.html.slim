@@ -5,7 +5,7 @@
     .mb10= link_to 'Главная', '/shop', class: 'ptz--btn ptz--size-16 w100p'
     .mb10= link_to 'Просмотр типа доставки', @delivery_type, class: 'ptz--btn ptz--size-16 w100p'
 
-.ptz--theme-0.m20
+.ptz--theme-0.m20.w800
   h3.mt20.mb20.fs18 Редактировать тип доставки
 
   = render partial: 'notifications/form', locals: { object: @delivery_type }
