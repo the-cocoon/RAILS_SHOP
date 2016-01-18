@@ -1,8 +1,8 @@
 class RailsShopLoggerMailer < ActionMailer::Base
   include ::RailsShop::MailerSettingsConcern
 
-  prepend_view_path "#{ ::RailsShop::Engine.root }/app/views/rails_shop"
-  prepend_view_path 'app/views/rails_shop'
+  prepend_view_path "#{ ::RailsShop::Engine.root }/app_view/views/rails_shop"
+  prepend_view_path 'app_view/views/rails_shop'
   layout 'mailers/layout'
 
   default bcc: ::Settings.rails_shop.mailer.admin_email

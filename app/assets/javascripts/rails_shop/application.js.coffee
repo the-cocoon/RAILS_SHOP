@@ -39,7 +39,7 @@
 #= require attached_images/attached_images
 
 #= require JODY/base
-#= require app/jody_notificator_init
+#= require app_view/jody_notificator_init
 
 #= require the_sortable_tree/jquery.ui.nestedSortable
 #= require the_sortable_tree/sortable_ui/base
