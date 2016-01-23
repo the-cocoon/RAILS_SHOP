@@ -12,3 +12,8 @@
 *.o
 *.a
 mkmf.log
+
+# OS FILES
+.DS_Store
+.DS_Store?
+Thumbs.db
