@@ -3,6 +3,7 @@ class ShopCategoryRel < ActiveRecord::Base
   include ::Pagination::Base
 
   paginates_per 24
+  acts_as_nested_set scope: %w[ category_type category_id ]
 
   belongs_to :user
   belongs_to :category, polymorphic: true
