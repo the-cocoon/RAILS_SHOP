@@ -29,6 +29,10 @@ class ShopCategoriesController < RailsShopController
     @shop_categories = ::ShopCategory.for_manage.nested_set
   end
 
+  def ordering
+    @category_items = @shop_category.shop_category_item_rels.reversed_nested_set
+  end
+
   def new
     @shop_category = ::ShopCategory.new
   end

@@ -57,6 +57,10 @@ class Product < ActiveRecord::Base
 
   # SERVICE METHODS
 
+  def params_card
+    shop_item_params_set
+  end
+
   # Product.first.fts_data_rebuild!
   def fts_data_rebuild!
     fts_data = shop_categories.map(&:title) | shop_brands.map(&:title) | [title]

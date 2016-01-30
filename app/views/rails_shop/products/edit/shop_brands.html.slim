@@ -1,9 +1,9 @@
 .ptz--theme-0
   = form_tag shop_category_rels_path, remote: true, data: { type: :json, role: 'shop-brand-rels--form' } do
-    = hidden_field_tag :category_klass, :ShopBrand
+    = hidden_field_tag :category_type, :ShopBrand
     = hidden_field_tag :category_id, '?'
 
-    = hidden_field_tag :item_klass, item.class
+    = hidden_field_tag :item_type, item.class
     = hidden_field_tag :item_id,    item.id
 
     = hidden_field_tag :checked

@@ -19,6 +19,10 @@ module RailsShop
       get 'shop/manage' => 'shop#manage',    as: :shop_manage
 
       resources :shop_categories do
+        member do
+          get :ordering
+        end
+
         collection do
           get  :manage
           post :rebuild
@@ -31,6 +35,11 @@ module RailsShop
           post :rebuild
         end
       end
+
+      get "shop_ordering/:category_type/:category_id",
+        action: :ordering,
+        controller: :shop_category_rels,
+        as: :shop_ordering
 
       resources :shop_category_rels do
         collection do

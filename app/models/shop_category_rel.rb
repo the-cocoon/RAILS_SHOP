@@ -1,6 +1,7 @@
 class ShopCategoryRel < ActiveRecord::Base
   include ::SimpleSort::Base
   include ::Pagination::Base
+  include ::TheSortableTree::Scopes
 
   paginates_per 24
   acts_as_nested_set scope: %w[ category_type category_id ]

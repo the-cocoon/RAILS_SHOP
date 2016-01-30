@@ -1,11 +1,14 @@
 class ShopCategoryRelsController < RailsShopController
   include ::TheSortableTreeController::ReversedRebuild
 
+  layout 'rails_shop_layout'
+
   before_action :user_require,   except: %w[ ]
   before_action :owner_required, except: %w[ ]
   before_action :admin_require,  except: %w[ ]
 
-  before_action :set_category_and_item, except: %w[ rebuild ]
+  before_action :set_category, except: %w[ rebuild ]
+  before_action :set_item,     except: %w[ rebuild ordering ]
 
   def create
     checked = params[:checked].to_i == 1
@@ -13,6 +16,10 @@ class ShopCategoryRelsController < RailsShopController
   end
 
   # Restricted area
+
+  def ordering
+    @category_items = @category.shop_category_rels.reversed_nested_set
+  end
 
   def create_category_item_rels params
     ::ShopCategoryRel.create(category: @category, item: @item)
@@ -24,14 +31,13 @@ class ShopCategoryRelsController < RailsShopController
     render template: 'shop_category_rels/json/destroy.success.json.jbuilder'
   end
 
-  def set_category_and_item
-    c_klass = params[:category_klass].constantize
-    c_id    = params[:category_id]
+  def set_category
+    @cat_klass = params[:category_type].classify.constantize
+    @category  = @cat_klass.friendly_first params[:category_id]
+  end
 
-    i_klass = params[:item_klass].constantize
-    i_id    = params[:item_id]
-
-    @category = c_klass.find(c_id)
-    @item     = i_klass.find(i_id)
+  def set_item
+    @item_klass = params[:item_type].classify.constantize
+    @item       = @item_klass.friendly_first params[:item_id]
   end
 end
