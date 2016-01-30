@@ -1,7 +1,7 @@
 category_rel_name = @category.class.name.tableize
 categories_count  = @item.send(category_rel_name).count
 
-json.set! :keep_alerts, false
+json.set! :keep_alerts, true
 
 json.set! :flash, {
   notice: "Позиция назначена в раздел Каталога"

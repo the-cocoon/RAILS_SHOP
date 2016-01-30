@@ -14,7 +14,7 @@
 
         val = if val then 1 else 0
 
-        form_role = checkbox.parents('ol').data('form-role')
+        form_role = checkbox.parents("ol[data-form-role]").data('form-role')
         form = $ "@#{ form_role }"
 
         form.find('[name=category_id]').val id
