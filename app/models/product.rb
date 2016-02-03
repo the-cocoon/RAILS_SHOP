@@ -40,6 +40,14 @@ class Product < ActiveRecord::Base
     through: :shop_category_rels,
     source: :category, source_type: :ShopBrand
 
+  has_many :shop_colors,
+    through: :shop_category_rels,
+    source: :category, source_type: :ShopColor
+
+  has_many :shop_unit_ports,
+    through: :shop_category_rels,
+    source: :category, source_type: :ShopUnitPort
+
   # SCOPES
 
   scope :in_stock, ->{ where('amount > 0') }

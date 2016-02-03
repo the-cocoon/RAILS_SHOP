@@ -35,6 +35,12 @@ module RailsShop
     end
 
     initializer :add_rails_shop_view_paths do
+
+      ActiveSupport.on_load(:active_record) do
+        _root_ = ::RailsShop::Engine.config.root
+        ::Rails.application.config.paths['db/migrate'] << "#{ _root_ }/db/migrate"
+      end
+
       ActiveSupport.on_load(:action_controller) do
         _root_  = ::RailsShop::Engine.config.root
         views_1 = "app/views/rails_shop"

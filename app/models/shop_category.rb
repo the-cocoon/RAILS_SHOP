@@ -9,6 +9,7 @@ class ShopCategory < ActiveRecord::Base
   include ::TheSortableTree::Scopes
   acts_as_nested_set scope: %w[ user_id ]
 
+  validates :title, uniqueness: true
   validates_presence_of :user, :title
   validates_presence_of :slug, if: ->{ errors.blank? }
 
@@ -19,5 +20,8 @@ class ShopCategory < ActiveRecord::Base
   belongs_to :user
 
   has_many :shop_category_rels, as: :category
-  # has_many :items, through: :shop_category_rels
+
+  has_many :products,
+    through: :shop_category_rels,
+    source: :item, source_type: :Product
 end
