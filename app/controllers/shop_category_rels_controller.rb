@@ -24,9 +24,9 @@ class ShopCategoryRelsController < RailsShopController
   def create_category_item_rels params
     ::ShopCategoryRel.create(category: @category, item: @item)
 
-    begin
-      ::ShopItemsSearch.update_index(@item)
-    ensure; end;
+    # begin
+      ::ShopItemsSearch.update(@item)
+    # ensure; end;
 
     render template: 'shop_category_rels/json/create.success.json.jbuilder'
   end
@@ -34,9 +34,9 @@ class ShopCategoryRelsController < RailsShopController
   def destroy_category_item_rels params
     ::ShopCategoryRel.where(category: @category, item: @item).delete_all
 
-    begin
-      ::ShopItemsSearch.update_index(@item)
-    ensure; end;
+    # begin
+      ::ShopItemsSearch.update(@item)
+    # ensure; end;
 
     render template: 'shop_category_rels/json/destroy.success.json.jbuilder'
   end

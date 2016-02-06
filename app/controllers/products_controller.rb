@@ -8,12 +8,22 @@ class ProductsController < RailsShopController
 
   def index
     @shop_category_rels =
-      ::ShopCategoryRel
-        .in_stock
-        .published
-        .max2min(:id)
+      ::ShopCategoryRel.in_stock.published
+        .select("
+          MAX(shop_category_rels.id)                AS rel_id,
+          MAX(shop_category_rels.item_active_price) AS price,
+          MAX(shop_category_rels.item_updated_at)   AS updated_at,
+
+          shop_category_rels.item_id   AS item_id,
+          shop_category_rels.item_type AS item_type
+        ")
+        .group("
+          item_id,
+          item_type
+        ")
         .includes(:item, item: [:attached_images])
-        .simple_sort(params)
+        ._max2min(:updated_at)
+        ._simple_sort(params)
         .pagination(params)
 
     @shop_items = @shop_category_rels.map(&:item)
