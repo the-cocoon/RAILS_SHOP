@@ -41,3 +41,4 @@ $(document).on 'ready page:load', ->
   OrderPaymentButton.init()
   OrderPaymentForm.init()
   SectionSwitcher.init()
+  ShopFilterForm.init()

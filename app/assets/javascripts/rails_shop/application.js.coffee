@@ -44,5 +44,7 @@
 #= require the_sortable_tree/jquery.ui.nestedSortable
 #= require the_sortable_tree/sortable_ui/base
 
+#= require shop_filters/shop_filter_form
+
 #= require rails_shop/application_initializer
 
