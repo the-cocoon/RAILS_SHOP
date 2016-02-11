@@ -17,6 +17,8 @@ class RailsShopCreateShopCategoryRels < ActiveRecord::Migration
       t.decimal :item_active_price,               precision: 10, scale: 2
       t.decimal :item_active_price_with_discount, precision: 10, scale: 2
 
+      t.references :item_shop_params_card, polymorphic: true
+
       t.datetime :item_created_at
       t.datetime :item_updated_at
       # ~ Item denormalization

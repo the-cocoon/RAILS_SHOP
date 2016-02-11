@@ -10,7 +10,7 @@ module RailsShop
 
       scope :with_state,    ->(states){ where state: Array.wrap(states) }
       scope :for_manage,    ->{ with_state [:draft, :published] }
-      scope :available_for, ->(user = nil) { user.admin? ? for_manage : published }
+      scope :available_for, ->(user = nil) { user.try(:admin?) ? for_manage : published }
 
       scope :published,  ->{ with_state :published }
       scope :draft,      ->{ with_state :draft     }

@@ -36,6 +36,20 @@ module RailsShop
         end
       end
 
+      resources :shop_colors do
+        collection do
+          get  :manage
+          post :rebuild
+        end
+      end
+
+      resources :shop_unit_ports do
+        collection do
+          get  :manage
+          post :rebuild
+        end
+      end
+
       get "shop_ordering/:category_type/:category_id",
         action: :ordering,
         controller: :shop_category_rels,

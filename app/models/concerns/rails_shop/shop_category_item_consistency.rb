@@ -46,6 +46,9 @@ module RailsShop
       item_active_price:               self.active_price,
       item_active_price_with_discount: self.active_price_with_discount,
 
+      item_shop_params_card_id:   self.shop_params_card_id,
+      item_shop_params_card_type: self.shop_params_card_type,
+
       item_created_at: self.created_at,
       item_updated_at: self.updated_at
     )
@@ -64,6 +67,9 @@ module RailsShop
 
       item_active_price:               self.active_price,
       item_active_price_with_discount: self.active_price_with_discount,
+
+      item_shop_params_card_id:   self.shop_params_card_id,
+      item_shop_params_card_type: self.shop_params_card_type,
 
       item_created_at: self.created_at,
       item_updated_at: self.updated_at

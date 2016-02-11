@@ -17,7 +17,7 @@ module ShopCategoryRelsOrderingHelper
 
         "
           <li data-node-id='#{ node.id }'>
-            <div class='ptz--table w100p the-sortable-tree--item ptz--div-0 p5'>
+            <div class='ptz--table w100p the-sortable-tree--item ptz--div-0 p5 shop--cat-rel-state--#{ node.item_state } shop--cat-rel-amount--#{ node.item_amount }'>
               <div class='ptz--tr'>
                 <div class='ptz--td vam w30'>
                   #{ handler }
@@ -27,7 +27,7 @@ module ShopCategoryRelsOrderingHelper
                   #{ show_link }
                 </div>
 
-                <div class='ptz--td vam br-off w10 pr5'>
+                <div class='ptz--td vam br-off w10 pl5 pr5'>
                   #{ controls }
                 </div>
               </div>
@@ -45,19 +45,19 @@ module ShopCategoryRelsOrderingHelper
       end
 
       def show_link
-        node = options[:node]
-        ns   = options[:namespace]
-        url = h.url_for(:controller => options[:klass].pluralize, :action => :show, :id => node)
+        node  = options[:node]
+        ns    = options[:namespace]
+        url   = h.url_for(:controller => options[:klass].pluralize, action: :show, id: node)
         title = node.send( options[:title] )
 
-        "<div class='fs15'>
+        "<div class='fs15 lh120'>
           #{ h.link_to(title, url) }
         </div>"
       end
 
       def controls
         node      = options[:node].item
-        edit_path = h.url_for(node)
+        edit_path = h.url_for([ :edit, node ])
 
         "
           <a href='#{ edit_path }'>

@@ -1,14 +1,24 @@
 = render template: 'rails_shop/layouts/items/header_footer'
 
-- content_for :left_sidebar do
-  - if current_user.try(:rails_shop_admin?)
-    .ptz--theme-0.m20
-      .mb30= link_to 'Кабинет',  cabinet_path, class: 'ptz--btn ptz--size-16 w100p'
-      .mb15= link_to 'Редактировать категорию', [:edit, @shop_category], class: 'ptz--btn ptz--size-16 w100p'
-      .mb15= link_to 'Порядок публикаций', shop_ordering_path(@shop_category.class, @shop_category.to_param), class: 'ptz--btn'
+/ - content_for :left_sidebar do
 
-.w800
+.w1000
+  .mb20
+    - if current_user.try(:rails_shop_admin?)
+      .clearfix.p20
+        .pull-left.mr20= link_to 'Кабинет',  cabinet_path, class: 'ptz--btn ptz--size-16'
+        .pull-left.mr20= link_to 'Редактировать категорию', [:edit, @shop_category], class: 'ptz--btn ptz--size-16'
+        .pull-left.mr20= link_to 'Порядок элементов', shop_ordering_path(@shop_category.class, @shop_category.to_param), class: 'ptz--btn ptz--size-16'
+
   .m20
     h1.fs20.mb20.mt20= @shop_category.title
+
+    - if @filter_types.present?
+      .mb30.fs18 Фильтры
+      .mb20
+        - @filter_types.each do |filter_type|
+          - filter_klass = filter_type.constantize
+          .mb40= render template: "shop_filters/#{ filter_klass.template_name }"
+
     = render template: 'rails_shop/shop_categories/shop_items_list', locals: { shop_items: @shop_items }
     = render template: 'app_view/common/paginator', locals: { items: @shop_category_rels }

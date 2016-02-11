@@ -3,16 +3,18 @@
 
 = render template: 'layouts/items/header_footer'
 
-- content_for :left_sidebar do
+.m20.mt25.w1000
+  .ptz--theme-0.mt20.mb20
+    .ptz--table.w100p
+      .ptz--td.vam.pr15= link_to 'Главная', root_path,       class: 'ptz--btn ptz--size-16'
+      .ptz--td.vam.pr15= link_to 'Кабинет', cabinet_path,    class: 'ptz--btn ptz--size-16'
+      .ptz--td.vam.pr15= link_to @category.title, @category, class: 'ptz--btn ptz--size-16'
+      .ptz--td.vam.w100p.fs13.tar= render template: 'common/pages_and_reset'
 
-  .ptz--theme-0.m20
-    div= link_to 'Главная', root_path, class: 'ptz--btn ptz--size-16 w100p'
-    hr.ptz--hr-0.mt20.mb20
-    div= link_to @category.title, @category, class: 'ptz--btn ptz--size-16 w100p'
-
-.m20.mt25.w800
   .fs20.mb30 Порядок позиций в разделе: "#{ @category.title }"
 
   .ptz--theme-0
     ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 1, rebuild_url: rebuild_shop_category_rels_path })
       = sortable_tree @category_items, title: :item_title, render_module: ShopCategoryRelsOrderingHelper
+
+  = render template: 'common/paginator', locals: { items: @category_items }

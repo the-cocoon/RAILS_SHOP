@@ -28,7 +28,7 @@ class Product < ActiveRecord::Base
 
   belongs_to :user
 
-  belongs_to :shop_item_params_set, polymorphic: true
+  belongs_to :shop_params_card, polymorphic: true
 
   has_many :shop_category_rels, as: :item
 
@@ -66,7 +66,7 @@ class Product < ActiveRecord::Base
   # SERVICE METHODS
 
   def params_card
-    shop_item_params_set
+    shop_params_card
   end
 
   # Product.first.fts_data_rebuild!

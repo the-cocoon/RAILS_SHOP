@@ -18,7 +18,12 @@ class ShopCategoryRelsController < RailsShopController
   # Restricted area
 
   def ordering
-    @category_items = @category.shop_category_rels.reversed_nested_set
+    @category_items =
+      @category
+        .shop_category_rels
+        .for_manage
+        .reversed_nested_set
+        .pagination(params)
   end
 
   def create_category_item_rels params

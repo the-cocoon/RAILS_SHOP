@@ -36,6 +36,7 @@
   #= require rails_shop/product-delivery
   #= require rails_shop/shop-cart
   #= require rails_shop/shop-search
+  #= require rails_shop/shop_category_rels_ordering
 
   #= require rails_shop/jq--autocomplete
 
