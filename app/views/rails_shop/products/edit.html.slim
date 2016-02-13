@@ -48,7 +48,7 @@
           = render template: 'attached_images/edit/attached_images', locals: { item: @product }
 
         .ptz--tabs--content-item(ptz--tab-content='tech_params')
-          .fs16 Здесь будет карточка товара
+          = render template: 'products/edit/params_card', locals: { item: @product }
 
         .ptz--tabs--content-item(ptz--tab-content='shop_categories')
           = render template: 'products/edit/shop_categories', locals: { item: @product }

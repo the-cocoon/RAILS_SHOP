@@ -1,0 +1,47 @@
+- if params_card = item.params_card
+  - card_klass = params_card.class
+  - prefix = ''
+
+  .fs18.mb30
+    | Карточка параметров:
+    '
+    = card_klass.title
+
+  .ptz--theme-0
+    .ptz--div-0
+      .m20
+        = form_tag shop_params_card_path(params_card), method: :patch do
+          = hidden_field_tag :params_card_class, params_card.class
+          = hidden_field_tag :params_card_id,    params_card.id
+
+          - params_card.class.card_fields.each do |field_name, field_params|
+            .mb20
+              .mb15.fs15
+
+                - if field_params[:type] == :select
+                  - field_id = "#{ prefix }#{ field_name }"
+                  - opts = field_params[:values].map{|v| [ v, v, class: :p5 ] }.unshift([ '...', '', class: :p5 ])
+
+                  .fs14.mb5= field_name
+                  .mb10= select_tag field_id, options_for_select(opts, params[field_id]), autocomplete: :off, class: 'ptz--size-15 w150 ptz--select'
+
+                - if field_params[:type] == :checkbox
+                  - field_id = "#{ prefix }#{ field_name }"
+                  .ptz--table
+                    .ptz--td.pt5.pb5.pr5.vam
+                      = check_box_tag field_id, '1', params[field_id], autocomplete: :off
+                    .ptz--td.p5.vam.fs15
+                      = field_name
+
+                - if field_params[:type] == :range
+
+                  - min = field_params[:min]
+                  - max = field_params[:max]
+                  - placeholder = "#{ min } - #{ max }"
+
+                  .mb15.fs14.b= field_name
+                  .mb15= text_field_tag field_name, params[field_name], type: :number, step: '0.01', min: min, max: max, class: 'ptz--input ptz--size-16 w100p', autocomplete: :off, placeholder: placeholder
+
+
+
+          = submit_tag 'Обновить', class: 'ptz--btn ptz--size-16'

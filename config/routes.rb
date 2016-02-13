@@ -18,6 +18,8 @@ module RailsShop
       get '/shop'       => 'products#index', as: :shop
       get 'shop/manage' => 'shop#manage',    as: :shop_manage
 
+      resources :shop_params_cards
+
       resources :shop_categories do
         member do
           get :ordering
