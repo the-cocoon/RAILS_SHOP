@@ -47,5 +47,5 @@
 #= require rails_shop/backend/shop_spoiler
 #= require shop_filters/shop_filter_form
 
-#= require rails_shop/backend/application_initializer
+#= require rails_shop/backend/initializer
 

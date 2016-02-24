@@ -3,7 +3,8 @@ class RailsShopController < ApplicationController
 
   include ::CartService::CurrentCart
 
-  # skip_before_filter :method_to_skip, :only => [:method_name]
+  # skip_before_filter :authenticate_user!,   only: [:method_name]
+  # skip_before_filter :shop_admin_required!, only: [:method_name]
 
   before_action :authenticate_user!
   before_action :shop_admin_required
@@ -13,7 +14,7 @@ class RailsShopController < ApplicationController
   private
 
   def shop_admin_required
-    redirect_to root_path unless current_user.admin?
+    redirect_to root_path unless current_user.try(:admin?)
   end
 
   def layout_for_action
