@@ -37,7 +37,7 @@ class ShopSearchController < RailsShopController
                    @shop_items_1
 
     if request.format.json?
-      render template: 'shop_search/json/shop_search'
+      render template: 'rails_shop/shop_search/json/shop_search'
     end
   end
 
