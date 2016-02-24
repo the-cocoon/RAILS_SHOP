@@ -110,7 +110,8 @@ class OrderMailer < ActionMailer::Base
     }
 
     @images.each_pair do |name, path|
-      attachments.inline[name] = File.read("#{ Rails.root }/public/#{ path }")
+      theme_scope = defined?(::AppViewEngine::view_name) ? ::AppViewEngine::view_name : nil
+      attachments.inline[name] = File.read("#{ Rails.root }/public/#{ theme_scope }/#{ path }")
     end
   end
 end

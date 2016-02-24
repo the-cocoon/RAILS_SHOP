@@ -1,5 +1,6 @@
 - order.products.each do |product|
   - product = product.item
-  - image_file = product.main_image_path(:v100x100)
-  - ( attachments.inline[image_file] = File.read(image_file) ) if attachments.inline[image_file].blank?
-  = image_tag attachments[image_file].url, title: product.title
+  - if product.main_image
+    - image_file = product.main_image_path(:v100x100)
+    - ( attachments.inline[image_file] = File.read(image_file) ) if attachments.inline[image_file].blank?
+    = image_tag attachments[image_file].url, title: product.title

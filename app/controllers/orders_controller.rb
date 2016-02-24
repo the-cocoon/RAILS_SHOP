@@ -1,4 +1,5 @@
 class OrdersController < RailsShopController
+  layout ->{ layout_for_action }
 
   before_action :set_order, only: %w[
     show login_before attach_current_user_to
@@ -112,6 +113,12 @@ class OrdersController < RailsShopController
   end
 
   private
+
+  def layout_for_action
+    %w[ payment ].include?(action_name) ? \
+    'rails_shop_frontend'               : \
+    super
+  end
 
   def set_cart
     @cart = ::Cart.where(uid: params[:cart_id]).first
