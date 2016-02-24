@@ -38,4 +38,4 @@ h3.mt20.mb20.fs18 Редактировать товары
               = link_to product, method: :delete, data: { confirm: 'Удалить товар?' } do
                 i.fs14.fa.fa-trash
 
-  = render template: 'rails_shop/common/paginator', locals: { items: @products }
+  = render template: 'common/paginator', locals: { items: @products }

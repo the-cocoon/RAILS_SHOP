@@ -61,4 +61,4 @@
             = link_to order, method: :delete, data: { confirm: 'Удалить заказ?' } do
               i.fs14.fa.fa-trash
 
-  = render template: 'rails_shop/common/paginator', locals: { items: @orders }
+  = render template: 'common/paginator', locals: { items: @orders }
