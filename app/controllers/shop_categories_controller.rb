@@ -1,5 +1,4 @@
 class ShopCategoriesController < RailsShopController
-  layout 'rails_shop_layout'
 
   def category_klass
     ::ShopCategory

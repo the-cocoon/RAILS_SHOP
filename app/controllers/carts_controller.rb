@@ -1,5 +1,4 @@
 class CartsController < RailsShopController
-  layout 'rails_shop_layout'
 
   before_action :find_cart_by_cart_id, only: %w[
     add_product remove_product

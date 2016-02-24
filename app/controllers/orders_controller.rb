@@ -1,5 +1,4 @@
 class OrdersController < RailsShopController
-  layout 'rails_shop_layout'
 
   before_action :set_order, only: %w[
     show login_before attach_current_user_to

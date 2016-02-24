@@ -5,7 +5,6 @@
 # ::ThinkingSphinx.search("canon", star: true, classes: [ Product ], indices: %w[ admin_product_core ]).count
 
 class ShopSearchController < RailsShopController
-  layout 'rails_shop_layout'
 
   def shop_search
     @sq = params[:sq].to_s.strip

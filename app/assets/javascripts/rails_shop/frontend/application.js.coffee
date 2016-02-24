@@ -20,14 +20,14 @@
 #= require components/jQuery-File-Upload/jquery.iframe-transport
 #= require components/jQuery-File-Upload/jquery.fileupload
 
-#= require rails_shop/products_edit
-#= require rails_shop/delivery_types
-#= require rails_shop/editable_block_switcher
-#= require rails_shop/order_payment_button
-#= require rails_shop/order_payment_form
-#= require rails_shop/shop_search_form
+#= require rails_shop/frontend/products_edit
+#= require rails_shop/frontend/delivery_types
+#= require rails_shop/frontend/editable_block_switcher
+#= require rails_shop/frontend/order_payment_button
+#= require rails_shop/frontend/order_payment_form
+#= require rails_shop/frontend/shop_search_form
 
-#= require rails_shop/shop_category_rels
+#= require rails_shop/frontend/shop_category_rels
 
 #= require components/ckeditor/init
 
@@ -39,13 +39,13 @@
 #= require attached_images/attached_images
 
 #= require JODY/base
-#= require app_view/jody_notificator_init
+#= require jody_notificator_init
 
 #= require the_sortable_tree/jquery.ui.nestedSortable
 #= require the_sortable_tree/sortable_ui/base
 
-#= require rails_shop/shop_spoiler
+#= require rails_shop/frontend/shop_spoiler
 #= require shop_filters/shop_filter_form
 
-#= require rails_shop/application_initializer
+#= require rails_shop/frontend/application_initializer
 

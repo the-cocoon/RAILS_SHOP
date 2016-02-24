@@ -1,8 +1,5 @@
 class CurrencyRatesController < RailsShopController
-  layout 'rails_shop_layout'
 
-  before_action :authenticate_user!,  except: %w[ ]
-  before_action :shop_admin_required, except: %w[ ]
   before_action :set_currency_rate, only: %w[ edit update destroy ]
 
   def manage

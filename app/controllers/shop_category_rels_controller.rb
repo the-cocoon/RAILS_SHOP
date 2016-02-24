@@ -1,8 +1,6 @@
 class ShopCategoryRelsController < RailsShopController
   include ::TheSortableTreeController::ReversedRebuild
 
-  layout 'rails_shop_layout'
-
   before_action :user_require,   except: %w[ ]
   before_action :owner_required, except: %w[ ]
   before_action :admin_require,  except: %w[ ]
