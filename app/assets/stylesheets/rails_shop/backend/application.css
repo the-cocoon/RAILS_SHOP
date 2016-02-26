@@ -6,10 +6,12 @@
   #= require ptz/inputs-buttons/base
   #= require ptz/inputs-buttons/sizes
 
+  #= require protozaur_theme/theme-0/divs
+  #= require protozaur_theme/theme-0/tables
+
   #= require ptz-tabs/ptz-tabs
 
   #= require custom_select/custom_select
-
 
   #= require crop_tool/crop_tool
   #= require crop_tool/jcrop/jquery.Jcrop

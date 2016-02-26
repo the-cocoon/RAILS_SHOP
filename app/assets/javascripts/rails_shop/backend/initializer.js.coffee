@@ -19,28 +19,15 @@ toastr.options =
   "hideMethod": "fadeOut"
 
 $(document).on 'ready page:load', ->
-  PtzTabs.init()
-
-  AttachedImages.init()
-  TheSortableTree.SortableUI.init()
-
-  CropTool.init()
-
-  ShopSearchForm.init()
   Notifications.init()
   Notifications.show_notifications()
 
-  ProductsEdit.init()
+  PtzTabs.init()
+  CropTool.init()
+  AttachedImages.init()
+
+  # TheStorgesSortable.init()
+  # TheStoragesFileUploader.init()
+  TheSortableTree.SortableUI.init()
+
   ShopCategoryRels.init()
-
-  DeliveryTypesOptions.init()
-  EditableBlockSwitcher.init()
-
-  SocialLoginButtons.init()
-  RegistrationAccordion.init()
-  OrderPaymentButton.init()
-  OrderPaymentForm.init()
-  SectionSwitcher.init()
-
-  ShopFilterForm.init()
-  ShopSpoiler.init()

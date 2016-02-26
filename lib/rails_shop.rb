@@ -19,7 +19,6 @@ require "rails_shop/version"
 
   protozaur
   protozaur_theme
-  table_holy_grail_layout
 ].each do |lib|
   require lib
 end

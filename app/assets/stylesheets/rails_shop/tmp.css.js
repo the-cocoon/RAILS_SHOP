@@ -36,7 +36,6 @@
 #= require protozaur_theme/theme-0/divs
 #= require user_room/user-room-header
 #= require user_room/social-login-btn
-#= require layouts/table-holy-grail/styles
 
 #= require rails_shop/frontend/link-marker
 #= require rails_shop/frontend/user
