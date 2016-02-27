@@ -23,6 +23,6 @@
 #= require rails_shop/frontend/shop_spoiler
 
 #= require ptz-tabs/ptz-tabs
-#= require shop_filters/frontend/shop_filter_form
+#  require shop_filters/frontend/shop_filter_form
 
 #= require rails_shop/frontend/initializer
