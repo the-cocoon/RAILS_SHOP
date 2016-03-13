@@ -105,13 +105,13 @@ class OrderMailer < ActionMailer::Base
   private
 
   def set_attachments!
-    @images = {
-      'logo_w130_h130.png' => 'images/logos/logo_w130_h130.png'
-    }
+    # @images = {
+    #   'logo_w130_h130.png' => 'images/logos/logo_w130_h130.png'
+    # }
 
-    @images.each_pair do |name, path|
-      theme_scope = defined?(::AppViewEngine::view_name) ? ::AppViewEngine::view_name : nil
-      attachments.inline[name] = File.read("#{ Rails.root }/public/#{ theme_scope }/#{ path }")
-    end
+    # @images.each_pair do |name, path|
+    #   theme_scope = defined?(::AppViewEngine::view_name) ? ::AppViewEngine::view_name : nil
+    #   attachments.inline[name] = File.read("#{ Rails.root }/public/#{ theme_scope }/#{ path }")
+    # end
   end
 end
