@@ -14,7 +14,10 @@ class OrderMailer < ActionMailer::Base
   # OrderMailer.delay_for(2.seconds).unexpected_transition(Order.last, %w[paid draft])
 
   def created(order_id)
-    @order   = Order.find(order_id)
+    @order = Order.find(order_id)
+
+    _mailer = ::Settings.rails_shop.mailer
+    @from   = _mailer.smtp.default.user_name
 
     @subject = I18n.t(:created, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
     @subject = "#{ env_prefix }#{ @subject }"
@@ -27,7 +30,7 @@ class OrderMailer < ActionMailer::Base
       end
     end
 
-    mail(to: @to, subject: @subject)
+    mail(to: @to, subject: @subject, from: @from)
   end
 
   def moderation(order_id)

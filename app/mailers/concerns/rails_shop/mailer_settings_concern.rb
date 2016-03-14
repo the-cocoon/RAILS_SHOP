@@ -4,20 +4,20 @@ module RailsShop
 
     class_methods do
       def smtp?
-        ['smtp', 'letter_opener'].include?(::Settings.app.mailer.service)
+        ['smtp', 'letter_opener'].include?(::Settings.rails_shop.mailer.service)
       end
     end
 
     # SomeMailer.test_mail.delivery_method.settings
     included do
       if smtp?
-        _mailer = ::Settings.app.mailer
+        _mailer = ::Settings.rails_shop.mailer
 
         default bcc:  _mailer.admin_email
         default from: _mailer.smtp.default.user_name
 
         def self.smtp_settings
-          ::Settings.rails_shop.mailer.smtp.to_h
+          ::Settings.rails_shop.mailer.smtp.default.to_h
         end
       end
     end
