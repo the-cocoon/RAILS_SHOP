@@ -76,6 +76,7 @@
           - DeliveryType.published.order(price: :desc).each do |dt|
             .cart-delivery-info--radio-btn
               = radio_button_tag :delivery_type_id, dt.id, (selected_dt == dt), class: 'radio-btn radio-btn--info-line', id: "delivery_type_#{ dt.id }", autocomplete: :off
+              '
               label(for="delivery_type_#{ dt.id }")
                 - if !dt.special?
                   = "#{ money_to_text dt.price } руб."
@@ -83,40 +84,43 @@
                 = dt.intro
 
       li.shop-cart--total
-        .cell
-          .fs15.mt10.mb10
-            - products_count = @cart.products.count
-            - positions_plur = t(:positions_count_text, scope: %w[ rails_shop ], count: products_count)
-            | #{ products_count } #{ positions_plur } на
-            '
-            span.fs24
-              = money_to_text(@cart.products_total_price)
-              '
-              'руб.
+        .ptz--table.w100p
+          .ptz--tr
+            .ptz--td
+              .fs15.mt10.mb10
+                - products_count = @cart.products.count
+                - positions_plur = t(:positions_count_text, scope: %w[ rails_shop ], count: products_count)
+                | #{ products_count } #{ positions_plur } на
+                '
+                span.fs24
+                  = money_to_text(@cart.products_total_price)
+                  '
+                  'руб.
 
-          - if !@cart.products_discount.zero?
-            .fs14
-              | Ваша скидка:
-              '
-              = money_to_text(@cart.products_discount)
-              '
-              'руб.
+              - if !@cart.products_discount.zero?
+                .fs14
+                  | Ваша скидка:
+                  '
+                  = money_to_text(@cart.products_discount)
+                  '
+                  'руб.
 
-          hr
 
-          .fs15.mt30.mb10
-            | Итого:
-            '
-            span.fs24= money_to_text(@cart.total_price)
-            '
-            'руб.
+          .ptz--tr
+            .ptz--td
+              .fs15.mt30.mb10
+                | Итого:
+                '
+                span.fs24= money_to_text(@cart.total_price)
+                '
+                'руб.
 
-        .cell.w250.tar
-          - if @cart.active?
-            = link_to 'Оформить заказ', orders_path(cart_id: @cart), method: :post, class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
-          - else
-            .ptz--btn.ptz--size-22 Корзина Просрочена
-
+          .ptz--tr
+            .ptz--td.tac
+              - if @cart.active?
+                = link_to 'Оформить заказ', orders_path(cart_id: @cart), method: :post, class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
+              - else
+                .ptz--btn.ptz--size-22 Корзина Просрочена
 
   .w900.ma.mb20.clearfix
     .pull-right
