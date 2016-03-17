@@ -2,5 +2,11 @@
   - product = product.item
   - if product.main_image
     - image_file = product.main_image_path(:v100x100)
-    - ( attachments.inline[image_file] = File.read(image_file) ) if attachments.inline[image_file].blank?
-    = image_tag attachments[image_file].url, title: product.title
+
+    - if attachments.inline[image_file].blank?
+      - attachments.inline[image_file] = File.read(image_file)
+
+    - if Rails.env.development?
+      = image_tag product.main_image_url(:v100x100), title: product.title
+    - else
+      = image_tag attachments[image_file].url, title: product.title

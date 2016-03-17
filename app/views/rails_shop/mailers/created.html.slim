@@ -16,12 +16,13 @@
       tr
         td.w50p
         td
-          .letter-body--activation-border
-            span.nobr= link_to "Перейти к заказу #{ @order.uid.upcase }", order_url(@order), class: 'letter-body--activation-link'
+          .app-mailer--activation-btn-border
+            span.nobr= link_to "Перейти к заказу #{ @order.uid.upcase }", order_url(@order), class: 'app-mailer--activation-btn block p20'
         td.w50p
 
   .letter-body--text.mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:
 
-  .letter-body--plain-activation= order_url(@order)
+  .app-mailer--activation-text.p10.mb20
+    = order_url(@order)
 
   = render partial: 'rails_shop/mailers/products_list', locals: { order: @order }

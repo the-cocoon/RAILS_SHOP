@@ -1,18 +1,19 @@
 class OrderMailer < ActionMailer::Base
   include ::RailsShop::MailerSettingsConcern
 
-  prepend_view_path "#{ ::RailsShop::Engine.root }/app_view/views/rails_shop"
-  prepend_view_path 'app_view/views/rails_shop'
-  layout 'mailers/layout'
+  # Add View Helper for Mailer Preview Fix
+  add_template_helper(MailerImageTagHelper)
+
+  prepend_view_path "#{ ::RailsShop::Engine.root }/app/views/rails_shop"
+  prepend_view_path 'views/rails_shop'
+
+  layout 'mailers/app_layout'
 
   default bcc: ::Settings.rails_shop.mailer.admin_email
   default template_path: 'rails_shop/mailers'
 
-  before_action :set_attachments!
-
   # OrderMailer.unexpected_transition(Order.last, %w[paid draft]).deliver_now
   # OrderMailer.delay_for(2.seconds).unexpected_transition(Order.last, %w[paid draft])
-
   def created(order_id)
     @order = Order.find(order_id)
 
@@ -105,16 +106,14 @@ class OrderMailer < ActionMailer::Base
     mail(to: @to, subject: @subject)
   end
 
-  private
-
-  def set_attachments!
-    # @images = {
-    #   'logo_w130_h130.png' => 'images/logos/logo_w130_h130.png'
-    # }
-
-    # @images.each_pair do |name, path|
-    #   theme_scope = defined?(::AppViewEngine::view_name) ? ::AppViewEngine::view_name : nil
-    #   attachments.inline[name] = File.read("#{ Rails.root }/public/#{ theme_scope }/#{ path }")
-    # end
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # INJECT FROM APP VIEW ENGINE
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  voiceless do
+    prepend_view_path "#{ ::AppViewEngine::Engine.root }/app/views"
+    include ::AppViewEngine::MailerAttachments
   end
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # ~ INJECT FROM APP VIEW ENGINE
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 end

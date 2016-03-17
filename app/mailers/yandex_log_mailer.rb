@@ -1,9 +1,10 @@
 class YandexLogMailer < ActionMailer::Base
   include ::RailsShop::MailerSettingsConcern
 
-  prepend_view_path "#{ ::RailsShop::Engine.root }/app_view/views/rails_shop"
-  prepend_view_path 'app_view/views/rails_shop'
-  layout 'mailers/layout'
+  prepend_view_path "#{ ::RailsShop::Engine.root }/app/views/rails_shop"
+  prepend_view_path 'views/rails_shop'
+
+  layout 'mailers/app_layout'
 
   default bcc: ::Settings.rails_shop.mailer.admin_email
   default template_path: 'rails_shop/mailers/yandex_kassa'
