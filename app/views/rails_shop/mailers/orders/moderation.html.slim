@@ -22,7 +22,7 @@
 
   .mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:
 
-  .app-mailer--activation-text.p10.mb20
+  .app-mailer--activation-text.p10.mb20.tac
     = order_url(@order)
 
   = render partial: 'rails_shop/mailers/products_list', locals: { order: @order }
