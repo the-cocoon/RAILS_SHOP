@@ -10,7 +10,7 @@ class OrderMailer < ActionMailer::Base
   layout 'mailers/app_layout'
 
   default bcc: ::Settings.rails_shop.mailer.admin_email
-  default template_path: 'rails_shop/mailers'
+  default template_path: 'rails_shop/mailers/orders'
 
   # OrderMailer.unexpected_transition(Order.last, %w[paid draft]).deliver_now
   # OrderMailer.delay_for(2.seconds).unexpected_transition(Order.last, %w[paid draft])

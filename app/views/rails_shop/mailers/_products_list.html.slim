@@ -7,6 +7,6 @@
       - attachments.inline[image_file] = File.read(image_file)
 
     - if Rails.env.development?
-      = image_tag product.main_image_url(:v100x100), title: product.title
+      = image_tag product.main_image_url(:v100x100), title: product.title, class: "product-list--item"
     - else
-      = image_tag attachments[image_file].url, title: product.title
+      = image_tag attachments[image_file].url, title: product.title, class: "product-list--item"

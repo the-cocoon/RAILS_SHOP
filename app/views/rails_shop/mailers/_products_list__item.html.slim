@@ -1,0 +1,6 @@
+- if Rails.env.development?
+  = image_tag @product.main_image_url(:v100x100), class: "product-list--item"
+- else
+  - image_file = @product.main_image_path(:v100x100)
+  - attachments.inline[image_file] = File.read(image_file)
+  = image_tag attachments[image_file].url, title: @product.title, class: "product-list--item"

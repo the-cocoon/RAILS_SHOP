@@ -8,12 +8,7 @@
   .mb20
     .fs15.mb10.b = @product.title
 
-    - if Rails.env.development?
-      = image_tag @product.main_image_url(:v100x100)
-    - else
-      - image_file = @product.main_image_path(:v100x100)
-      - attachments.inline[image_file] = File.read(image_file)
-      = image_tag attachments[image_file].url, title: @product.title
+    = render partial: 'rails_shop/mailers/products_list__item', locals: { product: @product }
 
   .mb15.fs18 На данный момент корзина содержит следующие товары:
 

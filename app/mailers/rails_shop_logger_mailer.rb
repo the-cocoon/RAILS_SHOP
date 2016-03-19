@@ -10,7 +10,7 @@ class RailsShopLoggerMailer < ActionMailer::Base
   layout 'mailers/app_layout'
 
   default bcc: ::Settings.rails_shop.mailer.admin_email
-  default template_path: 'rails_shop/mailers'
+  default template_path: 'rails_shop/mailers/logger'
 
   # RailsShopLoggerMailer.product_added_to_cart(Cart.last.id, Product.last.id).deliver_now
   # RailsShopLoggerMailer.delay_for(2.seconds).product_added_to_cart(cart_id, product_id)
