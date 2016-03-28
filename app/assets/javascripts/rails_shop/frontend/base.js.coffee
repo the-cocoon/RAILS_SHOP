@@ -16,6 +16,7 @@
 #= require notifications/vendors/toastr
 #= require components/toastr/toastr
 
+#= require the_comments/base
 #= require ptz-tabs/ptz-tabs
 
 #= require rails_shop/frontend/delivery_types

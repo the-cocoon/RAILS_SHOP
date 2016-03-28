@@ -7,6 +7,9 @@
   #= require ptz/inputs-buttons/sizes
   #= require ptz/inputs-buttons/icons
 
+  #= require notifications/vendors/toastr
+  #= require components/toastr/style
+
   #= require protozaur_theme/theme-0/divs
   #= require protozaur_theme/theme-0/tables
 
