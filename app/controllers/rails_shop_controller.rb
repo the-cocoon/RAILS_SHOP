@@ -3,6 +3,8 @@ class RailsShopController < ApplicationController
 
   include ::CartService::CurrentCart
 
+  # USE THIS METHODS WHEN YOU NEED TO SKIP AUTH FILTERS
+  #
   # skip_before_filter :authenticate_user!,   only: [:method_name]
   # skip_before_filter :shop_admin_required!, only: [:method_name]
 

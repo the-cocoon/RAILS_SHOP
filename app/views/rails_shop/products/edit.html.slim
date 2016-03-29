@@ -1,13 +1,13 @@
 = render template: 'rails_shop/layouts/items/header_footer'
 
 - content_for :left_sidebar do
-  .m20.ptz--theme-0
-    div= link_to 'Кабинет',  cabinet_path, class: 'ptz--btn ptz--size-16 w100p'
-    hr.ptz--hr-0
-    div= link_to 'Просмотр товара', @product, class: 'ptz--btn ptz--size-16 w100p'
 
 .ptz--theme-0.m20
-  .w1000
+  .ma.w1000
+    .mb20.ptz--theme-0
+      span.mr20= link_to 'Кабинет', cabinet_path, class: 'ptz--btn ptz--size-14'
+      span.mr20= link_to 'Просмотр товара', @product, class: 'ptz--btn ptz--size-14', target: :_blank
+
     h3.mt20.mb20.fs20 Редактировать товар
 
     .ptz--tabs(ptz--tabs-scope='page_edit_2')
@@ -35,7 +35,7 @@
           span.js--shop-brands--count
             = !(br_count = @product.shop_brands.count).zero? ? br_count : nil
 
-        .ptz--tabs--item(ptz--tab-id='additional_params') Другое
+        .ptz--tabs--item(ptz--tab-id='seo_params') SEO
 
       .m20
         .ptz--tabs--content-item.ptz--tabs--active(ptz--tab-content='form')
@@ -48,7 +48,7 @@
           = render template: 'attached_images/edit/attached_images', locals: { item: @product }
 
         .ptz--tabs--content-item(ptz--tab-content='tech_params')
-          = render template: 'products/edit/params_card', locals: { item: @product }
+          = render template: 'rails_search/products/edit/params_card', locals: { item: @product }
 
         .ptz--tabs--content-item(ptz--tab-content='shop_categories')
           = render template: 'products/edit/shop_categories', locals: { item: @product }
@@ -56,5 +56,6 @@
         .ptz--tabs--content-item(ptz--tab-content='shop_brands')
           = render template: 'products/edit/shop_brands', locals: { item: @product }
 
-        .ptz--tabs--content-item(ptz--tab-content='additional_params')
-          = render template: 'products/edit/additional_params', locals: { item: @product }
+        .ptz--tabs--content-item(ptz--tab-content='seo_params')
+          .mb20= render template: 'products/edit/slug', locals: { item: @product }
+          .mb20= render template: 'meta_data/edit/meta_data', locals: { item: @product }

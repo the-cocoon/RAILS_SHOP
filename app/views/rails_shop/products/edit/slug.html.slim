@@ -1,0 +1,10 @@
+.ptz--theme-0.w800
+  .ptz--div-0
+    = form_for @product do |f|
+      .m20
+        .mb15
+          = f.label :slug, 'ЧПУ', class: 'block fs13 mb5'
+          = f.text_field :slug, class: 'ptz--input ptz--size-15 w500', data: { role: :pub_title }
+
+        .tar
+          = f.submit 'Обновить', class: 'ptz--btn ptz--size-20'
