@@ -47,6 +47,8 @@ ru:
         products_count: В корзине %{count} %{products_plur}
 
     orders:
+      one_click: Сформирован заказ в 1 клик
+
       state:
         draft: Cформирован
         paid: Оплачен

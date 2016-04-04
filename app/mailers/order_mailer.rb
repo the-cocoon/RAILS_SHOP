@@ -14,6 +14,24 @@ class OrderMailer < ActionMailer::Base
 
   # OrderMailer.unexpected_transition(Order.last, %w[paid draft]).deliver_now
   # OrderMailer.delay_for(2.seconds).unexpected_transition(Order.last, %w[paid draft])
+
+  # OrderMailer.one_click('+7910001122', 'Product', '12')
+  def one_click(phone, item_klass = nil, item_id = nil)
+    @phone = phone
+
+    if item_id = item_id
+      klass = item_klass.constantize
+      @item = klass.find(item_id)
+    end
+
+    @subject = I18n.t(:one_click, scope: %w[ rails_shop orders ], phone: phone)
+    @subject = "#{ env_prefix }#{ @subject }"
+
+    @to = ::Settings.rails_shop.mailer.admin_email
+
+    mail(to: @to, subject: @subject)
+  end
+
   def created(order_id)
     @order = Order.find(order_id)
 

@@ -12,11 +12,13 @@ class OrdersController < RailsShopController
   before_action :authenticate_user!, except: %w[
     show search create login_before attach_current_user_to
     completion payment payment_system
+    one_click
   ]
 
   before_action :shop_admin_required, except: %w[
     index show search create login_before attach_current_user_to
     completion payment my payment_system
+    one_click
   ]
 
   def search
@@ -34,6 +36,14 @@ class OrdersController < RailsShopController
   end
 
   def show; end
+
+  # one click order
+  def one_click
+    OrderMailer.one_click(params[:phone], params[:item_klass], params[:item_id]).deliver_now
+    render layout: false, json: {
+      flash:{ notice: "Ваш запрос успешно отправлен" }
+    }
+  end
 
   def create
     # create new Order

@@ -1,0 +1,22 @@
+.letter--header.tac.arial.p15.fs20
+  = @subject
+
+.letter--body.m20.tal.arial
+
+  .letter-body--text.mb15
+    p.mb15.lh130 Заказчик указал телефон: <b>#{ @phone }</b>
+    p.mb35.lh130.b= @item.title
+
+  .letter-body--activation.tac
+    table.w100p
+      tr
+        td.w50p
+        td
+          .app-mailer--activation-btn-border
+            span.nobr= link_to "Просмотр товара", polymorphic_url(@item), class: 'app-mailer--activation-btn block p20'
+        td.w50p
+
+  .mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:
+
+  .app-mailer--activation-text.p10.mb20.tac
+    = polymorphic_url(@item)

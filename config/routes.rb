@@ -107,6 +107,8 @@ module RailsShop
           get :my
           get :search
           get :manage
+
+          post :one_click
         end
       end
 
