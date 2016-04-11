@@ -7,6 +7,8 @@
   #= require ptz/inputs-buttons/sizes
   #= require ptz/inputs-buttons/icons
 
+  #= require ptz-tabs/ptz-tabs
+
   #= require notifications/vendors/toastr
   #= require components/toastr/style
 
