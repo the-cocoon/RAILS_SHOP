@@ -55,30 +55,4 @@ class ShopSearchController < RailsShopController
 
     render json: res
   end
-
-  def psql_products_search
-    @squery = params[:term].to_s.strip
-
-    res = ::Product
-      .psql_search_base(@squery)
-      .published
-      .in_stock
-      .simple_sort(params)
-      .pagination(params)
-
-    render json: res
-  end
-
-  def psql_products_search2
-    @squery = params[:term].to_s.strip
-
-    res = ::Product
-      .psql_search_simple(@squery)
-      .published
-      .in_stock
-      .simple_sort(params)
-      .pagination(params)
-
-    render json: res
-  end
 end

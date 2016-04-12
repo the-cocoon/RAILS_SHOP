@@ -1,6 +1,4 @@
 class Product < ActiveRecord::Base
-  include ::PgSearch
-
   include ::RailsShop::StatesProcessing
   include ::RailsShop::ContentProcessing
   include ::RailsShop::ShopCategoryItemConsistency
@@ -23,6 +21,11 @@ class Product < ActiveRecord::Base
   validates :sku, uniqueness: true, if: ->{ sku.present? }
 
   include ::FriendlyIdPack::Base
+
+  include ::RailsShop::ProductParamsCardMethods
+  include ::RailsShop::ProductSearchMethods
+  include ::RailsShop::ProductPriceMethods
+  include ::RailsShop::ProductHasOrNeed
 
   # RELATIONS
 
@@ -49,120 +52,5 @@ class Product < ActiveRecord::Base
     source: :category, source_type: :ShopUnitPort
 
   # SCOPES
-
   scope :in_stock, ->{ where('amount > 0') }
-
-  pg_search_scope :psql_search_base, against: %w[ title intro content ]
-
-  scope :psql_search_simple, -> (term) {
-    where(
-      "products.title   @@ :text OR
-       products.intro   @@ :text OR
-       products.content @@ :text",
-       text: term
-    )
-  }
-
-  # SERVICE METHODS
-
-  # ================================================
-  # PARAMS CARD
-  # ================================================
-
-  def params_card
-    shop_params_card
-  end
-
-  def params_card_full_list
-    return nil unless params_card
-
-    card_klass = params_card.class
-    full_list = card_klass.card_fields
-
-    return nil unless full_list
-
-    res = full_list.map do |field_name, field_params|
-      field_name if params_card.send(field_name).present?
-    end.compact
-
-    res.present? ? res : nil
-  end
-
-  def params_card_short_list
-    return nil unless params_card
-
-    card_klass = params_card.class
-    short_list = card_klass.params_short_list
-
-    return nil unless short_list
-
-    res = short_list.map do |field_name, field_params|
-      field_name if params_card.send(field_name).present?
-    end.compact
-
-    res.present? ? res : nil
-  end
-
-  def short_list_params_for(field_name)
-    params_card.class.params_short_list[field_name]
-  end
-
-  def full_list_params_for(field_name)
-    params_card.class.card_fields[field_name]
-  end
-
-  # ================================================
-  # SEARCH HELPERS
-  # ================================================
-
-  # Product.first.fts_data_rebuild!
-  # FULL TEXT SEARCH by title
-  def fts_data_rebuild!
-    fts_data = shop_categories.map(&:title) | shop_brands.map(&:title) | [title]
-    fts_data = fts_data.join ', '
-
-    self.update_column :fts_auto_data, fts_data
-  end
-
-  # ::Product.rebuild_search_index!
-  def self.rebuild_search_index!
-    count = ::Product.count
-    ::Product.all.each_with_index do |product, index|
-      ShopItemsSearch.update_index(product)
-      puts "#{ index }/#{ count }"
-    end
-  end
-
-  # Product.fts_data_rebuild!
-  def self.fts_data_rebuild!
-    ::Product.all.each { |pr| pr.fts_data_rebuild! }
-  end
-
-  # Product.recalc_actual_price!
-  def self.recalc_actual_price!
-    ::Product.where.not(eur_price: nil).each{|pr| pr.recalc_actual_price! }
-    ::Product.where.not(usd_price: nil).each{|pr| pr.recalc_actual_price! }
-  end
-
-  def recalc_actual_price!
-    curr_rate = ::CurrencyRate.max2min(:created_at).first
-    return unless curr_rate
-
-    if eur_price.to_f > 0
-      update_attribute(:active_price, eur_price.to_f * curr_rate.rur_eur.to_f)
-
-    elsif usd_price.to_f > 0
-      update_attribute(:active_price, usd_price.to_f * curr_rate.rur_usd.to_f)
-    else
-      update_attribute(:active_price, rur_price.to_f)
-    end
-  end
-
-  def total_price
-    active_price.to_f - (active_price.to_f/100)*discount_percent
-  end
-
-  def active_price_with_discount
-    active_price.to_f - (active_price.to_f/100)*discount_percent
-  end
 end
