@@ -26,39 +26,46 @@
     ac = $('.js--shop-search--sq-input')
     return unless ac.length
 
-    ac
-      .autocomplete
-        minLength: 3
-        source: @source
-        focus: (e, ui) ->
-          log 'focus'
-        select: (e, ui) ->
-          log 'select'
-        open: (e, ui) ->
-          sq_input = $ e.target
-          ac       = sq_input.data('ui-autocomplete')
+    ac.autocomplete
+      minLength: 3
+      source: @source
+      position:
+        my: "left top"
+        at: "left bottom"
+      focus: (e, ui) ->
+        # log 'OPEN'
+      select: (e, ui) ->
+        location.href = ui.item.url_for
+        false
+      open: (e, ui) ->
+        # log 'OPEN'
+        sq_input = $ e.target
+        ac       = sq_input.data('ui-autocomplete')
 
-          menu = ac.menu
-          menu = menu.activeMenu
+        menu = ac.menu
+        menu = menu.activeMenu
 
+        li = $("<li class='js--shop-search--show-all shop-search--show-all'>")
+        li.data('element', ac.element)
 
-          li = $("<li class='js--shop-search--show-all shop-search--show-all'>")
-          li.data('element', ac.element)
-
-          li.append """
-            <div class='ptz--table w100p'>
-              <div class='ptz--tbody'>
-                <div class='ptz--tr'>
-                  <div class='ptz--td p10 w100p fs15 lh130'>
-                    Все результаты
-                  </div>
+        li.append """
+          <div class='ptz--table w100p'>
+            <div class='ptz--tbody'>
+              <div class='ptz--tr'>
+                <div class='ptz--td p10 w100p fs15 lh130'>
+                  Все результаты
                 </div>
               </div>
             </div>
-          """
-          .appendTo(menu)
+          </div>
+        """
+        .appendTo(menu)
 
-      .data('ui-autocomplete')
+    ac = ac.data('ui-autocomplete')
+
+    ac._resizeMenu = (ul, item) ->
+      ul = @menu.element
+      ul.outerWidth ac.element.width()
 
     ac._renderItem = (ul, item) ->
       $("<li>").append("""

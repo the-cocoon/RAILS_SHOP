@@ -5,7 +5,6 @@
 # ::ThinkingSphinx.search("canon", star: true, classes: [ Product ], indices: %w[ admin_product_core ]).count
 
 class ShopSearchController < RailsShopController
-
   def shop_search
     @sq = params[:sq].to_s.strip
     to_search = ::Riddle::Query.escape @sq
@@ -36,7 +35,7 @@ class ShopSearchController < RailsShopController
                    @shop_items_1
 
     if request.format.json?
-      render template: 'rails_shop/shop_search/json/shop_search'
+      render layout: false, template: 'rails_shop/shop_search/json/shop_search'
     end
   end
 
@@ -53,6 +52,6 @@ class ShopSearchController < RailsShopController
       per_page: 24
     )
 
-    render json: res
+    render layout: false, json: res
   end
 end
