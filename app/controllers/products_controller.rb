@@ -2,7 +2,7 @@ require_relative './shop_category_fixed_pagination'
 
 class ProductsController < RailsShopController
   before_action :authenticate_user!,  except: %w[ index show ]
-  before_action :shop_admin_required, except: %w[ index show ]
+  before_action :shop_admin_required!, except: %w[ index show ]
 
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 

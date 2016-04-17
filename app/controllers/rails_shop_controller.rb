@@ -9,13 +9,13 @@ class RailsShopController < ApplicationController
   # skip_before_filter :shop_admin_required!, only: [:method_name]
 
   before_action :authenticate_user!
-  before_action :shop_admin_required
+  before_action :shop_admin_required!
 
   def manage; end
 
   private
 
-  def shop_admin_required
+  def shop_admin_required!
     redirect_to root_path unless current_user.try(:admin?)
   end
 

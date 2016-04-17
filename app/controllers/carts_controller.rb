@@ -22,7 +22,7 @@ class CartsController < RailsShopController
     reset
   ]
 
-  before_action :shop_admin_required, except: %w[
+  before_action :shop_admin_required!, except: %w[
     index show
     set_delivery_type
     add_product remove_product

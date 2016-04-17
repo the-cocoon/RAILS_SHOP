@@ -15,7 +15,7 @@ class OrdersController < RailsShopController
     one_click
   ]
 
-  before_action :shop_admin_required, except: %w[
+  before_action :shop_admin_required!, except: %w[
     index show search create login_before attach_current_user_to
     completion payment my payment_system
     one_click
