@@ -1,6 +1,15 @@
 # include ::RailsShop::ProductHasOrNeed
 module RailsShop
   module ProductHasOrNeed
+    def in_stock?
+      !amount.zero?
+    end
+
+    def has_warranty_info?
+      ym_manufacturer_warranty ||
+      !warranty_weeks.zero?
+    end
+
     def has_content?
       content.present?
     end
