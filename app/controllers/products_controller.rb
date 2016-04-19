@@ -129,7 +129,7 @@ class ProductsController < RailsShopController
 
       amount
       weight
-      warranty_weeks
+      warranty_time_units
 
       dimension_x
       dimension_y

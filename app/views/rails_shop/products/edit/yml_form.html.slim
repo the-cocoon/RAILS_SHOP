@@ -1,5 +1,6 @@
 .ptz--div-0.p20
   = form_for product, html: { class: '' } do |f|
+    - hidden_field_tag :anchor, 'ptz--tabs--page_edit_2--yml-form'
 
     .fs18.mb40 Участие в Яндекс Маркет
 
@@ -43,18 +44,19 @@
 
     hr.ptz--hr-0.mt25.mb25
 
-    .clearfix
-      .pull-left.mr40
-        = f.label :ym_receiving_delivery, 'Доставка курьером', class: 'fs13 mr10'
-        = f.check_box :ym_receiving_delivery, class: 'ptz--input', autocomplete: :off
+    .mb25
+      = f.check_box :ym_receiving_delivery, class: 'ptz--input mr10', autocomplete: :off
+      = f.label :ym_receiving_delivery, 'Возможность Доставки', class: 'fs13'
 
-      .pull-left.mr40
-        = f.label :ym_receiving_pickup, 'Самовывоз', class: 'fs13 mr10'
-        = f.check_box :ym_receiving_pickup, class: 'ptz--input', autocomplete: :off
+    .fs12.mb15.u Убедитесь, что в партнерском интерфейсе заданы точки продаж
 
-      .pull-left
-        = f.label :ym_receiving_pickup, 'Получение в магазине', class: 'fs13 mr10'
-        = f.check_box :ym_receiving_pickup, class: 'ptz--input', autocomplete: :off
+    .mb15
+      = f.check_box :ym_receiving_pickup, class: 'ptz--input mr10', autocomplete: :off
+      = f.label :ym_receiving_pickup, 'Самовывоз по предзаказу из пункта выдачи', class: 'fs13'
+
+    .mb15
+      = f.check_box :ym_receiving_store, class: 'ptz--input mr10', autocomplete: :off
+      = f.label :ym_receiving_store, 'Покупка в магазине без предзаказа', class: 'fs13'
 
     hr.ptz--hr-0.mt25.mb25
 

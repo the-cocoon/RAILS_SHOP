@@ -79,6 +79,7 @@ class RailsShopCreateProducts < ActiveRecord::Migration
       t.boolean :ym_cpa, default: false
 
       # Delivery types
+      # https://yandex.ru/support/partnermarket/delivery.xml
       t.boolean :ym_receiving_delivery, default: false
       t.boolean :ym_receiving_pickup,   default: false
       t.boolean :ym_receiving_store,    default: false

@@ -1,12 +1,12 @@
 # include ::RailsShop::ProductPriceMethods
 module RailsShop
   module ProductPriceMethods
-    def total_price
-      active_price.to_f - (active_price.to_f/100)*discount_percent
+    def active_price_with_discount
+      active_price.to_f - (active_price.to_f/100)*discount_percent.to_f
     end
 
-    def active_price_with_discount
-      active_price.to_f - (active_price.to_f/100)*discount_percent
+    def total_price
+      active_price_with_discount
     end
 
     # Product.recalc_actual_price!
@@ -16,19 +16,18 @@ module RailsShop
     end
 
     def recalc_actual_price!
+      if eur_price.to_f.zero? && usd_price.to_f.zero?
+        return update_attribute(:active_price, rur_price.to_f)
+      end
+
       curr_rate = ::CurrencyRate.max2min(:created_at).first
       return unless curr_rate
 
       if eur_price.to_f > 0
         update_attribute(:active_price, eur_price.to_f * curr_rate.rur_eur.to_f)
-
       elsif usd_price.to_f > 0
         update_attribute(:active_price, usd_price.to_f * curr_rate.rur_usd.to_f)
-      else
-        update_attribute(:active_price, rur_price.to_f)
       end
     end
-
-
   end
 end

@@ -31,6 +31,8 @@ module RailsShop
   end
 
   def shop_category_rels_items_consistency_after_create!
+    recalc_actual_price!
+
     shop_category_rels.create(
       item: self,
 
@@ -55,6 +57,8 @@ module RailsShop
   end
 
   def shop_category_rels_items_consistency_after_update!
+    recalc_actual_price!
+
     shop_category_rels.update_all(
       item_title: self.title,
       item_state: self.state,
