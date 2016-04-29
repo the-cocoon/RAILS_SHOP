@@ -1,18 +1,22 @@
 # include ::RailsShop::ProductPriceMethods
 module RailsShop
   module ProductPriceMethods
+    extend ActiveSupport::Concern
+
+    class_methods do
+      # Product.recalc_actual_price!
+      def recalc_actual_price!
+        ::Product.where.not(eur_price: nil).each{|pr| pr.recalc_actual_price! }
+        ::Product.where.not(usd_price: nil).each{|pr| pr.recalc_actual_price! }
+      end
+    end
+
     def active_price_with_discount
       active_price.to_f - (active_price.to_f/100)*discount_percent.to_f
     end
 
     def total_price
       active_price_with_discount
-    end
-
-    # Product.recalc_actual_price!
-    def self.recalc_actual_price!
-      ::Product.where.not(eur_price: nil).each{|pr| pr.recalc_actual_price! }
-      ::Product.where.not(usd_price: nil).each{|pr| pr.recalc_actual_price! }
     end
 
     def recalc_actual_price!
