@@ -15,7 +15,9 @@
 #= require jody_notificator_init
 #= require notifications/vendors/toastr
 #= require components/toastr/toastr
+
 #= require components/script_loader/scriptLoader
+#= require components/seo_inspector/seo_inspector
 
 #= require the_comments/base
 #= require ptz-tabs/ptz-tabs
