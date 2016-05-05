@@ -53,4 +53,13 @@ class Product < ActiveRecord::Base
 
   # SCOPES
   scope :in_stock, ->{ where('amount > 0') }
+
+  scope :rels_shop_categories_item, -> (ids) {
+    ::ShopCategoryRel
+      .where(category_id: ids, category_type: :ShopCategory)
+      .includes(:item)
+      .reversed_nested_set
+      .in_stock
+      .published
+  }
 end
