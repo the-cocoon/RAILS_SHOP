@@ -31,3 +31,4 @@ $(document).on 'ready page:load', ->
   TheSortableTree.SortableUI.init()
 
   ShopCategoryRels.init()
+  ShopCategoryRelsSelect2.init()

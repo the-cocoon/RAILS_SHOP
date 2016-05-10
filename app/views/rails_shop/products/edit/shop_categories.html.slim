@@ -1,13 +1,24 @@
-.ptz--theme-0
-  = form_tag shop_category_rels_path, remote: true, data: { type: :json, role: 'shop-category-rels--form' } do
+.hidden style='display:none'
+  = form_tag shop_category_rels_path, remote: true, class: 'js--shop-category-rels--form', data: { type: :json } do
     = hidden_field_tag :category_type, :ShopCategory
     = hidden_field_tag :category_id, '?'
 
     = hidden_field_tag :item_type, item.class
-    = hidden_field_tag :item_id,    item.id
+    = hidden_field_tag :item_id,   item.id
 
     = hidden_field_tag :checked
 
-  - products_used_categories_ids = item.shop_categories.pluck(:id)
-  ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5, form_role: 'shop-category-rels--form' })
-    = sortable_tree ::ShopCategory.for_manage.nested_set, render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_categories_ids
+ruby:
+  all_categories = ::ShopCategory.for_manage.nested_set
+  selected_categories = item.shop_categories
+
+  selected_cats = selected_categories.map{|cat| cat.slug }
+  tag_options = options_for_select(all_categories.map{|cat| [cat.title, cat.slug, { data: { 'shop-category-id' => cat.id } }] }, selected_cats)
+  options = { data: { options: { form_role: 'shop-category-rels--form' } } }
+
+.mb40= select_tag :shop_categories_selector, tag_options, { multiple: :multiple, autocomplete: :off, class: 'shop-category-rels-select2 js--shop-category-rels-select2 w80p', placeholder: 'Выбор категорий товаров' }.merge(options)
+
+.ptz--theme-0
+  - products_used_categories_ids = selected_categories.pluck(:id)
+  ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5 })
+    = sortable_tree all_categories, render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_categories_ids

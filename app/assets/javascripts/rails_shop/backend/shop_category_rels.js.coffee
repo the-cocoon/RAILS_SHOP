@@ -3,10 +3,10 @@
     @inited ||= do ->
       doc = $ document
 
-      doc.on 'ajax:success', '@shop-category-rels--form, @shop-brand-rels--form', (xhr, data, status) ->
+      doc.on 'ajax:success', '.js--shop-category-rels--form, .js--shop-brand-rels--form', (xhr, data, status) ->
         JODY.processor(data)
 
-      doc.on 'change', '@shop-category-rel--checkbox', (e) ->
+      doc.on 'change', '.js--shop-category-rel--checkbox', (e) ->
         checkbox = $ e.target
 
         id  = checkbox.data('id')
@@ -14,9 +14,7 @@
 
         val = if val then 1 else 0
 
-        form_role = checkbox.parents("ol[data-form-role]").data('form-role')
-        form = $ "@#{ form_role }"
-
+        form = $('.js--shop-category-rels--form')
         form.find('[name=category_id]').val id
         form.find('[name=checked]').val val
 

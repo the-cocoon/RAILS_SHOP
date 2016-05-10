@@ -19,6 +19,9 @@
 #= require ptz-tabs/ptz-tabs
 #= require components/ckeditor/init
 
+#= require components/select2-4.0.2/select2
+#= require components/select2-4.0.2/ru
+
 #= require crop_tool/crop_tool
 #= require crop_tool/jcrop/jquery.Jcrop
 
@@ -32,5 +35,4 @@
 
 #= require custom_select/custom_select
 #= require rails_shop/backend/shop_category_rels
-
-#= require rails_shop/backend/initializer
+#= require rails_shop/backend/shop_category_rels_select2

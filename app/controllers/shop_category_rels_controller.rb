@@ -27,21 +27,17 @@ class ShopCategoryRelsController < RailsShopController
   def create_category_item_rels params
     ::ShopCategoryRel.create(category: @category, item: @item)
 
-    # begin
-      ::ShopItemsSearch.update(@item)
-    # ensure; end;
+    voiceless { ::ShopItemsSearch.update(@item) }
 
-    render template: 'shop_category_rels/json/create.success.json.jbuilder'
+    render layout: false, template: 'shop_category_rels/json/create.success.json.jbuilder'
   end
 
   def destroy_category_item_rels params
     ::ShopCategoryRel.where(category: @category, item: @item).delete_all
 
-    # begin
-      ::ShopItemsSearch.update(@item)
-    # ensure; end;
+    voiceless { ::ShopItemsSearch.update(@item) }
 
-    render template: 'shop_category_rels/json/destroy.success.json.jbuilder'
+    render layout: false, template: 'shop_category_rels/json/destroy.success.json.jbuilder'
   end
 
   def set_category
