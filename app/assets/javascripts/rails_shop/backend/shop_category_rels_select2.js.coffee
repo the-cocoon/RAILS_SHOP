@@ -13,6 +13,10 @@
     $('.js--shop-category-rels-select2').trigger('change')
 
   init: ->
+    @inited ||= do =>
+      $(document).on 'click', '[ptz--tab-id=shop_categories]', ->
+        $('.js--shop-category-rels-select2').select2()
+
     for select2 in $('.js--shop-category-rels-select2')
       selector = $ select2
 
@@ -23,6 +27,14 @@
         language:    options.language || 'ru'
         allowClear:  false
         placeholder: placeholder
+
+      selector.on 'select2:unselecting', (e) ->
+        selector.data('close-right-now', true)
+
+      selector.on 'select2:open', (e) ->
+        if selector.data('close-right-now')
+          selector.removeData('close-right-now')
+          selector.select2('close')
 
       selector.on 'select2:select', (e) =>
         option = $ e.params.data.element

@@ -11,6 +11,9 @@
 
   #= require ptz-tabs/ptz-tabs
 
+  #= require notifications/vendors/toastr
+  #= require components/toastr/style
+
   #= require custom_select/custom_select
 
   #= require crop_tool/crop_tool
