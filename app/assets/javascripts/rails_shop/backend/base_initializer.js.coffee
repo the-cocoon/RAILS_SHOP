@@ -32,3 +32,4 @@ $(document).on 'ready page:load', ->
 
   ShopCategoryRels.init()
   ShopCategoryRelsSelect2.init()
+  ShopBrandRelsSelect2.init()

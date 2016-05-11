@@ -43,7 +43,7 @@ module ShopCategoryRelsManagerHelper
 
         category_id = "shop_category_#{ node.id }"
         checked     = @used_in_ids.include?(node.id)
-        data        = { id: node.id }
+        data        = { id: node.id, class: node.class.to_s.tableize.singularize.dasherize }
 
         "<div class='mr15'>
           #{ h.check_box_tag category_id, 1, checked, { autocomplete: :off, data: data, class: 'js--shop-category-rel--checkbox' } }

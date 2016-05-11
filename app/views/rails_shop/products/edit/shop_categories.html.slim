@@ -11,17 +11,17 @@
 ruby:
   all_categories = ::ShopCategory.for_manage.nested_set
   selected_categories = item.shop_categories
+  products_used_categories_ids = selected_categories.pluck(:id)
 
   selected_cats = selected_categories.map{|cat| cat.slug }
   tag_options = options_for_select(all_categories.map{|cat| [cat.title, cat.slug, { data: { 'shop-category-id' => cat.id } }] }, selected_cats)
-  options = { data: { options: { form_role: 'shop-category-rels--form' } } }
+  options = {}
 
 .mb40
   .mb15.fs15 Выбрать категории витрины из списка
   = select_tag :shop_categories_selector, tag_options, { multiple: :multiple, autocomplete: :off, class: 'shop-category-rels-select2 js--shop-category-rels-select2 w80p', placeholder: 'Выбор категорий товаров' }.merge(options)
 
 .ptz--theme-0
-  .mb15.fs15 Выбрать категории витрины в дереве
-  - products_used_categories_ids = selected_categories.pluck(:id)
+  .mb15.fs15 Выбрать категории витрины
   ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5 })
     = sortable_tree all_categories, render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_categories_ids

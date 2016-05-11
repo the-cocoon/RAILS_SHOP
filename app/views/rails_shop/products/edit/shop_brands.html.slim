@@ -4,11 +4,24 @@
     = hidden_field_tag :category_id, '?'
 
     = hidden_field_tag :item_type, item.class
-    = hidden_field_tag :item_id,    item.id
+    = hidden_field_tag :item_id,   item.id
 
     = hidden_field_tag :checked
 
+ruby:
+  all_brands = ::ShopBrand.for_manage.min2max(:title)
+  selected_brands = item.shop_brands
+  products_used_brands_ids = selected_brands.pluck(:id)
+
+  selected_cats = selected_brands.map{|brand| brand.slug }
+  tag_options = options_for_select(all_brands.map{|brand| [brand.title, brand.slug, { data: { 'shop-brand-id' => brand.id } }] }, selected_cats)
+  options = {}
+
+.mb40
+  .mb15.fs15 Выбрать бренды из списка
+  = select_tag :shop_brands_selector, tag_options, { multiple: :multiple, autocomplete: :off, class: 'shop-brands-rels-select2 js--shop-brand-rels-select2 w80p', placeholder: 'Выбор брендов товара' }.merge(options)
+
 .ptz--theme-0
-  - products_used_brands_ids = item.shop_brands.pluck(:id)
+  .mb15.fs15 Выбрать категории
   ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5 })
-    = sortable_tree ::ShopBrand.for_manage.min2max(:title), render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_brands_ids
+    = sortable_tree all_brands, render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_brands_ids
