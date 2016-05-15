@@ -22,6 +22,6 @@ ruby:
   = select_tag :shop_brands_selector, tag_options, { multiple: :multiple, autocomplete: :off, class: 'shop-brands-rels-select2 js--shop-brand-rels-select2 w80p', placeholder: 'Выбор брендов товара' }.merge(options)
 
 .ptz--theme-0
-  .mb15.fs15 Выбрать категории
+  .mb15.fs15 Выбрать бренды
   ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5 })
     = sortable_tree all_brands, render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_brands_ids
