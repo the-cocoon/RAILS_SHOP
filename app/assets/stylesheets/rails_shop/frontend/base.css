@@ -31,4 +31,5 @@
   #= require rails_shop/frontend/payment-systems
 
   #= require rails_shop/frontend/jq--autocomplete
+  #= require shop_filters/frontend/shop_filter_form
 */
