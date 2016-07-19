@@ -12,8 +12,15 @@
 
     .ptz--tabs(ptz--tabs-scope='page_edit_2')
       .ptz--tabs--holder
-        .ptz--tabs--item.ptz--tabs--active(ptz--tab-id='form') Основная форма
-        .ptz--tabs--item(ptz--tab-id='yml-form') Я.Маркет
+        .ptz--tabs--item.ptz--tabs--active(ptz--tab-id='form')
+          | Основная форма
+        .ptz--tabs--item(ptz--tab-id='price')
+          | Цена
+        / SPECIFIC
+        .ptz--tabs--item(ptz--tab-id='elco')
+          | ELCO
+        .ptz--tabs--item(ptz--tab-id='yml-form')
+          | Я.Маркет
         .ptz--tabs--item(ptz--tab-id='images')
           | Картинки
           '
@@ -40,6 +47,13 @@
       .m20
         .ptz--tabs--content-item.ptz--tabs--active(ptz--tab-content='form')
           = render template: 'products/edit/form', locals: { product: @product }
+
+        .ptz--tabs--content-item(ptz--tab-content='price')
+          = render template: 'products/edit/price', locals: { product: @product }
+
+        / SPECIFIC
+        .ptz--tabs--content-item(ptz--tab-content='elco')
+          = render template: 'products/edit/elco', locals: { product: @product }
 
         .ptz--tabs--content-item(ptz--tab-content='yml-form')
           = render template: 'products/edit/yml_form', locals: { product: @product }

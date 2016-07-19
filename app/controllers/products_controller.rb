@@ -91,7 +91,9 @@ class ProductsController < RailsShopController
 
     if @product.save
       @product.keep_consistency_after_update!
-      redirect_to url_for([:edit, @product]), notice: 'Товар успешно обновлен'
+
+      redirect_path = polymorphic_url([:edit, @product], anchor: params[:anchor])
+      redirect_to redirect_path, notice: 'Товар успешно обновлен'
     else
       render action: 'edit'
     end
@@ -157,6 +159,9 @@ class ProductsController < RailsShopController
       ym_market_category
       ym_sales_notes
       ya_barcode
+
+      elco_id
+      elco_markup
     ])
   end
 end

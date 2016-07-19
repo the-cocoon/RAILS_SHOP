@@ -28,4 +28,9 @@
 #= require rails_shop/frontend/shop_search_form
 #= require rails_shop/frontend/shop_spoiler
 
+#= require shop_filters/frontend/shop_filter_form
+#= require components/throttle_debounce/throttle_debounce
+#= require components/ion.rangeSlider-2.1.4/ion.rangeSlider
+#= require shop_filters/frontend/shop_filter_range_slider
+
 #= require rails_shop/frontend/base_initializer

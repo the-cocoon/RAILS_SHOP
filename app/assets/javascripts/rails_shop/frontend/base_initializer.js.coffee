@@ -30,7 +30,9 @@ $(document).on 'ready page:load', ->
   OrderPaymentForm.init()
 
   ShopSpoiler.init()
+
   ShopFilterForm.init()
+  ShopFilterRangeSlider.init()
 
   notificator = Notifications
   TheComments.init(notificator)

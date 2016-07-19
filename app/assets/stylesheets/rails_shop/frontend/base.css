@@ -31,5 +31,8 @@
   #= require rails_shop/frontend/payment-systems
 
   #= require rails_shop/frontend/jq--autocomplete
+
   #= require shop_filters/frontend/shop_filter_form
+  #= require components/ion.rangeSlider-2.1.4/ion.rangeSlider
+  #= require components/ion.rangeSlider-2.1.4/ion.rangeSlider.skinModern
 */
