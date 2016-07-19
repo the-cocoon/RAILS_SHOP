@@ -8,6 +8,8 @@
   = form_for product, html: { class: '' } do |f|
     = render partial: 'notifications/form', locals: { object: product }
 
+    .mb15.fs12 ID: <b>#{ product.id }</b>
+
     .mb30
       = f.label :title, 'Название', class: 'block fs13 mb10'
       = f.text_field :title, class: 'ptz--input ptz--size-15 w100p'

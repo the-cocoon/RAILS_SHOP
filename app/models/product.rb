@@ -12,6 +12,8 @@ class Product < ActiveRecord::Base
 
   include ::TheCommentsBase::Commentable
 
+  voiceless_include { ::ElcoProductAddon }
+
   paginates_per 24
 
   # VALIDATIONS
