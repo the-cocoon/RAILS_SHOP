@@ -65,12 +65,16 @@ h1.fs24.mt10.mb20= @product.title
       .product-card--price-title.fs20.mb20 цена:
       .product-card--price-val.mt20.mb20.fs24.pl15
 
-        - if @product.total_price == @product.active_price.to_f
-          = money_to_text @product.active_price
-        - else
-          .mb25(style='text-decoration:line-through')= @product.active_price.to_f
+        ruby:
+          - price = product_price(product)
+          - discounted_price = product_discounted_price(product)
 
-          = money_to_text @product.total_price
+        - if price == discounted_price
+          = price
+        - else
+          .mb25(style='text-decoration:line-through')
+            = price
+          = discounted_price
           '
           | руб.
 

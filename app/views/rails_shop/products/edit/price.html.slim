@@ -60,23 +60,23 @@
         .ptz--hr-0.mb20
 
         .clearfix
-          - if product.total_price == product.active_price.to_f
+          ruby:
+            price = money_to_text product_price(product)
+            discounted_price = money_to_text product_discounted_price(product)
+            discount = product.discount_percent
+
+          - if price == discounted_price
             .pull-right
               .fs13.b.mb10 Итоговая цена:
-              .fs20.tar= product.total_price
+              .fs20.tar= price
           - else
             .pull-right
               .fs13.b.mb10 Итоговая цена:
-              .fs20.tar= product.total_price
+              .fs20.tar= discounted_price
 
             .pull-right.mr40
               .fs13.b.mb10 Цена без скидки:
-              .fs20.tar(style='text-decoration:line-through')= product.active_price.to_f
-
-        / .mb20.clearfix
-        /   .pull-left.mr30
-        /     = f.label :price_text, 'Текстовая цена', class: 'block fs13 mb5'
-        /     = f.text_field :price_text, class: 'ptz--input ptz--size-15 w150 ', maxlength: 200, placeholder: '1000 за 6 штук', autocomplete: :off
+              .fs20.tar(style='text-decoration:line-through')= price
 
         hr.ptz--hr-0.mt25.mb25
 

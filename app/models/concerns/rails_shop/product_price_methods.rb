@@ -2,6 +2,7 @@
 module RailsShop
   module ProductPriceMethods
     extend ActiveSupport::Concern
+    include ::ProductPriceHelper
 
     class_methods do
       # Product.recalc_actual_price!
@@ -12,11 +13,11 @@ module RailsShop
     end
 
     def active_price_with_discount
-      active_price.to_f - (active_price.to_f/100)*discount_percent.to_f
+      product_discounted_price(self)
     end
 
     def total_price
-      active_price_with_discount
+      product_price(self)
     end
 
     def recalc_actual_price!
