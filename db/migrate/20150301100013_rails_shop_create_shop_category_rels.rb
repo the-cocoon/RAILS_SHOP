@@ -14,8 +14,8 @@ class RailsShopCreateShopCategoryRels < ActiveRecord::Migration
       t.boolean :item_novelty,         default: false
       t.decimal :item_popularity_rate, precision: 8, scale: 2
 
-      t.decimal :item_active_price,               precision: 10, scale: 2
-      t.decimal :item_active_price_with_discount, precision: 10, scale: 2
+      t.decimal :item_price,            precision: 10, scale: 2
+      t.decimal :item_discounted_price, precision: 10, scale: 2
 
       t.references :item_shop_params_card, polymorphic: true
 

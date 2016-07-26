@@ -17,7 +17,7 @@ h3.mt20.mb20.fs18 Редактировать товары
           tr.fs15.tal
             th.p20
             th.p20.br-off= link_to 'Название ↕',  simple_sort_url(:title)
-            th.p20.br-off= link_to 'Цена ↕',      simple_sort_url(:active_price)
+            th.p20.br-off= link_to 'Цена ↕',      simple_sort_url(:price)
             th.p20.br-off= link_to 'На складе ↕', simple_sort_url(:amount)
             th.p20.br-off= link_to 'Артикул ↕',   simple_sort_url(:sku)
             th.w50
@@ -29,7 +29,7 @@ h3.mt20.mb20.fs18 Редактировать товары
             td.vam.p20
               = link_to product.title, [:edit, product], class: 'link--block fs15 pt0 lh120'
             td.vam.w100.p20
-              .fs15= money_to_text product.active_price
+              .fs15= money_to_text product.price
             td.vam.w100.p20.tac
               .fs15= product.amount
             td.vam.w100.p20

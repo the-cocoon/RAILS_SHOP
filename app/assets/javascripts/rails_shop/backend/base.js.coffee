@@ -37,3 +37,5 @@
 #= require rails_shop/backend/shop_category_rels
 #= require rails_shop/backend/shop_category_rels_select2
 #= require rails_shop/backend/shop_brand_rels_select2
+
+#= require rails_shop/backend/yandex_market_index

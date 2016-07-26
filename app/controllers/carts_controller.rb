@@ -54,7 +54,7 @@ class CartsController < RailsShopController
   end
 
   def add_product
-    @cart.cart_items.create(item: @product, amount: 1, price: @product.active_price)
+    @cart.cart_items.create(item: @product, amount: 1, price: @product.price)
     @cart.increment!(:cart_items_counter)
 
     ::CartService.add_default_delivery_if_need(@cart)

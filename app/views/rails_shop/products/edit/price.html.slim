@@ -6,43 +6,35 @@
 
         .fs18.mb30 Ценообразование
 
-        .fs15.mb20.b Рублевая цена
 
-        .mb20.clearfix
-          .pull-left.mr30
-            = f.label :rur_price, 'Руб. цена (комплекта)', class: 'block fs13 mb10'
-            = f.number_field :rur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+        .fs15.mb20.b Цена в порядке приоритета
 
-          .pull-left.mr30
-            = label_tag nil, '&nbsp;'.html_safe, class: 'block fs13 mb10'
-            .lh130.fs15.pt10 &mdash; &nbsp; Установите здесь рублевую цену
-
-        .ptz--hr-0.mb20
-
-        .fs15.mb20.b Валютная цена
-
-        .mb25.clearfix
+        .mb15.clearfix
           .pull-left.mr30
             = f.label :eur_price, 'EUR цена (комплекта)', class: 'block fs13 mb10'
             = f.number_field :eur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
           .pull-left.mr30
             = f.label :usd_price, 'USD цена (комплекта)', class: 'block fs13 mb10'
             = f.number_field :usd_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
-          .pull-left.mr30.w45p
-            = label_tag nil, '&nbsp;'.html_safe, class: 'block fs13 mb10'
-            .lh130.fs15 Если здесь указана валютная цена товара, то итоговая цена будет расcчитываться исходя из текущего курса валюты
-
-        .mb25.clearfix
           .pull-left.mr30
-            = f.label :min_active_price, 'MIN руб. цена', class: 'block fs13 mb10'
-            = f.number_field :min_active_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
-          .pull-left.mr30
-            = f.label :max_active_price, 'MAX руб. цена', class: 'block fs13 mb10'
-            = f.number_field :max_active_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
-          .pull-left.mr30.w45p
-            = label_tag nil, '&nbsp;'.html_safe, class: 'block fs13 mb10'
-            .lh130.fs15 Здесь можно зафиксировать Max/Min рублевую цену, которая будет расчитываться на основе валютного значения
+            = f.label :rur_price, 'Руб. цена (комплекта)', class: 'block fs13 mb10'
+            = f.number_field :rur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+        .mb25.lh130.fs15.clearfix
+          | Конечная цена рассчитывается из значения самой приоритетной валюты
 
+        .ptz--hr-0.mb20
+
+        .mb15.clearfix
+          .pull-left.mr30
+            = f.label :min_price, 'MIN руб. цена', class: 'block fs13 mb10'
+            = f.number_field :min_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+          .pull-left.mr30
+            = f.label :max_price, 'MAX руб. цена', class: 'block fs13 mb10'
+            = f.number_field :max_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+        .mb25.lh130.fs15.clearfix
+          | Здесь можно зафиксировать Max/Min рублевую цену, которая будет расчитываться на основе валютного значения
+
+        .ptz--hr-0.mb20
 
         / SPECIFIC
         = render template: 'products/edit/elco_price', locals: { f: f, product: @product }
@@ -61,8 +53,8 @@
 
         .clearfix
           ruby:
-            price = money_to_text product_price(product)
-            discounted_price = money_to_text product_discounted_price(product)
+            price = money_to_text product.price
+            discounted_price = money_to_text product.discounted_price
             discount = product.discount_percent
 
           - if price == discounted_price

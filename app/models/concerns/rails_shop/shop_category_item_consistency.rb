@@ -31,7 +31,7 @@ module RailsShop
   end
 
   def shop_category_rels_items_consistency_after_create!
-    recalc_actual_price!
+    recalc_price!
 
     shop_category_rels.create(
       item: self,
@@ -45,8 +45,8 @@ module RailsShop
       item_amount:           self.amount,
       item_discount_percent: self.discount_percent,
 
-      item_active_price:               self.active_price,
-      item_active_price_with_discount: self.active_price_with_discount,
+      item_price:            self.price,
+      item_discounted_price: self.discounted_price,
 
       item_shop_params_card_id:   self.shop_params_card_id,
       item_shop_params_card_type: self.shop_params_card_type,
@@ -57,7 +57,7 @@ module RailsShop
   end
 
   def shop_category_rels_items_consistency_after_update!
-    recalc_actual_price!
+    recalc_price!
 
     shop_category_rels.update_all(
       item_title: self.title,
@@ -69,8 +69,8 @@ module RailsShop
       item_amount:           self.amount,
       item_discount_percent: self.discount_percent,
 
-      item_active_price:               self.active_price,
-      item_active_price_with_discount: self.active_price_with_discount,
+      item_price:            self.price,
+      item_discounted_price: self.discounted_price,
 
       item_shop_params_card_id:   self.shop_params_card_id,
       item_shop_params_card_type: self.shop_params_card_type,

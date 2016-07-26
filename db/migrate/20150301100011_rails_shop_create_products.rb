@@ -20,12 +20,12 @@ class RailsShopCreateProducts < ActiveRecord::Migration
       t.decimal :rur_price, precision: 10, scale: 2
 
       # active currency and price for shop
-      t.string  :active_currency, default: :RUR
-      t.decimal :active_price, precision: 10, scale: 2
+      t.decimal :price, precision: 10, scale: 2
+      t.decimal :discounted_price, precision: 10, scale: 2
 
       # for control price currency converting
-      t.decimal :min_active_price,  precision: 10, scale: 2
-      t.decimal :max_active_price,  precision: 10, scale: 2
+      t.decimal :min_price,  precision: 10, scale: 2
+      t.decimal :max_price,  precision: 10, scale: 2
       # ~ PRICE
 
       t.integer :discount_percent,       default: 0

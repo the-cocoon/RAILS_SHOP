@@ -79,7 +79,7 @@
 
           .shop-cart--position-cell.w15p
              .shop-cart--position-price
-              - cart_item_total_price = cart_item.amount * product.active_price.to_f
+              - cart_item_total_price = cart_item.amount * product.price.to_f
               = money_to_text(cart_item_total_price)
 
           .shop-cart--position-cell.w5p

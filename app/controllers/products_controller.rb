@@ -11,7 +11,7 @@ class ProductsController < RailsShopController
       ::ShopCategoryRel.in_stock.published
         .select("
           MAX(shop_category_rels.id)                AS rel_id,
-          MAX(shop_category_rels.item_active_price) AS price,
+          MAX(shop_category_rels.item_price)        AS price,
           MAX(shop_category_rels.item_updated_at)   AS updated_at,
 
           shop_category_rels.item_id   AS item_id,
@@ -91,6 +91,7 @@ class ProductsController < RailsShopController
 
     if @product.save
       @product.keep_consistency_after_update!
+      # voiceless { ::ShopItemsSearch.update(@product) }
 
       redirect_path = polymorphic_url([:edit, @product], anchor: params[:anchor])
       redirect_to redirect_path, notice: 'Товар успешно обновлен'
@@ -122,8 +123,8 @@ class ProductsController < RailsShopController
       eur_price
       usd_price
 
-      min_active_price
-      max_active_price
+      min_price
+      max_price
       discount_percent
 
       sku

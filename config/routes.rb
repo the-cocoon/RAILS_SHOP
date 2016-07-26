@@ -19,7 +19,7 @@ module RailsShop
       get 'shop/manage' => 'shop#manage',    as: :shop_manage
 
       get   'yandex_market/index'  => 'yandex_market#index',  as: :yandex_market
-      patch 'yandex_market/switch' => 'yandex_market#switch', as: :yandex_market_switch
+      patch 'yandex_market/switch/:id' => 'yandex_market#switch', as: :yandex_market_switch
       patch 'yandex_market/update' => 'yandex_market#update', as: :yandex_market_update
 
       resources :shop_params_cards

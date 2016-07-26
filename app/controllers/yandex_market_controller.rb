@@ -1,4 +1,6 @@
 class YandexMarketController < RailsShopController
+  layout ->{ 'rails_shop_backend' }
+
   def index
     @products = Product
       .max2min(:created_at)
@@ -7,11 +9,11 @@ class YandexMarketController < RailsShopController
   end
 
   def switch
-    product_id = params[:yandex_market_list_id]
+    product_id = params[:id]
     checked    = params[:yandex]
 
     product = Product.find(product_id)
-    product.update_attribute(:add_to_yandex_market, checked)
+    product.update_attribute(:ym_available, checked)
 
     render json: { product_id: product_id, checked: checked }
   end
@@ -25,14 +27,5 @@ class YandexMarketController < RailsShopController
     time_stamp = Time.now.strftime("%Y.%m.%-d_%H.%M")
     send_data(stream, type: "text/xml", filename: "yandex-market-#{ time_stamp }.xml")
     # render text: stream
-  end
-
-  def product_update
-    product = Product.find(params[:yandex_market_list_id]) # aka product id
-    product_params = params.require(:product).permit(:elco_id, :elco_markup)
-    product.update(product_params)
-    render json: {
-      flash: { notice: 'Товар Обновлен' }
-    }
   end
 end

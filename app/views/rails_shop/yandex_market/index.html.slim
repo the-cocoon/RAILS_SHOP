@@ -1,99 +1,93 @@
 = render template: 'rails_shop/layouts/items/header_footer'
 = render template: 'rails_shop/meta_data/products/index'
 
-h1.fs20.mb20.mt20 Яндекс Маркет
+.fs20.mb20.mt20 Выгрузка в Яндекс Маркет
 
-.w1500
-  .ptz--theme-0
-    .table.w100p.ffa.fs15.ptz--table-0--table
-      .ptz--tr.ptz--table-0--header
-        .ptz--td.p10.w50
-          | Номер
-        .ptz--td.p10.w50
-          = link_to 'ID ↕', simple_sort_url(:id)
-        .ptz--td.p10
-          = link_to 'Название ↕', simple_sort_url(:title)
-        .ptz--td.p10
-          = link_to 'Создан ↕', simple_sort_url(:created_at)
+.table.w100p.ffa.fs15
+  .ptz--tr.ym-index-header
+    .ptz--td.p10.w50
+      | &nbsp;
+    .ptz--td.p10.br-off
+      = link_to 'ID ↕', simple_sort_url(:id)
+    .ptz--td.p10
+    .ptz--td.p10.br-off.w500
+      = link_to 'Название ↕', simple_sort_url(:title)
+    .ptz--td.p10.br-off
+      = link_to 'Создан ↕', simple_sort_url(:created_at)
+    .ptz--td.p10.br-off
+      = link_to 'Статус ↕', simple_sort_url(:state)
+    .ptz--td.p10
+      = link_to 'На складе ↕', simple_sort_url(:amount)
+    .ptz--td.p10.w40.br-off
+      | Цена
+    .ptz--td.p10.w40.br-off
+      = link_to 'В Маркете? ↕', simple_sort_url(:ym_available)
 
-        .ptz--td.p10
-          = link_to 'Статус ↕', simple_sort_url(:state)
+  - @products.each_with_index do |product, index|
+    - line_type = index.odd? ? :odd : :even
+    .ptz--tr(class='ym-index-line' class=line_type)
+      .ptz--td.p10.w50.vam
+        = index.next
+      .ptz--td.p10.w50.vam
+        = link_to product.id, product, target: :_blank
+      .ptz--td.p10
+        = image_tag product.main_image_url(:v100x100), class: 'w40'
+      .ptz--td.p10.lh120.vam.w500
+        = product.title
+      .ptz--td.p10.br-off.vam
+        = raw I18n.l(product.created_at, format: raw("%d.%m.%Y"))
+      .ptz--td.p10.lh120.vam
+        = t product.state, scope: :state
+      .ptz--td.p10.lh120.vam
+        = product.amount
+      .ptz--td.p10.w40.vam.elco-rb
+        .br-off
+          ruby:
+            price = money_to_text product_price(product)
+            discounted_price = money_to_text product_discounted_price(product)
 
-        / .ptz--td.p10
-        / = link_to 'В наличии ↕', simple_sort_url(:in_stock)
+          - if price == discounted_price
+            = discounted_price
+          - else
+            span.s= price
+            span<>= "/"
+            span= discounted_price
+      .ptz--td.p10.w40.vam
+        = form_tag yandex_market_switch_path(product.id), remote: true, method: :patch do
+          = hidden_field_tag 'yandex', 0
+          = check_box_tag 'yandex', '1', product.ym_available, autocomplete: :off, class: 'js--ya-market--checkbox'
 
-        .ptz--td.p10.w40
-          = link_to 'Elco ID ↕', simple_sort_url(:elco_id)
+= render template: 'common/paginator', locals: { items: @products }
 
-        .ptz--td.p10.w40
-          = link_to 'Elco цена ↕', simple_sort_url(:elco_price)
-
-        .ptz--td.p10.w40
-          = link_to 'Elco наценка %↕', simple_sort_url(:elco_markup)
-
-        .ptz--td.p10.w40
-          = link_to 'Elco UPD ↕', simple_sort_url(:elco_updated_at)
-
-        .ptz--td.p10.w40
-          = link_to 'SPB/MSK'
-
-        .ptz--td.p10.w40
-          = link_to 'Elco статус ↕', simple_sort_url(:elco_state)
-
-        .ptz--td.p10.w40
-          | Цена
-
-        .ptz--td.p10.w40
-          = link_to 'В Маркете? ↕', simple_sort_url(:add_to_yandex_market)
-
-      - @products.each_with_index do |product, index|
-        .ptz--tr
-          .ptz--td.p10.w50.vam
-            = index.next
-          .ptz--td.p10.w50.vam
-            = product.id
-          .ptz--td.p10.lh120.vam
-            = link_to product.title, product
-          .ptz--td.p10.br-off.vam
-            = raw I18n.l(product.created_at, format: raw("%-d %B %Y"))
-          .ptz--td.p10.lh120.vam
-            = t product.state, scope: :state
-
-          / .ptz--td.p10.lh120.vam
-          /   = t "#{ product.in_stock }_val", scope: :in_da_stock
-
-          .ptz--td.p10.lh120.vam.elco-lb
-            / = form_for product, url: yandex_market_list_product_update_path(product.id), remote: true, html: { class: 'js--elco-update-form' } do |f|
-            /   = f.text_field :elco_id, autocomplete: :off, class: 'ptz--input js--elco-form-submit elco-input ptz--size-12 w80 elco--id'
-
-          .ptz--td.p10.lh120.vam
-            = product.elco_price
-
-          .ptz--td.p10.lh120.vam
-            / = form_for product, url: yandex_market_list_product_update_path(product.id), remote: true, html: { class: 'js--elco-update-form' } do |f|
-            /   = f.text_field :elco_markup, autocomplete: :off, class: 'ptz--input js--elco-form-submit elco-input ptz--size-12 w60 elco--markup'
-
-          .ptz--td.p10.lh120.vam.fs11
-            - if product.elco_updated_at
-              = raw I18n.l(product.elco_updated_at, format: raw("%-d %B %Y %H:%M %S''"))
-
-          .ptz--td.p10.lh120.vam
-            - if product.elco_id.present?
-              = product.elco_amount_home
-              |/
-              = product.elco_amount_msk
-
-          .ptz--td.p10.lh120.vam.elco-rb
-            = product.elco_state
-
-          .ptz--td.p10.w40.vam.elco-rb
-            .br-off
-              / = price_with_discount(product)
-
-          .ptz--td.p10.w40.vam
-            / = form_tag yandex_market_list_switch_path(product.id), remote: true, method: :put do
-            /   = hidden_field_tag 'yandex', 0
-            /   = check_box_tag 'yandex', '1', product.add_to_yandex_market, autocomplete: :off, class: 'ya-market--checkbox'
+/ .ptz--td.p10.w40.br-off
+/   = link_to 'Elco ID ↕', simple_sort_url(:elco_id)
+/ .ptz--td.p10.w40.br-off
+/   = link_to 'Elco цена ↕', simple_sort_url(:elco_price)
+/ .ptz--td.p10.w40.br-off
+/   = link_to 'Elco наценка %↕', simple_sort_url(:elco_markup)
+/ .ptz--td.p10.w40.br-off
+/   = link_to 'Elco UPD ↕', simple_sort_url(:elco_updated_at)
+/ .ptz--td.p10.w40.br-off
+/   = link_to 'Elco SPB/MSK'
+/ .ptz--td.p10.w40.br-off
+/   = link_to 'Elco статус ↕', simple_sort_url(:elco_state)
 
 
-  = render template: 'common/paginator', locals: { items: @products }
+/ .ptz--td.p10.lh120.vam.elco-lb
+/   = form_for product, url: yandex_market_list_product_update_path(product.id), remote: true, html: { class: 'js--elco-update-form' } do |f|
+/     = f.text_field :elco_id, autocomplete: :off, class: 'ptz--input js--elco-form-submit elco-input ptz--size-12 w80 elco--id'
+/ .ptz--td.p10.lh120.vam
+/   = product.elco_price
+/ .ptz--td.p10.lh120.vam
+/   = form_for product, url: yandex_market_list_product_update_path(product.id), remote: true, html: { class: 'js--elco-update-form' } do |f|
+/     = f.text_field :elco_markup, autocomplete: :off, class: 'ptz--input js--elco-form-submit elco-input ptz--size-12 w60 elco--markup'
+/ .ptz--td.p10.lh120.vam.fs11
+/   - if product.elco_updated_at
+/     = raw I18n.l(product.elco_updated_at, format: raw("%-d %B %Y %H:%M %S''"))
+/ .ptz--td.p10.lh120.vam
+/   - if product.elco_id.present?
+/     = product.elco_amount_home
+/     |/
+/     = product.elco_amount_msk
+/ .ptz--td.p10.lh120.vam.elco-rb
+/   = product.elco_state
