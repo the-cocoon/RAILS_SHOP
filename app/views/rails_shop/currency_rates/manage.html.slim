@@ -29,15 +29,9 @@ h3.mt20.mb20.fs18 Курсы Валют
             td.w100.p20
               = item.rur_usd
             td.w100.p20
-              .br-off
-                = item.created_at.to_rus_date_2
-                br
-                = item.created_at
+              .br-off= item.created_at.to_rus_date_2
             td.w100.p20
-              .br-off
-                = item.updated_at.to_rus_date_2
-                br
-                = item.updated_at
+              .br-off= item.updated_at.to_rus_date_2
             td.p20.tac
               = link_to [:edit, item] do
                 i.fs14.fa.fa-edit
