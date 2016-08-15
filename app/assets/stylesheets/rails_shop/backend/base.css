@@ -13,6 +13,7 @@
 
   #= require notifications/vendors/toastr
   #= require components/toastr/style
+  #= require notifications
 
   #= require custom_select/custom_select
 

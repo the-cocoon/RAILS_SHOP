@@ -1,0 +1,1 @@
+#= require rails_shop/login/application

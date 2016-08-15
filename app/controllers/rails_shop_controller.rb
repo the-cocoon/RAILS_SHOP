@@ -20,10 +20,7 @@ class RailsShopController < ApplicationController
   end
 
   def layout_for_action
-    if %w[ index show ].include? action_name
-      'rails_shop_frontend'
-    else
-      'rails_shop_backend'
-    end
+    return 'rails_shop_frontend' if %w[ index show ].include?(action_name)
+    'rails_shop_backend'
   end
 end

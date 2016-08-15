@@ -3,12 +3,13 @@
 - @main_content_block_class = 'shop-cart--background'
 
 .shop-cart
-  = render partial: 'notifications/form', locals: { object: @order, format: :html }
 
-  .order-process-steps.mt20
+  .order-process-steps.mt20.mb20
     .order-process-steps--item 1. Корзина
     .order-process-steps--item.current 2. Доставка
     .order-process-steps--item 3. Оплата
+
+  .ma.w900= render partial: 'notifications/form', locals: { object: @order, format: :html }
 
   = form_for @order, url: completion_order_path(@order), method: :patch do |f|
     ul.shop-cart--list
@@ -29,7 +30,7 @@
 
       - if @order.delivery
         li.cart-delivery-info
-          .fs18.ml5.lh130
+          .fs18.lh120
             = @order.delivery.intro
             - if !@order.delivery.special?
               |:
@@ -67,10 +68,14 @@
               = product.sku
 
           .shop-cart--position-cell.w20p
+            ruby:
+              price = product_price(product)
+              discounted_price = product_discounted_price(product)
 
             .mt10.fs24
+              => money_to_text discounted_price
               |x
-              = cart_item.amount
+              =< cart_item.amount
 
             .mt10.fs13
               | На складе:
@@ -79,8 +84,7 @@
 
           .shop-cart--position-cell.w15p
              .shop-cart--position-price
-              - cart_item_total_price = cart_item.amount * product.price.to_f
-              = money_to_text(cart_item_total_price)
+                = money_to_text cart_item.amount * discounted_price
 
           .shop-cart--position-cell.w5p
 
@@ -92,23 +96,24 @@
                 .fs15.mb10
                   | Итого:
                   '
-                  span.fs24= money_to_text(@order.total_price)
-                  '
-                  'руб.
+                  span.br-off
+                    span.fs24
+                      => money_to_text(@order.total_price)
+                    'руб.
 
               .pull-left.mr40
                 .fs15.mb10
                   - products_items = @order.products
                   | #{ products_items.count } позиции на
                   '
-                  span.fs24
-                    - products_total = @order.products_price
-                    = money_to_text(products_total)
-                    '
+                  span.br-off
+                    span.fs24
+                      - products_total = @order.products_price
+                      => money_to_text(products_total)
                     'руб.
 
                 - if !@order.discount.to_f.zero?
-                  .fs14.mt5.p5.ptz--highlight
+                  .fs14.mt5.ptz--highlight
                     | Ваша скидка:
                     '
                     span.b= money_to_text(@order.discount)
@@ -119,9 +124,9 @@
                 .fs15.mb10
                   | Доставка:
                   '
-                  span.fs24
-                    = money_to_text @order.delivery_price
-                    '
+                  span.br-off
+                    span.fs24
+                      => money_to_text @order.delivery_price
                     'руб.
 
             hr
@@ -135,11 +140,9 @@
 
             / SUBMIT BUTTONS
             - if @order.moderation?
-
               .ptz--btn.ptz--size-22 Заказ на Модарации
 
             - elsif @order.paid?
-
               .ptz--btn.ptz--size-22 Заказ уже оплачен
 
             - else

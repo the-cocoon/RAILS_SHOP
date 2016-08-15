@@ -125,8 +125,8 @@ class OrdersController < RailsShopController
   private
 
   def layout_for_action
-    %w[ payment ].include?(action_name) ? \
-    'rails_shop_frontend'               : \
+    return 'rails_shop_login'    if %w[ login_before ].include?(action_name)
+    return 'rails_shop_frontend' if %w[ payment completion ].include?(action_name)
     super
   end
 

@@ -1,4 +1,8 @@
 class Order < ActiveRecord::Base
+  # You have to implement your own `ProductPriceHelper`
+  # in your App View
+  include ::ProductPriceHelper
+
   include ::SimpleSort::Base
   include ::Pagination::Base
   include ::Notifications::LocalizedErrors
@@ -87,7 +91,10 @@ class Order < ActiveRecord::Base
   # PRICE CALCULATIONS
 
   def recalc_products_price!
-    ps_price = products.inject(0){|res, pr| res += (pr.amount * pr.price.to_f) }
+    ps_price = products.inject(0) do |res, order_item|
+      res + (order_item.amount * product_discounted_price(order_item.item))
+    end
+
     update_attribute(:products_price, ps_price)
   end
 

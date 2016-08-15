@@ -11,6 +11,7 @@
 
   #= require notifications/vendors/toastr
   #= require components/toastr/style
+  #= require notifications
 
   #= require protozaur_theme/theme-0/divs
   #= require protozaur_theme/theme-0/tables

@@ -66,8 +66,8 @@ h1.fs24.mt10.mb20= @product.title
       .product-card--price-val.mt20.mb20.fs24.pl15
 
         ruby:
-          - price = product_price(product)
-          - discounted_price = product_discounted_price(product)
+          price = product_price(product)
+          discounted_price = product_discounted_price(product)
 
         - if price == discounted_price
           = price

@@ -31,7 +31,7 @@
         .shop-cart--header.w15p Цена
         .shop-cart--header.w5p
 
-      - @cart.cart_items.products.each do |cart_item|
+      - @cart.cart_items.products.min2max(:created_at).each do |cart_item|
         - product = cart_item.item
         li.shop-cart--position
           .shop-cart--position-cell
@@ -62,7 +62,14 @@
 
           .shop-cart--position-cell.w15p
              .shop-cart--position-price
-              = money_to_text(cart_item.total_price)
+                ruby:
+                  price = product_price(product)
+                  discounted_price = product_discounted_price(product)
+
+                = money_to_text(discounted_price)
+                - if price != discounted_price
+                  '
+                  span.s= money_to_text(price)
 
           .shop-cart--position-cell.w5p
             = link_to remove_from_cart_path(product, cart_id: @cart), method: :delete, class: 'link--block shop-cart--position-delete' do
@@ -74,11 +81,11 @@
         = form_tag set_delivery_type_cart_path(@cart, anchor: :delivery_form), method: :patch, data: { role: 'delivery-type--form-options' } do
           - selected_dt = @cart.cart_items.deliveries.first.try(:item)
           - DeliveryType.published.order(price: :desc).each do |dt|
-            .cart-delivery-info--radio-btn
+            .cart-delivery-info--radio-btn.fs15.mb20
               = radio_button_tag :delivery_type_id, dt.id, (selected_dt == dt), class: 'radio-btn radio-btn--info-line', id: "delivery_type_#{ dt.id }", autocomplete: :off
               '
-              label(for="delivery_type_#{ dt.id }")
-                - if !dt.special?
+              label.ml10(for="delivery_type_#{ dt.id }")
+                - unless dt.special?
                   = "#{ money_to_text dt.price } руб."
                   '
                 = dt.intro
