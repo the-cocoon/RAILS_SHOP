@@ -129,13 +129,6 @@ module RailsShop
         end
       end
 
-      # Yandex Kassa test routes
-      #
-      # match 'payments/test/yk/check-url' => 'payments#yk_check_test',   via: %w[ get post ]
-      # match 'payments/test/yk/aviso-url' => 'payments#yk_aviso_test',   via: %w[ get post ]
-      # match 'payments/test/yk/success'   => 'payments#yk_success_test', via: %w[ get post ]
-      # match 'payments/test/yk/failure'   => 'payments#yk_failure_test', via: %w[ get post ]
-
       # Yandex Kassa routes
       match 'payments/yk/check-url' => 'payments#yk_check',   via: %w[ get post ]
       match 'payments/yk/aviso-url' => 'payments#yk_aviso',   via: %w[ get post ]
