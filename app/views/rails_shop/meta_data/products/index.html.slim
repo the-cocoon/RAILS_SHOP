@@ -1,19 +1,20 @@
-- title = 'page title text'
+ruby:
+  title = 'RAILS SHOP PRODUCTS INDEX PAGE'
+
+  og_image = image_url '/logos/shop_logo_w1200_h800.png'
+  og_title = "OG title"
+  og_descr = "OG description"
+  og_sname = "OG site name"
 
 - content_for :title
   = title
 
-meta( name='keywords'    content=''.strip )
-meta( name='description' content=title.strip )
-meta( name='author'      content='' )
+- content_for :meta_data do
+  meta( name='keywords'    content=(''.strip) )
+  meta( name='description' content=title.strip )
+  meta( name='author'      content='' )
 
-- content_for :meta_data
-  - og_image = image_url '/logos/shop_logo_w1200_h800.png'
-  - og_title = "OG title"
-  - og_descr = "OG description"
-  - og_sname = "OG site name"
-
-  meta(property="og:image"       content=og_image.strip)
-  meta(property='og:title'       content=og_title.strip)
-  meta(property='og:description' content=og_descr.strip)
-  meta(property='og:site_name'   content=og_sname.strip)
+  meta( property="og:image"       content=og_image.strip )
+  meta( property='og:title'       content=og_title.strip )
+  meta( property='og:description' content=og_descr.strip )
+  meta( property='og:site_name'   content=og_sname.strip )
