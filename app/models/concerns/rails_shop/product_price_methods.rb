@@ -17,6 +17,10 @@ module RailsShop
       end
     end
 
+    def has_discount?
+      price != discounted_price
+    end
+
     def recalc_price
       self.price = product_price(self)
       self.discounted_price = product_discounted_price(self)
