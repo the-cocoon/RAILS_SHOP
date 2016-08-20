@@ -5,6 +5,9 @@
 # ::ThinkingSphinx.search("canon", star: true, classes: [ Product ], indices: %w[ admin_product_core ]).count
 
 class ShopSearchController < RailsShopController
+  skip_before_filter :authenticate_user!,   only: %w[ shop_search ]
+  skip_before_filter :shop_admin_required!, only: %w[ shop_search ]
+
   def shop_search
     @sq = params[:sq].to_s.strip
     to_search = ::Riddle::Query.escape @sq
