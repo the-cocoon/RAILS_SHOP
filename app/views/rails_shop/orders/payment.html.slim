@@ -59,7 +59,7 @@
           .mb5
             .b SUM:
             '
-            = text_field_tag :sum, money_to_text(@order.total_price), class: :input
+            = text_field_tag :sum, @order.total_price, class: :input
 
           .mb5
             .b Customer Number:
