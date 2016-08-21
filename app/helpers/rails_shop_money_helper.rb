@@ -1,7 +1,11 @@
-module ShopHelper
+module RailsShopMoneyHelper
+  def money_round val
+    val.to_f.round
+  end
+
   def money_to_text val
-    val.to_f
-      .round.to_s
+    money_round(val)
+      .to_s
       .reverse
       .scan(/.{1,3}/)
       .join(' ')

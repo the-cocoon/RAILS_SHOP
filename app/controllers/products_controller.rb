@@ -8,11 +8,11 @@ class ProductsController < RailsShopController
 
   def index
     @shop_category_rels =
-      ::ShopCategoryRel.in_stock.published
+      ::ShopCategoryRel.base_scope
         .select("
-          MAX(shop_category_rels.id)                AS rel_id,
-          MAX(shop_category_rels.item_price)        AS price,
-          MAX(shop_category_rels.item_updated_at)   AS updated_at,
+          MAX(shop_category_rels.id)              AS rel_id,
+          MAX(shop_category_rels.item_price)      AS price,
+          MAX(shop_category_rels.item_updated_at) AS updated_at,
 
           shop_category_rels.item_id   AS item_id,
           shop_category_rels.item_type AS item_type

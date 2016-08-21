@@ -12,25 +12,12 @@ module RailsShop
 
     def index
       # ???
-
-      # @shop_categories =
-      #   category_klass
-      #     .in_stock
-      #     .published
-      #     .includes(:item)
-      #     .max2min(:id)
-      #     .simple_sort(params)
-      #     .pagination(params)
-
-      # render template: 'rails_shop/shop_categories/index'
     end
 
     def show
       @shop_category_rels =
-        ::ShopCategoryRel
+        ::ShopCategoryRel.base_scope
           .where(category: @shop_category)
-          .in_stock
-          .published
 
       @filter_types = @shop_category_rels
         .pluck(:item_shop_params_card_type)

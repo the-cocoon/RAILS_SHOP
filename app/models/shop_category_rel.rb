@@ -29,4 +29,8 @@ class ShopCategoryRel < ActiveRecord::Base
   scope :for_manage, ->{ with_state %w[ draft published ] }
   scope :in_stock,   ->{ where.not(item_amount: 0) }
   scope :available_for, ->(user = nil) { user.try(:admin?) ? for_manage : published }
+
+  scope :base_scope, ->{ in_stock.published }
+
+  voiceless_include { ::ShopCategoryRelAddodns }
 end
