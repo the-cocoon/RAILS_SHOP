@@ -27,10 +27,13 @@ class ShopCategoryRel < ActiveRecord::Base
   # Scopes
   scope :with_state, ->(states){ where(item_state: Array.wrap(states)) if states.present? }
   scope :for_manage, ->{ with_state %w[ draft published ] }
-  scope :in_stock,   ->{ where.not(item_amount: 0) }
+
   scope :available_for, ->(user = nil) { user.try(:admin?) ? for_manage : published }
 
-  scope :base_scope, ->{ in_stock.published }
+  scope :base_scope,   ->{ in_stock.published }
+  scope :in_stock,     ->{ where.not(item_amount: 0) }
+  scope :out_of_stock, ->{ where(item_amount: 0) }
 
-  voiceless_include { ::ShopCategoryRelAddodns }
+
+  voiceless_include { ::AppViewEngine::ShopCategoryRel }
 end

@@ -54,12 +54,19 @@ class Product < ActiveRecord::Base
     source: :category, source_type: :ShopUnitPort
 
   # SCOPES
-  scope :in_stock, ->{ where('amount > 0') }
+  scope :base_scope,   ->{ in_stock.published }
+  scope :in_stock,     ->{ where.not(amount: 0) }
+  scope :out_of_stock, ->{ where(amount: 0) }
 
-  scope :rels_shop_categories_item, -> (ids) {
-    ::ShopCategoryRel.base_scope
+
+  scope :shop_categories_rel_items, -> (ids) {
+    ::ShopCategoryRel
       .includes(:item)
       .reversed_nested_set
       .where(category_id: ids, category_type: :ShopCategory)
   }
+
+  scope :base_scope, ->{ in_stock.published }
+
+  voiceless_include { ::AppViewEngine::Product }
 end
