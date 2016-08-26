@@ -68,10 +68,9 @@ h1.fs24.mt10.mb20= @product.title
         - unless product.has_discount?
           = money_to_text product.price
         - else
-          .mb25(style='text-decoration:line-through')
-            = money_to_text price
-          = money_to_text product.discounted_price
-          '
+          .mb25.s
+            = money_to_text product.price
+          => money_to_text product.discounted_price
           | руб.
 
       .product-card--buy-btn.mt20.mb40

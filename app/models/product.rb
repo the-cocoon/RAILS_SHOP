@@ -58,7 +58,6 @@ class Product < ActiveRecord::Base
   scope :in_stock,     ->{ where.not(amount: 0) }
   scope :out_of_stock, ->{ where(amount: 0) }
 
-
   scope :shop_categories_rel_items, -> (ids) {
     ::ShopCategoryRel
       .includes(:item)
