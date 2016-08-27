@@ -5,6 +5,8 @@
 # ::ThinkingSphinx.search("canon", star: true, classes: [ Product ], indices: %w[ admin_product_core ]).count
 
 class ShopSearchController < RailsShopController
+  layout ->{ layout_for_action }
+
   skip_before_filter :authenticate_user!,   only: %w[ shop_search ]
   skip_before_filter :shop_admin_required!, only: %w[ shop_search ]
 
@@ -56,5 +58,10 @@ class ShopSearchController < RailsShopController
     )
 
     render layout: false, json: res
+  end
+
+  def layout_for_action
+    return 'rails_shop_frontend' if %w[ shop_search ].include?(action_name)
+    'rails_shop_backend'
   end
 end

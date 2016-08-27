@@ -1,5 +1,5 @@
 = form_tag shop_search_path, method: :get, enforce_utf8: false do
   .br-off
-    = text_field_tag :sq, @sq,  class: 'ptz--input ptz--size-15 w90p js--shop-search--sq-input', placeholder: "Поиск по товарам или номеру заказа"
+    = text_field_tag :sq, @sq,  class: 'ptz--input ptz--size-15 w100p js--shop-search--sq-input', placeholder: "Поиск по товарам или номеру заказа"
     = button_tag type: :button, class: 'ptz--btn ptz--size-15 ptz--btn--side-right js--shop-search--submit-btn' do
       i.fa.fa-search
