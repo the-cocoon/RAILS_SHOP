@@ -13,6 +13,9 @@
         = f.label :ym_cpa, 'Заказ с Маркета', class: 'fs13 mr10'
         = f.check_box :ym_cpa, class: 'ptz--input', autocomplete: :off
 
+      .pull-right
+        = link_to 'Выгрузить ЭТОТ в YML', yandex_market_export_this_path(product.id), class: 'fs15'
+
     hr.ptz--hr-0.mt25.mb25
 
     .clearfix.mb20

@@ -67,5 +67,7 @@ class Product < ActiveRecord::Base
 
   scope :base_scope, ->{ in_stock.published }
 
+  scope :for_yandex_market, -> { where(ym_available: true) }
+
   voiceless_include { ::AppViewEngine::Product }
 end

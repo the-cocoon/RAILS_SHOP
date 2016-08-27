@@ -18,9 +18,11 @@ module RailsShop
       get '/shop'       => 'products#index', as: :shop
       get 'shop/manage' => 'shop#manage',    as: :shop_manage
 
-      get   'yandex_market/index'  => 'yandex_market#index',  as: :yandex_market
+      get   'yandex_market/index'      => 'yandex_market#index',  as: :yandex_market
       patch 'yandex_market/switch/:id' => 'yandex_market#switch', as: :yandex_market_switch
-      patch 'yandex_market/update' => 'yandex_market#update', as: :yandex_market_update
+
+      get   'yandex_market/export' => 'yandex_market#export', as: :yandex_market_export
+      get   'yandex_market/export_this/:id' => 'yandex_market#export_this', as: :yandex_market_export_this
 
       resources :shop_params_cards
 

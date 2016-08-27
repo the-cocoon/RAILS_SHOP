@@ -19,10 +19,21 @@ class YandexMarketController < RailsShopController
   end
 
   def export
-    @categories = ProductCategory.published.order(:id)
-    @products   = Product.on_hand.published.for_yandex_market
+    @categories = ::ShopCategory.published.order(:id)
+    @products   = ::Product.base_scope.for_yandex_market.order(:id)
 
-    stream = render_to_string(formats: :xml)
+    stream = render_to_string(layout: false, formats: :xml)
+
+    time_stamp = Time.now.strftime("%Y.%m.%-d_%H.%M")
+    send_data(stream, type: "text/xml", filename: "yandex-market-#{ time_stamp }.xml")
+    # render text: stream
+  end
+
+  def export_this
+    @products   = ::Product.where(id: params[:id]).order(:id)
+    @categories = @products.first.shop_categories.published.order(:id)
+
+    stream = render_to_string(layout: false, template: 'yandex_market/export', formats: :xml)
 
     time_stamp = Time.now.strftime("%Y.%m.%-d_%H.%M")
     send_data(stream, type: "text/xml", filename: "yandex-market-#{ time_stamp }.xml")

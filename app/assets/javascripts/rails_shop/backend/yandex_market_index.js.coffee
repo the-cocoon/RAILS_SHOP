@@ -1,6 +1,6 @@
 @YandexMarketIndex = do ->
   init: ->
-    @inited = do =>
+    @inited ||= do =>
       @doc = $ document
 
       @doc.on 'change', '.js--ya-market--checkbox', (e) ->
