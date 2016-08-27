@@ -4,6 +4,8 @@ module RailsShop
     extend ActiveSupport::Concern
 
     included do
+      include ::ProductPriceHelper
+
       SHOP_PUBLIC_ACTIONS = %w[ yk_check yk_aviso yk_success yk_failure ]
 
       skip_before_action :authenticate_user!,        only: SHOP_PUBLIC_ACTIONS
