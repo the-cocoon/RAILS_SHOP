@@ -190,7 +190,9 @@ module RailsShop
       order = Order.where(uid: order_number).first
       return :order_not_found unless order
 
-      equal_prices  = ('%.2f' % order_sum.to_f) == ('%.2f' % order.total_price.to_f)
+      order_price = money_round(order.total_price).to_f
+      equal_prices  = ('%.2f' % order_sum.to_f) == ('%.2f' % order_price)
+
       return :incorrect_price unless equal_prices
 
       :correct_price
