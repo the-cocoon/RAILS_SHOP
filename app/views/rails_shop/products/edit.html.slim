@@ -1,6 +1,7 @@
 = render template: 'rails_shop/layouts/items/header_footer'
 
-- content_for :left_sidebar do
+- content_for :title do
+  | Редактировать: #{ @product.title }
 
 .ptz--theme-0.m20
   .ma.w1000
@@ -16,9 +17,6 @@
           | Основная форма
         .ptz--tabs--item(ptz--tab-id='price')
           | Цена
-        / SPECIFIC
-        / .ptz--tabs--item(ptz--tab-id='elco')
-        /   | ELCO
         .ptz--tabs--item(ptz--tab-id='yml-form')
           | Я.Маркет
         .ptz--tabs--item(ptz--tab-id='images')
@@ -50,10 +48,6 @@
 
         .ptz--tabs--content-item(ptz--tab-content='price')
           = render template: 'products/edit/price', locals: { product: @product }
-
-        / SPECIFIC
-        / .ptz--tabs--content-item(ptz--tab-content='elco')
-        /   = render template: 'products/edit/elco', locals: { product: @product }
 
         .ptz--tabs--content-item(ptz--tab-content='yml-form')
           = render template: 'products/edit/yml_form', locals: { product: @product }

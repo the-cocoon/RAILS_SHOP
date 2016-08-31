@@ -39,3 +39,4 @@
 #= require rails_shop/backend/shop_brand_rels_select2
 
 #= require rails_shop/backend/yandex_market_index
+#= require rails_shop/backend/products_manage

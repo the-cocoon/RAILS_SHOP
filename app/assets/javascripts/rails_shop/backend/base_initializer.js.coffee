@@ -35,3 +35,4 @@ $(document).on 'ready page:load', ->
   ShopBrandRelsSelect2.init()
 
   YandexMarketIndex.init()
+  ProductsManage.init()

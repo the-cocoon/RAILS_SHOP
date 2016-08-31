@@ -93,10 +93,21 @@ class ProductsController < RailsShopController
       @product.keep_consistency_after_update!
       # voiceless { ::ShopItemsSearch.update(@product) }
 
-      redirect_path = polymorphic_url([:edit, @product], anchor: params[:anchor])
-      redirect_to redirect_path, notice: 'Товар успешно обновлен'
+      respond_to do |format|
+        format.html do
+          redirect_path = polymorphic_url([:edit, @product], anchor: params[:anchor])
+          redirect_to redirect_path, notice: 'Товар успешно обновлен'
+        end
+
+        format.js do
+          render_json_template('rails_shop/products/json/update.success')
+        end
+      end
     else
-      render action: 'edit'
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.any(:js, :json) { render_json_template('rails_shop/products/json/update.errors') }
+      end
     end
   end
 
@@ -157,6 +168,7 @@ class ProductsController < RailsShopController
       ym_receiving_pickup
       ym_receiving_store
 
+      ym_main_shop_category
       ym_market_category
       ym_sales_notes
       ya_barcode

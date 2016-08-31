@@ -65,8 +65,15 @@
 
     .clearfix
       .mb20
-        = f.label :ym_market_category, 'Категория маркета', class: 'block fs13 mb10'
-        = f.text_field :ym_market_category, class: 'ptz--input ptz--size-15 w500', maxlength: 150, placeholder: 'Все товары/Электроника/Фото и видеокамеры'
+        ruby:
+          selected_cat = product.ym_main_shop_category
+          opts = raw options_for_select(ShopCategory.published.nested_set.map{|sc| [raw("______")*sc.level + sc.title, sc.id]}, selected_cat)
+
+        = f.label :ym_main_shop_category, 'Главная категория товара', class: 'block fs13 mb10'
+        = f.select :ym_main_shop_category, raw(options_for_select(opts)), {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w80p form-classic--select'
+
+      .mb20
+        = render partial: 'rails_shop/products/edit/ym_classificator', locals: { f: f, product: product }
 
       .mb20
         = f.label :ym_sales_notes, 'Заметки продавца', class: 'block fs13 mb10'

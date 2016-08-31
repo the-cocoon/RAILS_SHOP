@@ -57,13 +57,14 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
 
           xml.url product_url(product)
 
-          cats_scope = product.shop_categories.published
+          cat_id = if product.ym_main_shop_category
+            product.ym_main_shop_category
+          else
+            product.shop_categories.published.nested_set.last.try(:id)
+          end
 
-          cat_id = cats_scope.roots.try(:last).try(:descendants).try(:last).try(:id)
-          cat_id = cat_id ? cat_id : cats_scope.leaves.try(:first).try(:id)
-          cat_id = cat_id ? cat_id : cats_scope.roots.try(:first).try(:id)
+          xml.categoryId(cat_id) if cat_id
 
-          xml.categoryId cat_id # Sort on relations
           xml.sales_notes "Наличные, банковская карта, б/н расчет"
 
           if product.main_image.present?
