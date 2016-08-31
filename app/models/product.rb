@@ -70,4 +70,8 @@ class Product < ActiveRecord::Base
   scope :for_yandex_market, -> { where(ym_available: true) }
 
   voiceless_include { ::AppViewEngine::Product }
+
+  def preorder?
+    amount.zero? && published?
+  end
 end

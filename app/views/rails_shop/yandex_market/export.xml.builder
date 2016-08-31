@@ -122,8 +122,11 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
           # Заводская гарантия?
           xml.manufacturer_warranty true
 
+          # https://yandex.ru/support/partnermarket/guides/classification.xml
           # http://download.cdn.yandex.net/market/market_categories.xls
-          # xml.market_category '???'
+          if product.ym_market_category.present?
+            xml.market_category product.ym_market_category
+          end
 
           # https://yandex.ru/support/partnermarket/settings/placement.xml#placement
           # xml.downloadable '???'
