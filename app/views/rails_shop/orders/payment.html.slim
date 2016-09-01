@@ -107,7 +107,7 @@
       | #{ products_count } #{ positions_plur } на
       '
       span.fs24
-        - products_total = products_items.inject(0){|res, pr| res += (pr.amount * pr.price.to_f) }
+        - products_total = products_items.inject(0){|res, pr| res += (pr.amount * pr.item.discounted_price.to_f) }
         = money_to_text(products_total)
         '
         'руб.
