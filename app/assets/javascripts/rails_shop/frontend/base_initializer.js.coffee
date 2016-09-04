@@ -28,6 +28,7 @@ $(document).on 'ready page:load', ->
   DeliveryTypesOptions.init()
   OrderPaymentButton.init()
   OrderPaymentForm.init()
+  OrderPaymentType.init()
 
   ShopSpoiler.init()
 

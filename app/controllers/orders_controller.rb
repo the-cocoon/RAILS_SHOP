@@ -82,7 +82,7 @@ class OrdersController < RailsShopController
       @order.process_completion_step!
 
       if @order.ready_to_payment?
-        redirect_to url_for([:payment, @order])
+        provide_required_payment_way
       else
         redirect_to url_for(@order)
       end
@@ -124,9 +124,23 @@ class OrdersController < RailsShopController
 
   private
 
+  def provide_required_payment_way
+    if manual_payment?
+      # Отправить Письмо Админу и пользователю
+      # Нарисовать обхяснительную страницу
+      render 'manual_payment'
+    else
+      redirect_to url_for([:payment, @order])
+    end
+  end
+
+  def manual_payment?
+    params[:order_payment_type].to_s.downcase == 'manual'
+  end
+
   def layout_for_action
     return 'rails_shop_login'    if %w[ login_before ].include?(action_name)
-    return 'rails_shop_frontend' if %w[ payment completion ].include?(action_name)
+    return 'rails_shop_frontend' if %w[ payment completion manual_payment ].include?(action_name)
     super
   end
 

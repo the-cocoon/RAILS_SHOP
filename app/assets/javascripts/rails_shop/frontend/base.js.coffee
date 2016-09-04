@@ -23,8 +23,11 @@
 #= require ptz-tabs/ptz-tabs
 
 #= require rails_shop/frontend/delivery_types
+
+#= require rails_shop/frontend/order_payment_type
 #= require rails_shop/frontend/order_payment_button
 #= require rails_shop/frontend/order_payment_form
+
 #= require rails_shop/frontend/shop_search_form
 #= require rails_shop/frontend/shop_spoiler
 
