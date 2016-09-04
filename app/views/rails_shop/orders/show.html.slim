@@ -14,15 +14,16 @@
   = form_for @order, url: completion_order_path(@order), method: :patch do |f|
     ul.shop-cart--list
       li.shop-cart--title.clearfix
-        - if current_user.try(:admin?)
-          - if order_user = @order.user
-            .pull-right.fs14
-              .mb10
-                | Владелец:
-                '
-                = link_to order_user.login, order_user
-              .mb10
-                = link_to 'Пересчетать заказ', recalc_price_order_path(@order), method: :patch
+
+        / - if current_user.try(:admin?)
+        /   - if order_user = @order.user
+        /     .pull-right.fs14
+        /       .mb10
+        /         | Владелец:
+        /         '
+        /         = link_to order_user.login, order_user
+        /       .mb10
+        /         = link_to 'Пересчетать заказ', recalc_price_order_path(@order), method: :patch
 
 
         h3.fs24.mb10 Заказ: #{ @order.uid.upcase }
@@ -31,14 +32,16 @@
       - if @order.delivery
         li.cart-delivery-info
           .fs18.lh120
-            = @order.delivery.intro
-            - if !@order.delivery.special?
-              |:
-              '
-              span.b
-                = money_to_text @order.delivery.price
-                '
+            / .special?
+            - if @order.delivery.moderation_required?
+              b>
+                | [Сумму уточнит оператор]
+              => @order.delivery.intro
+            - else
+              b>
+                => money_to_text @order.delivery.price
                 | руб.
+              => @order.delivery.intro
 
         li.mt20.mb20.ml15.mr15.fs15 Пожалуйста, аккуратно и достоверно укажите все необходимые данные
 
@@ -128,7 +131,6 @@
                     span.fs24
                       => money_to_text @order.delivery_price
                     'руб.
-
             hr
 
         .ptz--tr
@@ -146,7 +148,7 @@
               .ptz--btn.ptz--size-22 Заказ уже оплачен
 
             - else
-              - if @order.delivery && @order.delivery.special?
-                = f.submit 'Отправить заказ', class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
+              - if @order.delivery && @order.delivery.moderation_required?
+                = f.submit 'Отправить заказ на обработку', class: 'ptz--btn ptz--size-22 ptz--style-0--btn app--btn-1'
               - else
-                = f.submit 'Оплатить заказ', class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
+                = f.submit 'Оплатить заказ', class: 'ptz--btn ptz--size-22 app--btn-1'

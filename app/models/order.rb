@@ -116,6 +116,8 @@ class Order < ActiveRecord::Base
   # ~~~ DISCOUNT ~~~
 
   def discount_percent
+    return 0
+
     return 0 unless user
     return 5 if user.orders.paid.count > 0
     2

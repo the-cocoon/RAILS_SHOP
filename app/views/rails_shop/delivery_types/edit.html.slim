@@ -1,9 +1,10 @@
 = render template: 'rails_shop/layouts/items/header_footer'
 
 - content_for :left_sidebar do
-  .m20
-    .mb10= link_to 'Главная', '/shop', class: 'ptz--btn ptz--size-16 w100p'
-    / .mb10= link_to 'Просмотр типа доставки', @delivery_type, class: 'ptz--btn ptz--size-16 w100p'
+  .mt20.mb20
+    = link_to 'Главная', root_path, class: 'ptz--btn ptz--size-16 w100p'
+  .mt20.mb20
+    = link_to 'Все типы доставки', manage_delivery_types_path, class: 'ptz--btn size-16'
 
 .ptz--theme-0.m20.w800
   h3.mt20.mb20.fs18 Редактировать тип доставки
@@ -35,24 +36,44 @@
           .pull-left.w30= f.check_box :default_option, class: '', autocomplete: :off
           .pull-left.w400= f.label :default_option, 'Тип доставки по умолчанию', class: 'block fs13 mb5'
 
-        .mb25.clearfix
-          .pull-left.w30= f.check_box :order_moderation_required, class: '', autocomplete: :off
-          .pull-left.w400= f.label :order_moderation_required, 'Позиция блокирующая оплату заказа', class: 'block fs13 mb5'
+
+        .ptz--hr-0.mb20.mt20
 
         .mb25.clearfix
           = f.label :delivery_kind, 'Тип доставки', class: 'block fs13 mb5'
 
-          .clearfix.fs12.lh120
-            .pull-left.w40p.mr30
+          .clearfix.fs12.lh120.mb15
+            .pull-left.w45p.mr30
               - options = options_for_select(DeliveryType::KINDS.map{|item| [t(item, scope: %w[ rails_shop delivery_kind ]), item] }, @delivery_type.delivery_kind)
-              = f.select :delivery_kind, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w150 form-classic--select'
+              = f.select :delivery_kind, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w250 form-classic--select'
             .pull-left.w40p
               | Влияет на то, какие обязательные поля адреса доставки требуется заполнить при оформлении заказа
 
-        .mb50.clearfix
+          .clearfix.fs14.lh125
+            .mb10 <b>Модерируемый</b> &mdash; Требует все базовые поля и блокирует заказ, пока модератор не проверит данные и не установит сумму доставки.
+            .mb10 <b>Зарубежный</b> &mdash; Требует все базовые поля и устанавливает в качестве страны НЕ Россию (По умолчанию Беларусь)
+            .mb10 <b>По стране</b> &mdash; Требует все базовые поля и устанавливает в качестве страны указана Россия
+            .mb10 <b>Местный</b> &mdash; Требует только имя, телефон и комментарий
+            .mb10 <b>Самовывоз</b> &mdash; Требует только имя, телефон и комментарий
+
+        .ptz--hr-0.mb20.mt20
+
+        .mb25.clearfix
+          .pull-left.w30= f.check_box :order_moderation_required, class: '', autocomplete: :off
+          .pull-left.w400= f.label :order_moderation_required, 'Позиция блокирующая оплату заказа', class: 'block fs13 mb5'
+
+        .clearfix.fs14.lh125
+          .mb10
+            | Установите эту опцию если вам требуется установить тип доставки "Зарубежный", "По стране", "Местный" и вы хотите запретить оплату заказа пока модератор не проверит данные и не установит сумму доставки.
+
+        .ptz--hr-0.mb20.mt20
+
+        .clearfix
           = f.label :state, 'Видимость', class: 'block fs13 mb5'
           - options = options_for_select({ 'Черновик' => :draft, 'Опубликовано' => :published }, @delivery_type.state)
-          = f.select :state, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w150 form-classic--select'
+          = f.select :state, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w250 form-classic--select'
+
+        .ptz--hr-0.mb20.mt20
 
         div
-          = f.submit 'Обновить тип доставки', class: 'ptz--btn ptz--size-16'
+          = f.submit 'Обновить тип доставки', class: 'ptz--btn ptz--size-20'

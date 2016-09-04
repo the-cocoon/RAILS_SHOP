@@ -1,8 +1,8 @@
 = render template: 'rails_shop/layouts/items/header_footer'
 
 - content_for :left_sidebar do
-  | &nbsp;
-  / = render partial: 'rails_shop/layouts/items/left_sidebar'
+  .mt20.mb20
+    = link_to 'Все типы доставки', manage_delivery_types_path, class: 'ptz--btn size-16'
 
 .ptz--theme-0.m20
   h3.mt20.mb20.fs18 Новый тип доставки

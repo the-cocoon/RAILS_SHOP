@@ -23,6 +23,10 @@ class DeliveryType < ActiveRecord::Base
     end
   end
 
+  def moderation_required?
+    order_moderation_required == true || special?
+  end
+
   validates_inclusion_of :delivery_kind, in: KINDS
   validates_presence_of :user, :title
 

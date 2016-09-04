@@ -85,10 +85,17 @@
               = radio_button_tag :delivery_type_id, dt.id, (selected_dt == dt), class: 'radio-btn radio-btn--info-line', id: "delivery_type_#{ dt.id }", autocomplete: :off
               '
               label.ml10(for="delivery_type_#{ dt.id }")
-                - unless dt.special?
-                  = "#{ money_to_text dt.price } руб."
-                  '
-                = dt.intro
+                - if dt.moderation_required?
+                  span.b>
+                    | [Требует уточнения цены оператором]
+                - else
+                  - if money_to_text(dt.price).to_i.zero?
+                    span.b>
+                      | [Бесплатно]
+                  - else
+                    span.b>= raw "#{ money_to_text dt.price } руб."
+
+                = dt.title
 
       li.shop-cart--total
         .ptz--table.w100p
@@ -115,7 +122,7 @@
 
           .ptz--tr
             .ptz--td
-              .fs15.mt30.mb10
+              .fs15.mt30.mb30
                 | Итого:
                 '
                 span.fs24= money_to_text(@cart.total_price)
@@ -124,10 +131,11 @@
 
           .ptz--tr
             .ptz--td.tac
-              - if @cart.active?
-                = link_to 'Оформить заказ', orders_path(cart_id: @cart), method: :post, class: 'ptz--btn ptz--size-22 ptz--style-0--btn'
-              - else
-                .ptz--btn.ptz--size-22 Корзина Просрочена
+              .mt20
+                - if @cart.active?
+                  = link_to 'Оформить заказ', orders_path(cart_id: @cart), method: :post, class: 'ptz--btn ptz--size-22 ptz--style-0--btn app--btn-1'
+                - else
+                  .ptz--btn.ptz--size-22 Корзина Просрочена
 
   .w900.ma.mb20.clearfix
     .pull-right
