@@ -70,6 +70,14 @@
                 | руб.
               => @order.delivery.intro
 
+    .fs15.mb40
+      | Итого:
+      '
+      span.br-off
+        span.fs24
+          => money_to_text(@order.total_price)
+        'руб.
+
     .fs16.mb25.lh130 А сейчас вы можете:
 
     ul.ul.mb35
