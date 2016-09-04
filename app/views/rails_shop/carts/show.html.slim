@@ -123,11 +123,15 @@
           .ptz--tr
             .ptz--td
               .fs15.mt30.mb30
-                | Итого:
-                '
-                span.fs24= money_to_text(@cart.total_price)
-                '
-                'руб.
+                - if @cart.delivery.moderation_required?
+                  b>
+                    | [Итоговую сумму уточнит оператор]
+                - else
+                  | Итого:
+                  '
+                  span.fs24= money_to_text(@cart.total_price)
+                  '
+                  'руб.
 
           .ptz--tr
             .ptz--td.tac

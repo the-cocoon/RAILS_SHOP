@@ -96,13 +96,17 @@
           .ptz--td
             .clearfix.pt20
               .pull-left.mr100
-                .fs15.mb10
-                  | Итого:
-                  '
-                  span.br-off
-                    span.fs24
-                      => money_to_text(@order.total_price)
-                    'руб.
+                - if @order.delivery.moderation_required?
+                  .fs15.mb10.b
+                    | Итоговую сумму заказа сообщит оператор
+                - else
+                  .fs15.mb10
+                    | Итого:
+                    '
+                    span.br-off
+                      span.fs24
+                        => money_to_text(@order.total_price)
+                      'руб.
 
               .pull-left.mr40
                 .fs15.mb10
@@ -115,7 +119,7 @@
                       => money_to_text(products_total)
                     'руб.
 
-                - if !@order.discount.to_f.zero?
+                - unless @order.discount.to_f.zero?
                   .fs14.mt5.ptz--highlight
                     | Ваша скидка:
                     '
@@ -124,13 +128,19 @@
                     'руб.
 
               .pull-left.mr40
-                .fs15.mb10
-                  | Доставка:
-                  '
-                  span.br-off
-                    span.fs24
-                      => money_to_text @order.delivery_price
-                    'руб.
+                - unless @order.delivery.moderation_required?
+
+                  - if money_to_text(@order.delivery_price).to_i.zero?
+                    .fs15.mb10
+                      | Доставка: БЕСПЛАТНО
+                  - else
+                    .fs15.mb10
+                      | Доставка:
+                      '
+                      span.br-off
+                        span.fs24
+                          => money_to_text @order.delivery_price
+                        'руб.
             hr
 
         .ptz--tr
@@ -142,13 +152,26 @@
 
             / SUBMIT BUTTONS
             - if @order.moderation?
-              .ptz--btn.ptz--size-22 Заказ на Модарации
+              .mt10.mb20.fs13.lh130
+                .mb5 Наш сотрудник перезвонит Вам и уточнит детали.
+                .mb5 В будние дни наш оператор перезвонит Вам в течение часа
+                .mb5 Мы работаем с 10 до 18 часов по московскому времени
+
+              .ptz--btn.ptz--size-22.app--btn-1 Заказ на Модарации
 
             - elsif @order.paid?
-              .ptz--btn.ptz--size-22 Заказ уже оплачен
+              .ptz--btn.ptz--size-22.app--btn-1 Заказ уже оплачен
 
             - else
               - if @order.delivery && @order.delivery.moderation_required?
+                .mt10.mb20.fs13.lh130
+                  .mb5 Наш сотрудник перезвонит Вам и уточнит детали.
+                  .mb5 В будние дни наш оператор перезвонит Вам в течение часа
+                  .mb5 Мы работаем с 10 до 18 часов по московскому времени
+
                 = f.submit 'Отправить заказ на обработку', class: 'ptz--btn ptz--size-22 ptz--style-0--btn app--btn-1'
               - else
+                .mt10.mb20.fs13.lh130
+                  .mb5 Доступны способы оплаты картами VISA, MASTER CARD, а так же Яндекс Деньги, Сбербанк Онлайн и др.
+
                 = f.submit 'Оплатить заказ', class: 'ptz--btn ptz--size-22 app--btn-1'
