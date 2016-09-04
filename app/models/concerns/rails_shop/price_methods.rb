@@ -3,7 +3,7 @@ module RailsShop
   module PriceMethods
 
     def products_total_price
-      products.inject(0){|res, pr| res += (pr.amount * pr.total_price.to_f) }
+      products.inject(0){|res, cart_item| res += (cart_item.amount * cart_item.item.discounted_price.to_f) }
     end
 
     def delivery_total_price
