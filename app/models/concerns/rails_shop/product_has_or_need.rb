@@ -6,8 +6,7 @@ module RailsShop
     end
 
     def has_warranty_info?
-      ym_manufacturer_warranty ||
-      !warranty_time_units.zero?
+      ym_manufacturer_warranty || warranty_time_units
     end
 
     def has_content?
