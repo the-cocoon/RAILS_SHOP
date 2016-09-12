@@ -3,18 +3,6 @@
 
 .fs20.mb20.mt20 Выгрузка в Яндекс Маркет
 
-.clearfix.mb20.fs15
-  .pull-left
-    = link_to 'Выгрузить в YML', yandex_market_export_path, class: 'ptz--btn'
-
-  .pull-right
-    .mr20
-      span.mr10 элементов на стр:
-      - %w[ 5 10 20 50 100 125 200 300 400 500 ].each do |num|
-        span.mr10= link_to num, url_for(per_page: num)
-
-      span.ml50= link_to 'Сбросить сортировку', url_for( reset_simple_sort )
-
 .table.w100p.ffa.fs15
   .ptz--tr.ym-index-header
     .ptz--td.p10.w50
@@ -32,8 +20,7 @@
       = link_to 'На складе ↕', simple_sort_url(:amount)
     .ptz--td.p10.w40.br-off
       = link_to 'Цена ↕', simple_sort_url(:price)
-    .ptz--td.p10.w40.br-off
-      = link_to 'В Маркете? ↕', simple_sort_url(:ym_available)
+
 
   - @products.each_with_index do |product, index|
     - line_type = index.odd? ? :odd : :even
@@ -59,9 +46,5 @@
             span= money_to_text product.discounted_price
           - else
             span= money_to_text product.price
-      .ptz--td.p10.w40.vam
-        = form_tag yandex_market_switch_path(product.id), remote: true, method: :patch do
-          = hidden_field_tag 'yandex', 0
-          = check_box_tag 'yandex', '1', product.ym_available, autocomplete: :off, class: 'js--ya-market--checkbox'
 
 = render template: 'common/paginator', locals: { items: @products }
