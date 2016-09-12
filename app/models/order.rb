@@ -15,9 +15,6 @@ class Order < ActiveRecord::Base
 
   EMAIL_REGEXP = /@/
 
-  PS_NAME_ID = { card: :AC, yadengi: :PC, alfa_bank: :AB, promsvyaz_bank: :PB, web_money: :WM, euroset: :GP, svyaznoy: :GP, sberbank: :SB, qiwi: :QW }
-  PS_ID_NAME = PS_NAME_ID.map{|k,v| [v,k] }.to_h
-
   def to_param; self.uid; end
 
   belongs_to :user
@@ -167,11 +164,40 @@ class Order < ActiveRecord::Base
 
   # SERVICE METHODS
 
-  def self.recalc_items_counters!
-    Order.all.each do |order|
-      order.update_attribute(:order_items_counter, order.products.count)
+  class << self
+    def ps_name_id
+      return super if defined?(super)
+
+      {
+        card: :AC,
+        yadengi: :PC,
+        alfa_bank: :AB,
+        promsvyaz_bank: :PB,
+        web_money: :WM,
+        euroset: :GP,
+        svyaznoy: :GP,
+        sberbank: :SB,
+        qiwi: :QW
+      }
+    end
+
+    def ps_id_name
+      return super if defined?(super)
+
+      ps_name_id.map{|k,v| [v,k] }.to_h
+    end
+
+    def recalc_items_counters!
+      return super if defined?(super)
+
+      Order.all.each do |order|
+        order.update_attribute(:order_items_counter, order.products.count)
+      end
     end
   end
+
+  # voiceless_include { }
+  include ::AppViewEngine::Order
 
   private
 

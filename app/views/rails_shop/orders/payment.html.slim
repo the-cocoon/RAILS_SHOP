@@ -42,7 +42,7 @@
 
         .payment-systems--list
           .fs20.mb15 Выберите удобный способ оплаты:
-          - Order::PS_NAME_ID.each_pair do |type, value|
+          - Order.ps_name_id.each_pair do |type, value|
             .payment-systems--item
               input type="radio" name="paymentType" value=value id="payment_type_#{ type }" class='payment-systems--input' data={ 'role' => 'payment-type-option', 'payment-description' => payment_description[type] }
               label(for="payment_type_#{ type }", class="payment-systems--label payment-systems--#{ type }") = value
