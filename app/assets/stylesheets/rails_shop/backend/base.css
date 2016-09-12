@@ -30,4 +30,5 @@
 
   #= require rails_shop/frontend/shop-footer
   #= require rails_shop/backend/yandex_market_index
+  #= require rails_shop/backend/products_manage
 */

@@ -12,6 +12,12 @@ ru:
         house_number: "Номер дома"
         delivery_comment: "Комментарий к доставке"
 
+  products:
+    state:
+      draft: Черновик
+      published: Опубликован
+      deleted: Удален
+
   rails_shop:
     title: Мой Магазин
 

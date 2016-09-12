@@ -21,11 +21,12 @@ h3.mt20.mb20.fs18 Редактировать товары
             th.p20.br-off= link_to 'Цена ↕',      simple_sort_url(:price)
             th.p20.br-off= link_to 'Скидка ↕',    simple_sort_url(:discount_percent)
             th.p20.br-off= link_to 'На складе ↕', simple_sort_url(:amount)
+            th.p20.br-off= link_to 'Статус ↕',    simple_sort_url(:state)
             th.p20.br-off= link_to 'Артикул ↕',   simple_sort_url(:sku)
             th.w50
 
         - @products.each do |product|
-          tr
+          tr(class="products-manage--status-#{ product.state }")
             td.vam.p20
               .fs16= product.id
             td.vam.w100.p20
@@ -44,6 +45,8 @@ h3.mt20.mb20.fs18 Редактировать товары
             td.vam.w100.p20.tac
               = form_for product, remote: true, data: { type: :json }, html: { class: 'js--products-manage--update-field-form' } do |f|
                 = f.text_field :amount, autocomplete: :off, class: 'ptz--input size--15 w45 js--products-manage--update-field'
+            td.vam.w100.p20
+              .fs15= t "products.state.#{ product.state }"
             td.vam.w100.p20
               .fs15= product.sku
             td.vam.p20.tac
