@@ -7,6 +7,7 @@
   .ma.w1000
     .mb20.ptz--theme-0
       span.mr20= link_to 'Кабинет', cabinet_path, class: 'ptz--btn ptz--size-14'
+      span.mr20= link_to 'Все товары', manage_products_path, class: 'ptz--btn ptz--size-14'
       span.mr20= link_to 'Просмотр товара', @product, class: 'ptz--btn ptz--size-14', target: :_blank
 
     h3.mt20.mb20.fs20 Редактировать товар
@@ -41,6 +42,8 @@
             = !(br_count = @product.shop_brands.count).zero? ? br_count : nil
 
         .ptz--tabs--item(ptz--tab-id='seo_params') SEO
+        .ptz--tabs--item(ptz--tab-id='delete')
+          i.fs14.fa.fa-trash
 
       .m20
         .ptz--tabs--content-item.ptz--tabs--active(ptz--tab-content='form')
@@ -67,3 +70,8 @@
         .ptz--tabs--content-item(ptz--tab-content='seo_params')
           .mb20= render template: 'products/edit/slug', locals: { item: @product }
           .mb20= render template: 'meta_data/edit/meta_data', locals: { item: @product }
+
+        .ptz--tabs--content-item(ptz--tab-content='delete')
+          = link_to @product, method: :delete, class: 'ptz--btn ptz--size-18', data: { confirm: 'Вы уверены что хотите УДАЛИТЬ товар?' } do
+            i.fs19.fa.fa-trash>
+            | Удалить товар

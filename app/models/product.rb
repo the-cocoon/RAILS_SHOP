@@ -57,6 +57,7 @@ class Product < ActiveRecord::Base
   scope :base_scope,   ->{ in_stock.published }
   scope :in_stock,     ->{ where.not(amount: 0) }
   scope :out_of_stock, ->{ where(amount: 0) }
+  scope :for_yandex_market, -> { where(ym_available: true) }
 
   scope :shop_categories_rel_items, -> (ids) {
     ::ShopCategoryRel
@@ -64,10 +65,6 @@ class Product < ActiveRecord::Base
       .reversed_nested_set
       .where(category_id: ids, category_type: :ShopCategory)
   }
-
-  scope :base_scope, ->{ in_stock.published }
-
-  scope :for_yandex_market, -> { where(ym_available: true) }
 
   voiceless_include { ::AppViewEngine::Product }
 

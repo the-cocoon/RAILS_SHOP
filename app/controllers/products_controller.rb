@@ -64,7 +64,13 @@ class ProductsController < RailsShopController
   end
 
   def manage
-    @products = ::Product.max2min(:id).simple_sort(params).pagination(params)
+    base_products_scope = ::Product.available_for(current_user)
+
+    @products = base_products_scope.max2min(:id)
+      .simple_sort(params)
+      .pagination(params)
+
+    @products_count = base_products_scope.count
   end
 
   def new
@@ -114,7 +120,7 @@ class ProductsController < RailsShopController
   def destroy
     @product.destroy
     @product.keep_consistency_after_destroy!
-    redirect_to :back, notice: 'Товар удален'
+    redirect_to manage_products_path, notice: 'Товар удален'
   end
 
   private
