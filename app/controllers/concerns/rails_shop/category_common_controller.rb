@@ -32,33 +32,32 @@ module RailsShop
           .pagination(params)
 
       @shop_items = @shop_category_rels.map(&:item)
-
-      render template: 'rails_shop/shop_categories/show'
+      render category_template(:show)
     end
 
     # RESTRICTED AREA
 
     def manage
       @shop_categories = category_klass.for_manage.reversed_nested_set
-      render template: 'rails_shop/shop_categories/manage'
+      render category_template(:manage)
     end
 
     def new
       @shop_category = category_klass.new
-      render template: 'rails_shop/shop_categories/new'
+      render category_template(:new)
     end
 
     def edit
-      render template: 'rails_shop/shop_categories/edit'
+      render category_template(:edit)
     end
 
     def create
-      @shop_category = current_user.shop_categories.new(shop_category_params)
+      @shop_category = current_user.send(category_name).new(shop_category_params)
 
       if @shop_category.save
         redirect_to url_for([:edit, @shop_category]), notice: 'Категория успешно создан'
       else
-        render action: 'rails_shop/shop_categories/new'
+        render category_template(:new)
       end
     end
 
@@ -66,7 +65,7 @@ module RailsShop
       if @shop_category.update(shop_category_params)
         redirect_to url_for([:edit, @shop_category]), notice: 'Категоря успешно обновлена'
       else
-        render action: 'rails_shop/shop_categories/edit'
+        render category_template(:edit)
       end
     end
 
@@ -78,7 +77,7 @@ module RailsShop
     private
 
     def set_shop_category
-      @shop_category = category_klass.published.friendly_first(params[:id])
+      @shop_category = category_klass.available_for(current_user).friendly_first(params[:id])
       return page_404 unless @shop_category
     end
 
@@ -88,7 +87,7 @@ module RailsShop
     end
 
     def shop_category_params
-      param_name = category_klass.table_name.singularize
+      param_name = category_name.singularize
 
       params.require(param_name).permit(
         :title,
@@ -99,5 +98,12 @@ module RailsShop
       )
     end
 
+    def category_name
+      category_klass.name.tableize
+    end
+
+    def category_template name
+      { template: "rails_shop/#{ category_name }/#{ name }" }
+    end
   end
 end

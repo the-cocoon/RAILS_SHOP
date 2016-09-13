@@ -7,10 +7,10 @@
   .m20
     h3.mt20.mb20.fs18 Новый Бренд
 
-    = render partial: 'notifications/form', locals: { object: @product_brand }
+    = render partial: 'notifications/form', locals: { object: @shop_category }
 
     .ptz--div-0
-      = form_for @shop_brand do |f|
+      = form_for @shop_category do |f|
         .m20
           .mb15
             = f.label :title, 'Название', class: 'block fs13 mb5'
