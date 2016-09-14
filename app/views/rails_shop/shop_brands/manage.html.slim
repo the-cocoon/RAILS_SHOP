@@ -9,4 +9,4 @@
   .mb25= link_to 'Новый бренд', new_shop_brand_url, class: 'ptz--btn ptz--size-14'
 
   ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 1, rebuild_url: rebuild_shop_brands_path })
-    = sortable_tree @shop_categories
+    = sortable_tree @shop_categories, render_module: ShopCategoryOrderingHelper

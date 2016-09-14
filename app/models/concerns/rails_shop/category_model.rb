@@ -3,7 +3,6 @@ module RailsShop
     extend ActiveSupport::Concern
 
     included do
-
       include ::SimpleSort::Base
       include ::Pagination::Base
       include ::Notifications::LocalizedErrors

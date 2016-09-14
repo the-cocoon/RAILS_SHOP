@@ -9,6 +9,9 @@
 
   .m20
     h1.fs20.mb20.mt20= @shop_category.title
-    .mb20= @shop_category.url
-    .mb20= @shop_category.intro
-    .mb20= @shop_category.content
+    - if @shop_category.url.present?
+      .mb20.fs14
+        = link_to @shop_category.url
+
+    .mb20.f16.lh120=raw @shop_category.intro
+    .mb20.f16.lh120=raw @shop_category.content

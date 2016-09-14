@@ -62,7 +62,10 @@ module RailsShop
     end
 
     def update
-      if @shop_category.update(shop_category_params)
+      @shop_category.assign_attributes(shop_category_params)
+      @shop_category.content_processing_for(current_user)
+
+      if @shop_category.save
         redirect_to url_for([:edit, @shop_category]), notice: 'Категоря успешно обновлена'
       else
         render category_template(:edit)
@@ -71,7 +74,7 @@ module RailsShop
 
     def destroy
       @shop_category.destroy
-      redirect_to products_url
+      redirect_to [:manage, @shop_category], notice: 'Раздел удален'
     end
 
     private
