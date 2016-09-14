@@ -18,6 +18,7 @@ class ShopSearchController < RailsShopController
       to_search,
       star: true,
       classes: [ Product ],
+      indices: %w[ product_core ],
       field_weights: {
         fts_manual_data: 10,
         fts_auto_data: 7,
@@ -31,6 +32,7 @@ class ShopSearchController < RailsShopController
       to_search,
       star: false,
       classes: [ Product ],
+      indices: %w[ product_core ],
       field_weights: { title: 10, content: 5 },
       per_page: 24
     )
@@ -52,6 +54,7 @@ class ShopSearchController < RailsShopController
       to_search,
       star: true,
       classes: [ Product ],
+      indices: %w[ product_core ],
       field_weights: { title: 10, content: 5 },
       order: "created_at DESC",
       per_page: 24
