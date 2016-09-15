@@ -85,7 +85,7 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
 
           # OPTIONAL
           xml.delivery true
-          xml.pickup   false
+          xml.pickup   true
           xml.store    false
 
           # PRODUCT DELIVERY OPTIONS
