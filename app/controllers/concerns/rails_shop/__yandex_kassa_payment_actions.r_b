@@ -1,6 +1,0 @@
-module RailsShop
-  module YandexKassaPaymentActions
-    extend ActiveSupport::Concern
-    included do; end
-  end
-end
