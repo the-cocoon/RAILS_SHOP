@@ -73,13 +73,39 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
           end
 
           # for - type: "vendor.model"
-          # xml.vendor  'Noname' # BRAND
-          # xml.model   'Undefined'
+
+          if product.ym_vendor.present?
+            xml.vendor(product.ym_vendor)
+          end
+
+          if product.ym_model.present?
+            xml.model(product.ym_model)
+          end
+
+          if product.ym_vendor_code.present?
+            xml.vendorCode(product.ym_vendor_code)
+          end
+
+          if product.ym_vendor_code.present?
+            xml.country_of_origin(product.ym_country_of_origin)
+          end
+
+          if product.ya_barcode.present?
+            xml.barcode(product.ya_barcode)
+          end
+
+          if product.ym_type_prefix.present?
+            xml.typePrefix(product.ym_type_prefix)
+          end
+
+          # xml.rec '123123,1214,243'
+
+          # https://yandex.ru/support/partnermarket/elements/typeprefix.xml
 
           # xml.cpa 1
 
           # RECOMENDED
-          # xml.country_of_origin 'Китай'
+
           # xml.param(name: "Максимальный формат"){ xml.text! "A4" }
           # xml.param(name: "Потребляемая мощность", unit: "Вт") { xml.text! "1000" }
 
@@ -107,10 +133,6 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
           #   end
           # end
 
-          # https://yandex.ru/support/partnermarket/elements/typeprefix.xml
-          # xml.typePrefix
-
-          # xml.vendorCode '???'
 
           # kilos
           unless product.weight.zero?
@@ -132,8 +154,7 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
           # xml.downloadable '???'
 
           # xml.adult false
-          # xml.barcode '1234567890120'
-          # xml.rec '123123,1214,243' - recomended products
+
         end
       end
     end # offers

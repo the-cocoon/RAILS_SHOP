@@ -20,30 +20,43 @@
 
     .clearfix.mb20
       .pull-left.mr30
-        = f.label :ym_vendor, 'Вендор', class: 'block fs13 mb10'
+        .block.fs13.mb10
+          | Вендор (Vendor)
+          =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/elements/vendor-name-model.xml', target: :_blank
         = f.text_field :ym_vendor, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Canon'
 
       .pull-left.mr30
-        = f.label :ym_model, 'Модель', class: 'block fs13 mb10'
+        .block.fs13.mb10
+          | Модель (Model)
+          =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/elements/vendor-name-model.xml', target: :_blank
+
         = f.text_field :ym_model, class: 'ptz--input ptz--size-15 w200', maxlength: 100, placeholder: 'Mark 2'
 
       .pull-left
-        = f.label :ym_vendor_code, 'Код модели', class: 'block fs13 mb10'
+        .block.fs13.mb10
+          | Код модели (VendorCode)
+          =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/export/vendor-model.xml', target: :_blank
         = f.text_field :ym_vendor_code, class: 'ptz--input ptz--size-15 w200', maxlength: 100, placeholder: 'СM-2'
 
     .clearfix
       .pull-left.mr30
-        = f.label :ym_type_prefix, 'Тип товара', class: 'block fs13 mb10'
+        .block.fs13.mb10
+          | Тип товара (Type Prefix)
+          =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/export/vendor-model.xml', target: :_blank
         = f.text_field :ym_type_prefix, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Фотоаппарат'
 
       .pull-left.mr30
-        = f.label :ym_country_of_origin, 'Страна производитель', class: 'block fs13 mb10'
+        .block.fs13.mb10
+          | Страна производитель (Country of Origin)
+          =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/export/vendor-model.xml', target: :_blank
         = f.text_field :ym_country_of_origin, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Китай'
 
       .pull-left
-        = f.label :ym_manufacturer_warranty, 'Гарантия производителя', class: 'fs13 mr10'
+        .block.fs13.mb10
+          | Гарантия производителя
         .pt20
-          = f.check_box :ym_manufacturer_warranty, class: 'ptz--input', autocomplete: :off
+          span.b TRUE
+          / = f.check_box :ym_manufacturer_warranty, class: 'ptz--input', autocomplete: :off
 
     hr.ptz--hr-0.mt25.mb25
 
