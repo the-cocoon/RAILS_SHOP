@@ -84,9 +84,9 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
           # xml.param(name: "Потребляемая мощность", unit: "Вт") { xml.text! "1000" }
 
           # OPTIONAL
-          xml.delivery true
-          xml.pickup   true
-          xml.store    false
+          xml.delivery product.ym_receiving_delivery
+          xml.pickup   product.ym_receiving_pickup
+          xml.store    product.ym_receiving_store
 
           # PRODUCT DELIVERY OPTIONS
           # xml.tag! 'delivery-options' do
