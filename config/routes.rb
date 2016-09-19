@@ -72,6 +72,7 @@ module RailsShop
 
       resources :products do
         member do
+          post  :clone
           patch :realtion_category
         end
 

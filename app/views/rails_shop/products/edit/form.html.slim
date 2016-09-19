@@ -87,6 +87,9 @@
 
     hr.ptz--hr-0.mt25.mb25
 
-    .clearfix
-      .pull-right
+    .ptz--table.w100p
+      .ptz--td.w50p.tal.vam
+        = link_to 'Клонировать товар', clone_product_path(product), method: :post, class: 'ptz--btn size--16', data: { confirm: 'Вы уверены, что хотите КЛОНИРОВАТЬ товар?' }
+      .ptz--td.tar.vam
         = f.submit 'Обновить товар', class: 'ptz--btn ptz--size-22'
+

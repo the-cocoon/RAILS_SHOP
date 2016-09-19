@@ -4,7 +4,7 @@ class ProductsController < RailsShopController
   before_action :authenticate_user!,   except: %w[ index show ]
   before_action :shop_admin_required!, except: %w[ index show ]
 
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :clone, :update, :destroy]
 
   def index
     @shop_category_rels =
@@ -89,6 +89,42 @@ class ProductsController < RailsShopController
     else
       render action: 'new'
     end
+  end
+
+  def clone
+    @cloned_product = @product.dup
+    @cloned_product.assign_attributes(
+      slug:        nil,
+      short_id:    nil,
+      friendly_id: nil,
+      state:       :draft
+    )
+
+    # CLONE PRODUCT
+    @cloned_product.save
+    @cloned_product.keep_consistency_after_create!
+
+    # CLONE CATEGORIES
+    @product.shop_categories.each do |category|
+      @cloned_product.shop_categories << category
+    end
+
+    @product.shop_brands.each do |brand|
+      @cloned_product.shop_brands << brand
+    end
+
+    # CLONE IMAGES
+    @product.attached_images.each do |image|
+      image = File.open image.file.path(:original)
+      @cloned_product.attached_images.create!(user: current_user, file: image)
+    end
+
+    # CLONE META DATA
+    attrs = @product.meta_data.dup.attributes.with_indifferent_access
+    attrs.reject! {|k, v| %w[id holder_id holder_type created_at updated_at].include? k }
+    @cloned_product.meta_data.update(attrs)
+
+    redirect_to url_for([:edit, @cloned_product]), notice: 'Успешно скопировано'
   end
 
   def update
