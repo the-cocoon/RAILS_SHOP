@@ -7,6 +7,7 @@ ru:
         email: "Email"
         phone: "Телефон"
         full_name: "Полное имя"
+        postcode: "Индекс"
         city: "Город"
         street: "Улица"
         house_number: "Номер дома"
