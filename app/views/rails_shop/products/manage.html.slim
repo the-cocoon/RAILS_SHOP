@@ -62,8 +62,15 @@ h3.mt20.mb20.fs18
             td.vam.w100.p20
               .fs15= t "products.state.#{ product.state }"
             td.vam.tac.w100.p20
-              = form_tag yandex_market_switch_path(product.id), remote: true, method: :patch do
-                = hidden_field_tag 'yandex', 0
-                = check_box_tag 'yandex', '1', product.ym_available, autocomplete: :off, class: 'js--ya-market--checkbox'
+              ruby:
+                delivery_error_flag = !product.ym_receiving_delivery && !product.ym_receiving_pickup && !product.ym_receiving_store
+
+              .mb5
+                = form_tag yandex_market_switch_path(product.id), remote: true, method: :patch do
+                  = hidden_field_tag 'yandex', 0
+                  = check_box_tag 'yandex', '1', product.ym_available, autocomplete: :off, class: 'js--ya-market--checkbox'
+
+              - if delivery_error_flag
+                .mb5.b.fs12 !Доставка
 
   = render template: 'common/paginator', locals: { items: @products }

@@ -82,8 +82,15 @@
           selected_cat = product.ym_main_shop_category
           opts = raw options_for_select(ShopCategory.published.nested_set.map{|sc| [raw("______")*sc.level + sc.title, sc.id]}, selected_cat)
 
-        = f.label :ym_main_shop_category, 'Главная категория товара', class: 'block fs13 mb10'
-        = f.select :ym_main_shop_category, raw(options_for_select(opts)), {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w80p form-classic--select'
+        .mb10.fs13= f.label :ym_main_shop_category, 'Главная категория товара'
+        .mb10= f.select :ym_main_shop_category, raw(opts), { include_blank: true }, autocomplete: :off, class: 'ptz--input ptz--size-15 w80p form-classic--select'
+
+        ruby:
+          prod_cat_ids = @product.shop_categories.pluck(:id)
+          main_cat_id  = product.ym_main_shop_category
+
+        - if main_cat_id && !prod_cat_ids.include?(main_cat_id)
+          .b.fs14 ОШИБКА. Главная категория не соответствует категориям товара
 
       .mb20
         = render partial: 'rails_shop/products/edit/ym_classificator', locals: { f: f, product: product }

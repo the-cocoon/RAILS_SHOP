@@ -57,13 +57,18 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
 
           xml.url product_url(product)
 
-          cat_id = if product.ym_main_shop_category
-            product.ym_main_shop_category
+          # MAIN CATEGORY
+          prod_cat_ids = product.shop_categories.pluck(:id)
+          main_cat_id  = product.ym_main_shop_category
+
+          cat_id = if main_cat_id && prod_cat_ids.include?(main_cat_id)
+            main_cat_id
           else
             product.shop_categories.published.nested_set.last.try(:id)
           end
 
           xml.categoryId(cat_id) if cat_id
+          # ~ MAIN CATEGORY
 
           xml.sales_notes "Наличные, банковская карта, б/н расчет"
 
