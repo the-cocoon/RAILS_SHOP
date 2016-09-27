@@ -19,7 +19,9 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   has_many :order_items
-  before_validation :build_uid, on: :create
+
+  # before_validation :build_uid, on: :create
+  validates_presence_of :uid
 
   def items_relation; order_items; end
 
@@ -196,12 +198,10 @@ class Order < ActiveRecord::Base
     end
   end
 
-  # voiceless_include { }
-  include ::AppViewEngine::Order
+  voiceless { include ::AppViewEngine::Order }
 
-  private
-
-  def build_uid
-    self.uid = Digest::MD5.hexdigest("#{ Time.now }-#{ rand }")[0...7].downcase
-  end
+  # private
+  # def build_uid
+  #   self.uid = Digest::MD5.hexdigest("#{ Time.now }-#{ rand }")[0...7].downcase
+  # end
 end

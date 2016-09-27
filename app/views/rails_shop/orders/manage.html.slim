@@ -33,8 +33,8 @@
         tr
           td.p10.fs18.vam.upcase
             = order.id
-          td.p10.vam
-            = link_to order.uid.upcase, order, class: 'link--block fs15 pt0 lh120'
+          td.p10.vam.nobr
+            = link_to string_in_groups_by(order.uid), order, class: 'link--block fs15 pt0 lh120'
 
           td.p10.vam
             .fs15.pt0.lh120 = order.order_items_counter

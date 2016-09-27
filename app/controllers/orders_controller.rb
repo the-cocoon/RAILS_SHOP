@@ -47,7 +47,7 @@ class OrdersController < RailsShopController
 
   def create
     # create new Order
-    @order = Order.create(user: current_user)
+    @order = Order.create(uid: @cart.uid, user: current_user)
     @order.process_cart_after_create!(@cart)
 
     # clean up the Cart

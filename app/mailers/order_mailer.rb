@@ -1,8 +1,10 @@
 class OrderMailer < ActionMailer::Base
   include ::RailsShop::MailerSettingsConcern
+  include ::RailsShopStringBeautifiersHelper
 
   # Add View Helper for Mailer Preview Fix
   add_template_helper(MailerImageTagHelper)
+  add_template_helper(RailsShopStringBeautifiersHelper)
 
   prepend_view_path "#{ ::RailsShop::Engine.root }/app/views/rails_shop"
   prepend_view_path 'views/rails_shop'
@@ -38,7 +40,7 @@ class OrderMailer < ActionMailer::Base
     _mailer = ::Settings.rails_shop.mailer
     @from   = _mailer.smtp.default.user_name
 
-    @subject = I18n.t(:created, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:created, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = ::Settings.rails_shop.mailer.admin_email
@@ -55,7 +57,7 @@ class OrderMailer < ActionMailer::Base
   def moderation(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:moderation, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:moderation, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to  = ::Settings.rails_shop.mailer.admin_email
@@ -67,7 +69,7 @@ class OrderMailer < ActionMailer::Base
   def ready_to_payment(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:ready_to_payment, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:ready_to_payment, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = ::Settings.rails_shop.mailer.admin_email
@@ -79,7 +81,7 @@ class OrderMailer < ActionMailer::Base
   def paid(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:paid, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:paid, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = ::Settings.rails_shop.mailer.admin_email
@@ -91,7 +93,7 @@ class OrderMailer < ActionMailer::Base
   def delivery(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:delivery, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:delivery, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = 'admin@open-cook.ru'
@@ -103,7 +105,7 @@ class OrderMailer < ActionMailer::Base
   def completed(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:completed, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:completed, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = ::Settings.rails_shop.mailer.admin_email
@@ -115,7 +117,7 @@ class OrderMailer < ActionMailer::Base
   def unexpected_transition(order_id, state_changed)
     @order = Order.find(order_id)
 
-    @subject = I18n.t(:unexpected_transition, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:unexpected_transition, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @state_changed = state_changed

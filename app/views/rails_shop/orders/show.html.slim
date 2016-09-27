@@ -26,7 +26,7 @@
         /         = link_to 'Пересчетать заказ', recalc_price_order_path(@order), method: :patch
 
 
-        h3.fs24.mb10 Заказ: #{ @order.uid.upcase }
+        h3.fs24.mb10 Заказ: #{ string_in_groups_by @order.uid.upcase }
         .fs12.mb20 По этому номеру вы сможете найти свой заказ и отследить его статус
 
       - if @order.delivery
