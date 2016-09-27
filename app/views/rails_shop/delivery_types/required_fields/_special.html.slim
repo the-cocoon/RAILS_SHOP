@@ -4,7 +4,10 @@ li.table.w100p
 
     .mb15.clearfix
       .pull-left.mr20.mb5
-        - email = current_user ? current_user.email : nil
+        ruby:
+          email = @order.email
+          email = email.blank? ? current_user.try!(:actual_email) : email
+
         = f.label :email, 'Ваша электронная почта', class: 'block fs13 mb5'
         = f.text_field :email, value: email, autofocus: true, class: 'ptz--input ptz--size-15 w250 ', placeholder: 'name@example.ru'
 

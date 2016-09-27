@@ -36,6 +36,7 @@ h3.mt20.mb20.fs18
             th.p20.br-off= link_to 'На складе ↕',  simple_sort_url(:amount)
             th.p20.br-off= link_to 'Статус ↕',     simple_sort_url(:state)
             th.p20.br-off= link_to 'В Маркете? ↕', simple_sort_url(:ym_available)
+            th.p20.br-off= link_to 'UPD ↕',        simple_sort_url(:updated_at)
 
         - @products.each_with_index do |product, index|
 
@@ -71,6 +72,12 @@ h3.mt20.mb20.fs18
                   = check_box_tag 'yandex', '1', product.ym_available, autocomplete: :off, class: 'js--ya-market--checkbox'
 
               - if delivery_error_flag
-                .mb5.b.fs12 !Доставка
+                .mb5.b.fs12(title='ВСЕ ОПЦИИ ДОСТАВКИ FALSE') !Доставка
+
+            td.vam.w100.p20
+              ruby:
+                full_date  = product.updated_at.strftime("%Y.%m.%-d %H:%M")
+                short_date = product.updated_at.strftime("%-d %b")
+              .fs15(title="ОБНОВЛЕНО #{full_date}")= short_date
 
   = render template: 'common/paginator', locals: { items: @products }

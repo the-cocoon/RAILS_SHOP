@@ -45,7 +45,7 @@
         li.mt20.mb20.ml15.mr15.fs15 Пожалуйста, аккуратно и достоверно укажите все необходимые данные
 
         - dkind = @order.delivery.delivery_kind
-        = render partial: "delivery_types/required_fields/#{ dkind }", locals: { f: f }
+        = render partial: "delivery_types/required_fields/#{ dkind }", locals: { f: f, order: @order }
 
       li.ptz--table.w100p
         h3.fs24.ml15.mr15.mt15.mb0 Ваш заказ:

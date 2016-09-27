@@ -213,7 +213,7 @@ class ProductsController < RailsShopController
       ym_main_shop_category
       ym_market_category
       ym_sales_notes
-      ya_barcode
+      ym_barcode
 
       elco_id
       elco_markup

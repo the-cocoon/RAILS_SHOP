@@ -95,8 +95,8 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
             xml.country_of_origin(product.ym_country_of_origin)
           end
 
-          if product.ya_barcode.present?
-            xml.barcode(product.ya_barcode)
+          if product.ym_barcode.present?
+            xml.barcode(product.ym_barcode)
           end
 
           if product.ym_type_prefix.present?
