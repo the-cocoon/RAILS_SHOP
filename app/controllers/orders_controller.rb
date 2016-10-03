@@ -39,7 +39,18 @@ class OrdersController < RailsShopController
 
   # one click order
   def one_click
-    OrderMailer.one_click(params[:phone], params[:item_klass], params[:item_id]).deliver_now
+    cart   = put_product_in_tmp_cart
+    @order = Order.create(uid: cart.uid, user: current_user)
+
+    @order.process_cart_after_create!(cart)
+    @order.update_attribute(:phone, params[:phone])
+
+    OrderMailer.one_click(
+      params[:phone],
+      params[:product_klass],
+      params[:product_id]
+    ).deliver_now
+
     render layout: false, json: {
       flash:{ notice: "Ваш запрос успешно отправлен" }
     }
@@ -142,6 +153,24 @@ class OrdersController < RailsShopController
     return 'rails_shop_login'    if %w[ login_before ].include?(action_name)
     return 'rails_shop_frontend' if %w[ payment completion manual_payment ].include?(action_name)
     super
+  end
+
+  def set_product
+    klass = params[:product_klass].classify.constantize
+    @product = klass.base_scope.find(params[:product_id])
+  end
+
+  def put_product_in_tmp_cart
+    set_product
+    cart = ::Cart.create
+
+    cart.cart_items.create(item: @product, amount: 1, price: @product.price)
+    cart.increment!(:cart_items_counter)
+
+    ::CartService.add_default_delivery_if_need(cart)
+    ::RailsShopLogger.product_added_to_cart(cart.id, @product.id)
+
+    cart
   end
 
   def set_cart
