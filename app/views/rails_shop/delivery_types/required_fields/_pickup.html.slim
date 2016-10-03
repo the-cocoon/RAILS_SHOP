@@ -21,9 +21,7 @@ li.table.w100p
       .mb10.fs13
         | Хотите следить за состоянием заказа? Мы будем присылать вам уведомления.
       .mb5
-        ruby:
-          email = @order.email
-          email = email.blank? ? current_user.try!(:actual_email) : email
-
         = f.label :email, 'Ваш email (не обязательно)', class: 'block fs13 mb5'
-        = f.text_field :email, value: email, autofocus: true, class: 'ptz--input ptz--size-15 w250 ', placeholder: 'name@example.ru'
+        = f.text_field :email, autofocus: true, class: 'ptz--input ptz--size-15 w250 ', placeholder: 'name@example.ru'
+        - if (email = current_user.try!(:actual_email)).present?
+          .mt5.fs11(style='color:#aaa')= email
