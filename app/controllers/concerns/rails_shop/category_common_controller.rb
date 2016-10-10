@@ -37,7 +37,7 @@ module RailsShop
     # RESTRICTED AREA
 
     def manage
-      @shop_categories = category_klass.for_manage.reversed_nested_set
+      @shop_categories = category_klass.for_manage.nested_set
       render category_template(:manage)
     end
 

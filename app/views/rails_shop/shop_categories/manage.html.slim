@@ -10,4 +10,4 @@
   h3.mt20.mb40.fs18 Редактировать категорию товаров
 
   ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5, rebuild_url: rebuild_shop_categories_path })
-    = sortable_tree @shop_categories
+    = sortable_tree @shop_categories, render_module: ShopCategoryOrderingHelper
