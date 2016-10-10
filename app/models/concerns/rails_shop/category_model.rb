@@ -11,10 +11,10 @@ module RailsShop
       include ::RailsShop::StatesProcessing
       include ::RailsShop::ContentProcessing
 
-      scope :in_stock, ->{ where('amount > 0') }
-
       include ::TheSortableTree::Scopes
       acts_as_nested_set scope: %w[ user_id ]
+
+      scope :in_stock, ->{ where('amount > 0') }
 
       validates :title, uniqueness: true
       validates_presence_of :user, :title

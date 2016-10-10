@@ -27,8 +27,7 @@ module RailsShop
       @shop_category_rels =
         @shop_category_rels
           .includes(:item)
-          .reversed_nested_set
-          .simple_sort(params)
+          .show_sorting(params)
           .pagination(params)
 
       @shop_items = @shop_category_rels.map(&:item)

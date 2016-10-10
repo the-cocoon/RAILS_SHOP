@@ -2,6 +2,7 @@ class ShopCategoryRel < ActiveRecord::Base
   include ::SimpleSort::Base
   include ::Pagination::Base
   include ::TheSortableTree::Scopes
+  include ::RailsShop::SpecialFilters
 
   paginates_per 24
   acts_as_nested_set scope: %w[ category_type category_id ]
@@ -11,6 +12,19 @@ class ShopCategoryRel < ActiveRecord::Base
   belongs_to :item,     polymorphic: true
 
   validates :category_id, uniqueness: { scope: %w[ category_type item_type item_id ] }
+
+  scope :show_sorting, ->(params) {
+    params[:sfilter] ||= 'in_stock'
+
+    if params[:sfilter] == 'as_is'
+      return
+        reversed_nested_set
+        .simple_sort(params)
+    end
+
+    special_filter(params)
+    .simple_sort(params)
+  }
 
   # Item Methods
 
