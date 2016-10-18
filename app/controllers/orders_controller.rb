@@ -4,7 +4,7 @@ class OrdersController < RailsShopController
   before_action :set_order, only: %w[
     show login_before attach_current_user_to
     completion payment recalc_price payment_system
-    edit destroy
+    edit update destroy
   ]
 
   before_action :set_cart, only: %w[ create ]
@@ -123,6 +123,18 @@ class OrdersController < RailsShopController
 
   def edit; end
 
+  def update
+    @order.assign_attributes(order_update_params)
+
+    if @order.save
+      @order.recalc_total_price!
+      redirect_path = polymorphic_url([:edit, @order])
+      redirect_to redirect_path, notice: 'Заказ успешно обновлен'
+    else
+      render action: 'edit'
+    end
+  end
+
   def destroy
     @order.deleted!
     redirect_to :back, notice: 'Заказ удалён'
@@ -138,7 +150,7 @@ class OrdersController < RailsShopController
   def provide_required_payment_way
     if manual_payment?
       # Отправить Письмо Админу и пользователю
-      # Нарисовать обхяснительную страницу
+      # Нарисовать объяснительную страницу
       render 'manual_payment'
     else
       redirect_to url_for([:payment, @order])
@@ -188,6 +200,24 @@ class OrdersController < RailsShopController
       :country, :region, :city,
       :postcode, :street, :house_number,
       :delivery_comment
+    )
+  end
+
+  def order_update_params
+    params.require(:order).permit(
+      :email, :phone,
+      :full_name,
+      :country, :region, :city,
+      :postcode, :street, :house_number,
+      :delivery_comment,
+      :track_site,
+      :track_code,
+
+      :products_price,
+      :delivery_price,
+      :discount,
+      :price_correction,
+      :state
     )
   end
 end
