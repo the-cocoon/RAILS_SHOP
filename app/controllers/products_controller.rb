@@ -93,7 +93,9 @@ class ProductsController < RailsShopController
 
   def clone
     @cloned_product = @product.dup
+
     @cloned_product.assign_attributes(
+      sku:         nil,
       slug:        nil,
       short_id:    nil,
       friendly_id: nil,
@@ -101,6 +103,8 @@ class ProductsController < RailsShopController
     )
 
     # CLONE PRODUCT
+    return invalid_copy! unless @cloned_product.valid?
+
     @cloned_product.save
     @cloned_product.keep_consistency_after_create!
 
@@ -160,6 +164,11 @@ class ProductsController < RailsShopController
   end
 
   private
+
+  def invalid_copy!
+    notice = 'Ошибка валидации при копировании'
+    return redirect_to url_for([:edit, @product]), notice: notice
+  end
 
   def set_product
     @product = ::Product.friendly_first(params[:id])

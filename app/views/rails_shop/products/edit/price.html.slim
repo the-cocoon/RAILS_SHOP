@@ -18,7 +18,7 @@
             = f.number_field :usd_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
           .pull-left.mr30
             = f.label :rur_price, 'Руб. цена (комплекта)', class: 'block fs13 mb10'
-            = f.number_field :rur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+            = f.number_field :rur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 5000000, step: 0.01, placeholder: '', autocomplete: :off
         .mb25.lh130.fs15.clearfix
           | Конечная цена рассчитывается из значения самой приоритетной валюты
 
