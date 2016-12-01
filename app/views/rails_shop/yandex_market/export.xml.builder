@@ -140,7 +140,7 @@ xml.yml_catalog(date: Time.now.strftime("%Y-%m-%d %H:%M")) do
 
 
           # kilos
-          unless product.weight.zero?
+          unless product.weight.to_f.zero?
             xml.weight product.weight.to_f.round(2)
           end
 
