@@ -176,9 +176,9 @@
                 .ma.w100p
                   = hidden_field_tag :order_payment_type, :online
                   .ma.ptz--table
-                    / .ptz--td.tar
-                    /   = button_tag 'Оплатить заказ ONLINE', class: 'ptz--btn ptz--size-22 app--btn-1'
-                    / .ptz--td.vam.fs18.pl10.pr10
-                    /   | или
+                    .ptz--td.tar
+                      = button_tag 'Оплатить заказ ONLINE', class: 'js--order-payment-type--online ptz--btn ptz--size-22 app--btn-1'
+                    .ptz--td.vam.fs18.pl10.pr10
+                      | или
                     .ptz--td.tal
-                      = button_tag 'ЗАКАЗАТЬ', class: 'app--btn-1 js--order-payment-type--manual ptz--btn ptz--size-22'
+                      = button_tag 'ЗАКАЗАТЬ', class: 'js--order-payment-type--manual ptz--btn app--btn-1 ptz--size-22'

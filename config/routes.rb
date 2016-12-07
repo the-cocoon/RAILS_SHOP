@@ -138,6 +138,12 @@ module RailsShop
       match 'payments/yk/success'   => 'payments#yk_success', via: %w[ get post ]
       match 'payments/yk/failure'   => 'payments#yk_failure', via: %w[ get post ]
 
+      # Alfa Bank routes
+      post 'alfa_payments' => 'payments#alfa_before'
+      get  'alfa_callback' => 'payments#alfa_callback'
+      get  'alfa_success'  => 'payments#alfa_success'
+      get  'alfa_failure'  => 'payments#alfa_failure'
+
       ##########################
       # ~ SHOP
       ##########################

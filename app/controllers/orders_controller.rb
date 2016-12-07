@@ -105,7 +105,7 @@ class OrdersController < RailsShopController
   def payment; end
 
   def payment_system
-    _type = params[:payment_system_type].upcase.to_sym
+    _type = params[:payment_system_type].to_s.upcase.to_sym
     payment_system_name = Order.ps_id_name[ _type ]
     RailsShopLogger.selected_payment_system(@order.id, payment_system_name)
     render nothing: true
