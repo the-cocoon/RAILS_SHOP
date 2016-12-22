@@ -6,16 +6,32 @@ require 'net/http'
 # 123
 # 3dsecure: 12345678
 
+# Регистрация заказа  https://pay.alfabank.ru/payment/rest/register.do
+# Регистрация заказа с предавторизацией   https://pay.alfabank.ru/payment/rest/registerPreAuth.do
+# Запрос завершения оплаты заказа   https://pay.alfabank.ru/payment/rest/deposit.do
+# Запрос отмены оплаты заказа   https://pay.alfabank.ru/payment/rest/reverse.do
+# Запрос возврата средств оплаты заказа   https://pay.alfabank.ru/payment/rest/refund.do
+# Получение статуса заказа  https://pay.alfabank.ru/payment/rest/getOrderStatus.do
+# Получение расширенного статуса заказа   https://pay.alfabank.ru/payment/rest/getOrderStatusExtended.do
+# Запрос проверки вовлеченности карты в 3DS     https://pay.alfabank.ru/payment/rest/verifyEnrollment.do
+# Запрос статистики по платежам за период   https://pay.alfabank.ru/payment/rest/getLastOrdersForMerchants.do
+
+# Название метода   URL WSDL
+# Описание WebService (WSDL)  https://pay.alfabank.ru/payment/webservices/merchant-ws?wsdl
+
+# Название метода   URL
+# Личный кабинет  https://pay.alfabank.ru/mportal
+
 # include RailsShop::AlfaBankPayments
 module RailsShop
   module AlfaBankPayments
     extend ActiveSupport::Concern
 
-    ALFA_GATEWAY_URL = 'https://test.paymentgate.ru/testpayment/rest/'
+    ALFA_GATEWAY_URL = 'https://pay.alfabank.ru/payment/rest/'
     ALFA_RETURN_URL  = 'https://stereo-shop.ru/alfa_callback'
 
     ALFA_API_USER = 'stereo_shop-api'
-    ALFA_API_PASS = 'stereo_shop'
+    ALFA_API_PASS = 'Stereo1Shop$'
 
     ALFA_AUTH_DATA = { userName: ALFA_API_USER, password: ALFA_API_PASS }
 
