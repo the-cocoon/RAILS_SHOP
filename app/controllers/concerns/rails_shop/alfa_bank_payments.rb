@@ -35,7 +35,13 @@ module RailsShop
 
     ALFA_AUTH_DATA = { userName: ALFA_API_USER, password: ALFA_API_PASS }
 
-    included do; end
+    included do
+      SHOP_PUBLIC_ACTIONS = %w[ alfa_before alfa_callback alfa_success alfa_failure ]
+
+      skip_before_action :authenticate_user!,        only: SHOP_PUBLIC_ACTIONS
+      skip_before_action :shop_admin_required!,      only: SHOP_PUBLIC_ACTIONS
+      skip_before_action :verify_authenticity_token, only: SHOP_PUBLIC_ACTIONS
+    end
 
     def alfa_before
       order_id = params[:orderNumber]
