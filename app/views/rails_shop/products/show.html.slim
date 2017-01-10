@@ -16,9 +16,9 @@ ul.product-breadcrumbs.mt20.mb10
 
 h1.fs24.mt10.mb20= @product.title
 
-.product-card.table.w100p
-  .row
-    .product-card--image-block.cell
+.product-card.ptz--table.w100p
+  .ptz--trrow
+    .product-card--image-block.ptz--td
       - img = @product.main_image_url(:v500x500)
       .product-card--image(style="background-image:url(#{ img })")
 
@@ -32,7 +32,7 @@ h1.fs24.mt10.mb20= @product.title
         .mt20.mb20
           = link_to 'Редактировать товар', [:edit, @product], class: 'ptz--btn ptz--size-12'
 
-    .product-card--text.cell.w75p
+    .product-card--text.ptz--td.w75p
       .content-style-default
         = raw @product.content
 
@@ -61,17 +61,16 @@ h1.fs24.mt10.mb20= @product.title
                 td.table-light--td Артикул
                 td.table-light--td.w50p= @product.sku
 
-    .product-card--price-block.cell.w25p
+    .product-card--price-block.ptz--td.w25p
       .product-card--price-title.fs20.mb20 цена:
       .product-card--price-val.mt20.mb20.fs24.pl15
 
-        - if @product.total_price == @product.active_price.to_f
-          = money_to_text @product.active_price
+        - unless product.has_discount?
+          = money_to_text product.price
         - else
-          .mb25(style='text-decoration:line-through')= @product.active_price.to_f
-
-          = money_to_text @product.total_price
-          '
+          .mb25.s
+            = money_to_text product.price
+          => money_to_text product.discounted_price
           | руб.
 
       .product-card--buy-btn.mt20.mb40

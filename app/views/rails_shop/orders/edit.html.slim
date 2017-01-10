@@ -3,6 +3,138 @@
 - content_for :left_sidebar do
   = render partial: 'users/left_sidebar'
 
-.m20
-  = form_for @order do |f|
-    .fs15= @order.id
+.w800.ptz--theme-0.mt20
+  .fs20.lh120.mb30 Редактировать заказ
+
+  .ptz--div-0.mb20
+    = form_for @order do |f|
+      .m20
+        .mb30.fs15
+          span.mr15
+            span< ID:
+            b= @order.id
+
+          span.mr30
+            span> UID:
+            b= string_in_groups_by @order.uid
+
+          span.mr15
+            span< Создан:
+            b= @order.created_at.strftime('%d.%m.%Y %H:%M:%S')
+
+          - if @order.created_at.to_i != @order.updated_at.to_i
+            span.mr15
+              span> Обновлен:
+              b= @order.updated_at.strftime('%d.%m.%Y %H:%M:%S')
+
+        .clearfix
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :email, 'Email', class: 'block fs13 mb10'
+              = f.text_field :email, class: 'ptz--input ptz--size-15 w100p'
+
+          .pull-left.w40p
+            .mb30
+              = f.label :phone, 'Телефон', class: 'block fs13 mb10'
+              = f.text_field :phone, class: 'ptz--input ptz--size-15 w100p'
+
+        .clearfix
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :full_name, 'Полное имя', class: 'block fs13 mb10'
+              = f.text_field :full_name, class: 'ptz--input ptz--size-15 w100p'
+
+          .pull-left.w40p
+            .mb30
+              = f.label :country, 'Страна', class: 'block fs13 mb10'
+              = f.text_field :country, class: 'ptz--input ptz--size-15 w100p'
+
+        .clearfix
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :region, 'Регион', class: 'block fs13 mb10'
+              = f.text_field :region, class: 'ptz--input ptz--size-15 w100p'
+
+          .pull-left.w40p
+            .mb30
+              = f.label :city, 'Город', class: 'block fs13 mb10'
+              = f.text_field :city, class: 'ptz--input ptz--size-15 w100p'
+
+        .clearfix
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :postcode, 'Индекс', class: 'block fs13 mb10'
+              = f.text_field :postcode, class: 'ptz--input ptz--size-15 w100p'
+
+          .pull-left.w40p
+            .mb30
+              = f.label :street, 'Улица', class: 'block fs13 mb10'
+              = f.text_field :street, class: 'ptz--input ptz--size-15 w100p'
+
+        .clearfix
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :house_number, 'Номер дома', class: 'block fs13 mb10'
+              = f.text_field :house_number, class: 'ptz--input ptz--size-15 w100p'
+
+          .pull-left.w40p
+            .mb30
+              = f.label :delivery_comment, 'Комментарий', class: 'block fs13 mb10'
+              = f.text_area :delivery_comment, class: 'ptz--textarea ptz--size-15 w100p'
+
+        .clearfix
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :track_site, 'Адрес страницы проверки заказа', class: 'block fs13 mb10'
+              .mb10= f.text_field :track_site, class: 'ptz--input ptz--size-15 w100p'
+              .mb5.fs12 https://www.pochta.ru/tracking
+
+          .pull-left.w40p
+            .mb30
+              = f.label :track_code, 'Трек код', class: 'block fs13 mb10'
+              .mb10= f.text_field :track_code, class: 'ptz--input ptz--size-15 w100p'
+              .mb5.fs12 35005145009747
+
+        .clearfix
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :products_price, 'Цена товаров', class: 'block fs13 mb10'
+              = f.text_field :products_price, class: 'ptz--input ptz--size-15 w100p'
+
+          .pull-left.w40p
+            .mb30
+              = f.label :delivery_price, 'Цена доставки', class: 'block fs13 mb10'
+              = f.text_field :delivery_price, class: 'ptz--input ptz--size-15 w100p'
+
+        .clearfix
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :discount, 'Скидка', class: 'block fs13 mb10'
+              = f.text_field :discount, class: 'ptz--input ptz--size-15 w100p'
+
+          .pull-left.w40p
+            .mb30
+              = f.label :total_price, 'Итоговая цена', class: 'block fs13 mb10'
+              = f.text_field :total_price, class: 'ptz--input ptz--size-15 w100p'
+
+            / .mb30
+            /   = f.label :price_correction, 'Корректировка цены', class: 'block fs13 mb10'
+            /   = f.text_field :price_correction, class: 'ptz--input ptz--size-15 w100p', disabled: :disabled
+
+        .clearfix
+          .pull-left.w40p.mr20
+
+
+          .pull-left.w40p
+            / .mb30
+            /   = f.label :order_items_counter, 'Кол-во товаров', class: 'block fs13 mb10'
+            /   = f.text_field :order_items_counter, class: 'ptz--input ptz--size-15 w100p', disabled: :disabled
+
+        .clearfix.mb20
+          .pull-left.w40p.mr20
+            .mb30
+              = f.label :state, 'Статус', class: 'b block fs13 mb10'
+              - options = options_for_select(I18n.t('rails_shop.orders.state').invert, @order.state)
+              = f.select :state, options, {}, autocomplete: :off, class: 'ptz--size-15 w100p ptz--select'
+
+        div= f.submit 'Сохранить', class: 'ptz--btn ptz--size-24'

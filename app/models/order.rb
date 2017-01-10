@@ -1,4 +1,8 @@
 class Order < ActiveRecord::Base
+  # You have to implement your own `ProductPriceHelper`
+  # in your App View
+  include ::ProductPriceHelper
+
   include ::SimpleSort::Base
   include ::Pagination::Base
   include ::Notifications::LocalizedErrors
@@ -11,14 +15,13 @@ class Order < ActiveRecord::Base
 
   EMAIL_REGEXP = /@/
 
-  PS_NAME_ID = { card: :AC, yadengi: :PC, alfa_bank: :AB, promsvyaz_bank: :PB, web_money: :WM, euroset: :GP, svyaznoy: :GP, sberbank: :SB, qiwi: :QW }
-  PS_ID_NAME = PS_NAME_ID.map{|k,v| [v,k] }.to_h
-
   def to_param; self.uid; end
 
   belongs_to :user
   has_many :order_items
-  before_validation :build_uid, on: :create
+
+  # before_validation :build_uid, on: :create
+  validates_presence_of :uid
 
   def items_relation; order_items; end
 
@@ -87,7 +90,10 @@ class Order < ActiveRecord::Base
   # PRICE CALCULATIONS
 
   def recalc_products_price!
-    ps_price = products.inject(0){|res, pr| res += (pr.amount * pr.price.to_f) }
+    ps_price = products.inject(0) do |res, order_item|
+      res + (order_item.amount * product_discounted_price(order_item.item))
+    end
+
     update_attribute(:products_price, ps_price)
   end
 
@@ -109,9 +115,10 @@ class Order < ActiveRecord::Base
   # ~~~ DISCOUNT ~~~
 
   def discount_percent
-    return 0 unless user
-    return 5 if user.orders.paid.count > 0
-    2
+    return 0
+    # return 0 unless user
+    # return 5 if user.orders.paid.count > 0
+    # 2
   end
 
   def discount_value
@@ -158,15 +165,42 @@ class Order < ActiveRecord::Base
 
   # SERVICE METHODS
 
-  def self.recalc_items_counters!
-    Order.all.each do |order|
-      order.update_attribute(:order_items_counter, order.products.count)
+  class << self
+    def ps_name_id
+      return super if defined?(super)
+
+      {
+        card: :AC,
+        yadengi: :PC,
+        alfa_bank: :AB,
+        promsvyaz_bank: :PB,
+        web_money: :WM,
+        euroset: :GP,
+        svyaznoy: :GP,
+        sberbank: :SB,
+        qiwi: :QW
+      }
+    end
+
+    def ps_id_name
+      return super if defined?(super)
+
+      ps_name_id.map{|k,v| [v,k] }.to_h
+    end
+
+    def recalc_items_counters!
+      return super if defined?(super)
+
+      Order.all.each do |order|
+        order.update_attribute(:order_items_counter, order.products.count)
+      end
     end
   end
 
-  private
+  voiceless { include ::AppViewEngine::Order }
 
-  def build_uid
-    self.uid = Digest::MD5.hexdigest("#{ Time.now }-#{ rand }")[0...7].downcase
-  end
+  # private
+  # def build_uid
+  #   self.uid = Digest::MD5.hexdigest("#{ Time.now }-#{ rand }")[0...7].downcase
+  # end
 end

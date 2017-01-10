@@ -1,0 +1,87 @@
+= render template: 'rails_shop/layouts/items/header_footer'
+
+- @main_content_block_class = 'shop-cart--background'
+
+.w800.ma.shop-cart--list
+
+  .mt50.mb50.ml20.mr20
+    h3.fs24.mb20  Поздравляем! Ваш заказ успешно сформирован
+    .fs16.mb15.lh130 Соответствующие уведомления отправлены оператору и на ваш контактный email.
+    .fs16.mb25.lh130 В ближайшее время мы свяжемся с Вами по указанным контактным данным для уточнения информации по заказу.
+
+    .fs22.mb30
+      | Номер вашего заказа: #{ string_in_groups_by @order.uid.to_s.upcase }
+
+    ul.mb30
+      li.ptz--table.w100p
+        h3.fs24.ml15.mr15.mt15.mb0 Ваш заказ:
+
+      li.shop-cart--headers
+        .shop-cart--header Информация о товаре
+        .shop-cart--header.w20p Количество
+        .shop-cart--header.w15p Цена
+        .shop-cart--header.w5p
+
+      - @order.order_items.products.each do |cart_item|
+        - product = cart_item.item
+        li.shop-cart--position
+          .shop-cart--position-cell
+            - img = product.main_image_url(:v100x100)
+            .shop-cart--image(style="background-image:url(#{ img })")
+
+            .shop-cart--product-name= product.title
+            .shop-cart--product-info
+              = product.equipment
+            .shop-cart--product-info
+              = product.sku
+
+          .shop-cart--position-cell.w20p
+            ruby:
+              price = product_price(product)
+              discounted_price = product_discounted_price(product)
+
+            .mt10.fs24
+              => money_to_text discounted_price
+              |x
+              =< cart_item.amount
+
+            .mt10.fs13
+              | На складе:
+              '
+              = product.amount
+
+          .shop-cart--position-cell.w15p
+             .shop-cart--position-price
+                = money_to_text cart_item.amount * discounted_price
+
+          .shop-cart--position-cell.w5p
+
+    - if @order.delivery
+      ul.mb40
+        li.cart-delivery-info
+          .fs18.lh120
+            - if @order.delivery.moderation_required?
+              b>
+                | [Сумму уточнит оператор]
+              => @order.delivery.intro
+            - else
+              b>
+                => money_to_text @order.delivery.price
+                | руб.
+              => @order.delivery.intro
+
+    .fs15.mb40
+      | Итого:
+      '
+      span.br-off
+        span.fs24
+          => money_to_text(@order.total_price)
+        'руб.
+
+    .fs16.mb25.lh130 А сейчас вы можете:
+
+    ul.ul.mb35
+      li.fs16.mb15
+        | Посмотреть другие товары в нашем магазине
+        '
+        = link_to 'stereo-shop.ru', 'https://stereo-shop.ru'

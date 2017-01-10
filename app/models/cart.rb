@@ -4,6 +4,8 @@ class Cart < ActiveRecord::Base
 
   include ::RailsShop::PriceMethods
 
+  voiceless { prepend ::AppViewEngine::Cart }
+
   def to_param; self.uid; end
 
   # expire time in hours
@@ -11,6 +13,7 @@ class Cart < ActiveRecord::Base
 
   belongs_to :user
   before_validation :build_uid, on: :create
+  validates_presence_of :uid
 
   has_many :cart_items
   def items_relation; cart_items; end

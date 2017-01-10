@@ -1,0 +1,77 @@
+.ptz--theme-0.w800
+  .ptz--div-0
+    .m20
+      = form_for @product do |f|
+        = hidden_field_tag :anchor, 'ptz--tabs--page_edit_2--price'
+
+        .fs18.mb30 Ценообразование
+
+
+        .fs15.mb20.b Цена в порядке приоритета
+
+        .mb15.clearfix
+          .pull-left.mr30
+            = f.label :eur_price, 'EUR цена (комплекта)', class: 'block fs13 mb10'
+            = f.number_field :eur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+          .pull-left.mr30
+            = f.label :usd_price, 'USD цена (комплекта)', class: 'block fs13 mb10'
+            = f.number_field :usd_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+          .pull-left.mr30
+            = f.label :rur_price, 'Руб. цена (комплекта)', class: 'block fs13 mb10'
+            = f.number_field :rur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 5000000, step: 0.01, placeholder: '', autocomplete: :off
+        .mb25.lh130.fs15.clearfix
+          | Конечная цена рассчитывается из значения самой приоритетной валюты
+
+        .ptz--hr-0.mb20
+
+        .mb15.clearfix
+          .pull-left.mr30
+            = f.label :min_price, 'MIN руб. цена', class: 'block fs13 mb10'
+            = f.number_field :min_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+          .pull-left.mr30
+            = f.label :max_price, 'MAX руб. цена', class: 'block fs13 mb10'
+            = f.number_field :max_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
+        .mb25.lh130.fs15.clearfix
+          | Здесь можно зафиксировать Max/Min рублевую цену, которая будет расчитываться на основе валютного значения
+
+        .ptz--hr-0.mb20
+
+        / SPECIFIC
+        = render template: 'products/edit/elco_price', locals: { f: f, product: @product }
+
+        .fs15.mb20.b Скидка
+
+        .mb20.clearfix
+          .pull-left.mr30
+            = f.label :discount_percent, 'Скидка (проценты)', class: 'block fs13 mb10'
+            = f.number_field :discount_percent, class: 'ptz--input ptz--size-15 w150', maxlength: 2, min: 0, max: 90, placeholder: '20', autocomplete: :off
+          .pull-left.mr30.w45p
+            = label_tag nil, '&nbsp;'.html_safe, class: 'block fs13 mb10'
+            .lh130.fs15 Скидка влияет на итоговую цену. Цена без скидки отображается на сайте и передается в Yandex Market
+
+        .ptz--hr-0.mb20
+
+        .clearfix
+          ruby:
+            price = money_to_text product.price
+            discounted_price = money_to_text product.discounted_price
+            discount = product.discount_percent
+
+          - if price == discounted_price
+            .pull-right
+              .fs13.b.mb10 Итоговая цена:
+              .fs20.tar= price
+          - else
+            .pull-right
+              .fs13.b.mb10 Итоговая цена:
+              .fs20.tar= discounted_price
+
+            .pull-right.mr40
+              .fs13.b.mb10 Цена без скидки:
+              .fs20.tar(style='text-decoration:line-through')= price
+
+        hr.ptz--hr-0.mt25.mb25
+
+        .clearfix
+          .pull-right
+            = f.submit 'Обновить товар', class: 'ptz--btn ptz--size-22'

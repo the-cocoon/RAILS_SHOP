@@ -1,14 +1,16 @@
 class RailsShopLoggerMailer < ActionMailer::Base
   include ::RailsShop::MailerSettingsConcern
 
+  # Add View Helper for Mailer Preview Fix
+  add_template_helper(MailerImageTagHelper)
+
   prepend_view_path "#{ ::RailsShop::Engine.root }/app/views/rails_shop"
-  prepend_view_path 'app/views/rails_shop'
-  layout 'mailers/layout'
+  prepend_view_path 'views/rails_shop'
+
+  layout 'mailers/app_layout'
 
   default bcc: ::Settings.rails_shop.mailer.admin_email
-  default template_path: 'rails_shop/mailers'
-
-  before_action :set_attachments!
+  default template_path: 'rails_shop/mailers/logger'
 
   # RailsShopLoggerMailer.product_added_to_cart(Cart.last.id, Product.last.id).deliver_now
   # RailsShopLoggerMailer.delay_for(2.seconds).product_added_to_cart(cart_id, product_id)
@@ -44,15 +46,14 @@ class RailsShopLoggerMailer < ActionMailer::Base
     mail(to: @to, subject: @subject)
   end
 
-  private
-
-  def set_attachments!
-    @images = {
-      'logo_w130_h130.png' => 'images/logos/logo_w130_h130.png'
-    }
-
-    @images.each_pair do |name, path|
-      attachments.inline[name] = File.read("#{ Rails.root }/public/#{ path }")
-    end
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # INJECT FROM APP VIEW ENGINE
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  voiceless do
+    prepend_view_path "#{ ::AppViewEngine::Engine.root }/app/views"
+    include ::AppViewEngine::MailerAttachments
   end
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # ~ INJECT FROM APP VIEW ENGINE
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 end

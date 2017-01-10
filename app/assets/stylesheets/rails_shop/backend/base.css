@@ -1,0 +1,36 @@
+/*
+  #= require ptz/reset
+  #= require ptz/base
+  #= require ptz/framework
+
+  #= require ptz/inputs-buttons/base
+  #= require ptz/inputs-buttons/sizes
+
+  #= require protozaur_theme/theme-0/divs
+  #= require protozaur_theme/theme-0/tables
+
+  #= require ptz-tabs/ptz-tabs
+
+  #= require notifications/vendors/toastr
+  #= require components/toastr/style
+  #= require notifications
+
+  #= require custom_select/custom_select
+
+  #= require crop_tool/crop_tool
+  #= require crop_tool/jcrop/jquery.Jcrop
+
+  #= require components/select2-4.0.2/select2
+  #= require components/select2-4.0.2/select2_custom
+
+  #= require attached_images/attached_images
+  #= require the_sortable_tree/sortable_ui/base
+
+  #= require app_view/layout/common_styles
+
+  #= require rails_shop/frontend/shop-footer
+
+  #= require rails_shop/backend/yandex_market_index
+  #= require rails_shop/backend/products_manage
+  #= require rails_shop/backend/shop_category
+*/

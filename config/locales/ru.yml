@@ -7,10 +7,17 @@ ru:
         email: "Email"
         phone: "Телефон"
         full_name: "Полное имя"
+        postcode: "Индекс"
         city: "Город"
         street: "Улица"
         house_number: "Номер дома"
         delivery_comment: "Комментарий к доставке"
+
+  products:
+    state:
+      draft: Черновик
+      published: Опубликован
+      deleted: Удален
 
   rails_shop:
     title: Мой Магазин
@@ -47,6 +54,8 @@ ru:
         products_count: В корзине %{count} %{products_plur}
 
     orders:
+      one_click: Сформирован заказ в 1 клик
+
       state:
         draft: Cформирован
         paid: Оплачен

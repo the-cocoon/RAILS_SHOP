@@ -1,8 +1,4 @@
 class DeliveryTypesController < RailsShopController
-  layout 'rails_shop_layout'
-
-  before_action :authenticate_user!
-  before_action :shop_admin_required
 
   before_action :set_delivery_type, only: [:show, :edit, :update, :destroy] + RailsShop::MainImageActions::ACTIONS
   before_action :set_holder_for_main_image, only: RailsShop::MainImageActions::ACTIONS

@@ -1,5 +1,4 @@
 class CartsController < RailsShopController
-  layout 'rails_shop_layout'
 
   before_action :find_cart_by_cart_id, only: %w[
     add_product remove_product
@@ -23,7 +22,7 @@ class CartsController < RailsShopController
     reset
   ]
 
-  before_action :shop_admin_required, except: %w[
+  before_action :shop_admin_required!, except: %w[
     index show
     set_delivery_type
     add_product remove_product
@@ -55,7 +54,7 @@ class CartsController < RailsShopController
   end
 
   def add_product
-    @cart.cart_items.create(item: @product, amount: 1, price: @product.active_price)
+    @cart.cart_items.create(item: @product, amount: 1, price: @product.price)
     @cart.increment!(:cart_items_counter)
 
     ::CartService.add_default_delivery_if_need(@cart)

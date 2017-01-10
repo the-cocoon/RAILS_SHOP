@@ -11,9 +11,9 @@
         span.fs16 Оформить заказ без регистрации
 
   @registration-accordion--content(style=content_visible)
-    .table.w100p
-      .row
-        .cell.pl10
+    .ptz--table.w100p
+      .ptz--tr
+        .ptz--td.pl10
           p.mt0 Я хочу просто закончить оформление заказа:
           = link_to 'Оформить заказ', @order, class: 'ptz--btn ptz--size-18 ptz--style-0--btn'
 

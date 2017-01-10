@@ -8,6 +8,8 @@
   = form_for product, html: { class: '' } do |f|
     = render partial: 'notifications/form', locals: { object: product }
 
+    .mb15.fs12 ID: <b>#{ product.id }</b>
+
     .mb30
       = f.label :title, 'Название', class: 'block fs13 mb10'
       = f.text_field :title, class: 'ptz--input ptz--size-15 w100p'
@@ -23,55 +25,6 @@
     div
       = f.label :equipment, 'Комплектация', class: 'block fs13 mb10'
       = f.text_area :equipment, class: 'ptz--textarea ptz--size-15 w100p'
-
-    hr.ptz--hr-0.mt25.mb25
-
-    .fs18.mb20 Цена
-
-    .mb25.clearfix
-      .pull-left.mr30
-        = f.label :rur_price, 'Руб. цена (комплекта)', class: 'block fs13 mb10'
-        = f.number_field :rur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
-      .pull-left.mr30
-        = f.label :eur_price, 'EUR цена (комплекта)', class: 'block fs13 mb10'
-        = f.number_field :eur_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
-      .pull-left.mr30
-        = f.label :usd_price, 'USD цена (комплекта)', class: 'block fs13 mb10'
-        = f.number_field :usd_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
-
-    .mb10.clearfix
-      .pull-left.mr30
-        = f.label :min_active_price, 'MIN руб. цена', class: 'block fs13 mb10'
-        = f.number_field :min_active_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
-      .pull-left.mr30
-        = f.label :max_active_price, 'MAX руб. цена', class: 'block fs13 mb10'
-        = f.number_field :max_active_price, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, step: 0.01, placeholder: '', autocomplete: :off
-      .pull-left
-        = f.label :discount_percent, 'Скидка (проценты)', class: 'block fs13 mb10'
-        = f.number_field :discount_percent, class: 'ptz--input ptz--size-15 w150', maxlength: 2, min: 0, max: 90, placeholder: '20', autocomplete: :off
-
-    / .mb20.clearfix
-    /   .pull-left.mr30
-    /     = f.label :price_text, 'Текстовая цена', class: 'block fs13 mb5'
-    /     = f.text_field :price_text, class: 'ptz--input ptz--size-15 w150 ', maxlength: 200, placeholder: '1000 за 6 штук', autocomplete: :off
-
-    .clearfix.mb20
-      .pull-left.lh130.w300.fs13
-        | При выходе за данный диапазон, цена будет установлена в MIN или MAX значение
-
-    .clearfix
-      - if product.total_price == product.active_price.to_f
-        .pull-right
-          .fs13.b.mb10 Итоговая цена:
-          .fs20.tar= product.total_price
-      - else
-        .pull-right
-          .fs13.b.mb10 Итоговая цена:
-          .fs20.tar= product.total_price
-
-        .pull-right.mr40
-          .fs13.b.mb10 Цена без скидки:
-          .fs20.tar(style='text-decoration:line-through')= product.active_price.to_f
 
     hr.ptz--hr-0.mt25.mb25
 
@@ -94,6 +47,10 @@
       .pull-left.mr30
         = f.label :weight, 'Вес (кило)', class: 'block fs13 mb10'
         = f.number_field :weight, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '15', autocomplete: :off
+
+      .pull-left.mr30
+        = f.label :warranty_time_units, 'Месяцев гарантии', class: 'block fs13 mb10'
+        = f.number_field :warranty_time_units, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.1, placeholder: '8', autocomplete: :off
 
     hr.ptz--hr-0.mt25.mb25
 
@@ -130,6 +87,9 @@
 
     hr.ptz--hr-0.mt25.mb25
 
-    .clearfix
-      .pull-right
+    .ptz--table.w100p
+      .ptz--td.w50p.tal.vam
+        = link_to 'Клонировать товар', clone_product_path(product), method: :post, class: 'ptz--btn size--16', data: { confirm: 'Вы уверены, что хотите КЛОНИРОВАТЬ товар?' }
+      .ptz--td.tar.vam
         = f.submit 'Обновить товар', class: 'ptz--btn ptz--size-22'
+

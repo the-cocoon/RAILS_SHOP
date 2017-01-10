@@ -1,7 +1,8 @@
-- if shop_items.blank?
-  h3.mt20.mb20.fs14 К сожалению товаров не найдено
-- else
-  .products-list.clearfix
-    - shop_items.each do |item|
-      - if item.is_a?(Product)
-        = render template: 'rails_shop/products/product_item', locals: { product: item }
+.w800
+  - if shop_items.blank?
+    h3.mt20.mb20.fs14 К сожалению товаров не найдено
+  - else
+    .products-list.clearfix
+      - shop_items.each do |item|
+        - if item.is_a?(Product)
+          = render template: 'rails_shop/products/product_item', locals: { product: item }

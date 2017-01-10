@@ -9,6 +9,6 @@ class CartItem < ActiveRecord::Base
   scope :deliveries, ->{ where(item_type: :DeliveryType) }
 
   def total_price
-    amount * item.active_price.to_f
+    amount * item.discounted_price.to_f
   end
 end

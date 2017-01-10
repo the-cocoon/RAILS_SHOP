@@ -19,13 +19,13 @@ module ShopCategoryRelsManagerHelper
         "
           <li data-node-id='#{ node.id }'>
             <div class='ptz--div-0 p10'>
-              <div class='table w100p the-sortable-tree--item'>
-                <div class='row'>
-                  <div class='cell vam w30'>
+              <div class='ptz--table w100p the-sortable-tree--item'>
+                <div class='ptz--tr'>
+                  <div class='ptz--td vam w30'>
                     #{ checkbox }
                   </div>
 
-                  <div class='cell vam'>
+                  <div class='ptz--td vam'>
                     #{ show_link }
                   </div>
 
@@ -43,10 +43,10 @@ module ShopCategoryRelsManagerHelper
 
         category_id = "shop_category_#{ node.id }"
         checked     = @used_in_ids.include?(node.id)
-        data        = { id: node.id, role: 'shop-category-rel--checkbox' }
+        data        = { id: node.id, class: node.class.to_s.tableize.singularize.dasherize }
 
         "<div class='mr15'>
-          #{ h.check_box_tag category_id, 1, checked, { autocomplete: :off, data: data } }
+          #{ h.check_box_tag category_id, 1, checked, { autocomplete: :off, data: data, class: 'js--shop-category-rel--checkbox' } }
           #{ h.label_tag category_id, '', for: category_id }
         </div>"
       end

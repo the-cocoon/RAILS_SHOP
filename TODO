@@ -1,0 +1,6 @@
+TODO:
+
+1. Оформить заказ
+
+`http://localhost:3000/orders/f0a0661/login_before`
+не работают пункты выбора логина

@@ -1,21 +1,51 @@
 .products-list--item
-  - if product.discount_percent.present? && !product.discount_percent.zero?
-    .marker.marker-size-12.marker-type-discount.products-list--marker
-      = raw "&ndash;#{ product.discount_percent }% СКИДКА!"
-  - elsif product.special_marker.present?
-    - if product.special_marker == 'new'
-       .marker.marker-size-12.marker-type-new.products-list--marker Новинка
-    - if product.special_marker == 'recommended'
-      .marker.marker-size-12.marker-type-recommended.products-list--marker Рекомендуем
+  .products-list--header
+    = link_to product, class: 'link--block products-list--title-link' do
+      h3.fs14.lh140.products-list--title
+        = product.title
 
-  - img = product.main_image_url(:v500x500)
-  = link_to '', product, class: 'products-list--image', style: "background-image:url(#{ img })"
+  = link_to product, class: 'products-list--img_link', title: product.title, alt: product.title do
+    - img = product.main_image_url(:v500x500)
+    .products-list--img style="background-image:url(#{ img })"
 
-  = link_to product, class: 'link--block products-list--title-link' do
-    h3.products-list--title= product.title
+      - if product.has_discount? || product.special_marker.present?
+        .markers--holder.tar
+          - if product.has_discount?
+            .mb5
+              .markers--item.markers--discount.marker-size-12
+                = raw "&ndash;#{ product.discount_percent }% СКИДКА!"
 
-  .products-list--price.b
-    - if product.price_text.present?
-      = product.price_text
-    - else
-      = "#{ money_to_text product.active_price } руб"
+          - if product.special_marker == 'new'
+            .mb5
+              .markers--item.markers--new.marker-size-12 Новинка
+
+          - if product.special_marker == 'recommended'
+            .mb5
+              .markers--item.markers--recommended.marker-size-12 Рекомендуем
+
+      .products-list--more.app--btn-1.ptz--btn.ptz--size-16 Перейти к товару
+
+  .products-list--footer
+    .mb5
+      - if product.has_discount?
+        span.mr15.b
+          => money_to_text product.discounted_price
+          | руб.
+        span.mr15.s
+          => money_to_text product.price
+          | руб.
+        span
+          | &ndash;
+          =<> product.discount_percent
+          |%
+      - else
+        span.b
+          => money_to_text product.price
+          | руб.
+    .mb5
+      - if product.amount > 0
+        | В наличии: #{ product.amount }
+      - else
+        | Под заказ
+
+  / .products-list--price.b

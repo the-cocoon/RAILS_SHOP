@@ -14,7 +14,7 @@ li.table.w100p
         = f.text_field :full_name, class: 'ptz--input ptz--size-15 w520 ', placeholder: 'Иванова Мария Николаевна'
 
     .mb15.mb30.clearfix
-      = f.label :delivery_comment, raw('Укажите предполагаемую станцию метро и предполагаемое время встречи'), class: 'block fs13 mb5 lh130'
+      = f.label :delivery_comment, raw('Укажите здесь резервный способы связи и контактные данные'), class: 'block fs13 mb5 lh130'
       = f.text_area :delivery_comment, class: 'ptz--input ptz--size-15 w520 '
 
     .clearfix
@@ -22,4 +22,6 @@ li.table.w100p
         | Хотите следить за состоянием заказа? Мы будем присылать вам уведомления.
       .mb5
         = f.label :email, 'Ваш email (не обязательно)', class: 'block fs13 mb5'
-        = f.text_field :email, class: 'ptz--input ptz--size-15 w250 ', placeholder: 'name@example.ru'
+        = f.text_field :email, autofocus: true, class: 'ptz--input ptz--size-15 w250 ', placeholder: 'name@example.ru'
+        - if (email = current_user.try!(:actual_email)).present?
+          .mt5.fs11(style='color:#aaa')= email

@@ -18,19 +18,25 @@ module RailsShop
     end
 
     def cbr_get_daily_report(date = "12/12/2012")
-      cbr_get_response(cbr_daily_rates_url, { date_req: date })
+      @cbr_response ||= cbr_get_response(cbr_daily_rates_url, { date_req: date })
     end
 
     def cbr_current_eur_rate(date)
       report = cbr_get_daily_report(date)
 
-      Nokogiri::XML(report.body)
+      ::Nokogiri::XML(report.body)
         .search("Valute[ID=#{ cbr_eur_code }]")
         .children()
         .search('Value')
         .text()
         .gsub(',','.')
         .to_f
+    end
+
+    def get_cbr_current_rates
+      date = Time.zone.now.strftime('%d/%m/%Y')
+      self.rur_eur = cbr_current_eur_rate(date)
+      self.rur_usd = cbr_current_usd_rate(date)
     end
 
     def cbr_current_usd_rate(date)

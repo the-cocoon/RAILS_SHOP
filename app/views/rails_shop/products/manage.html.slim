@@ -1,41 +1,83 @@
 = render template: 'rails_shop/layouts/items/header_footer'
 
-h3.mt20.mb20.fs18 Редактировать товары
+h3.mt20.mb20.fs18
+  | Редактировать товары:
+  =< @products_count
 
-.mb20= link_to 'Новый товар', new_product_url, class: 'ptz--btn ptz--size-14'
+.ptz--table.w100p.mb20.fs15
+  .ptz--td.vam.tal
+    span.mr30= link_to 'Кабинет', cabinet_url, class: 'ptz--btn ptz--size-14'
+    span.mr30= link_to 'Новый товар', new_product_url, class: 'ptz--btn ptz--size-14'
+    span.mr30= link_to 'Выгрузить в YML', yandex_market_export_path, class: 'ptz--btn ptz--size-14'
+
+  .ptz--td.vam.tar
+    span.mr10 элементов на стр:
+    ruby:
+      per_page = params[:per_page].to_i
+      per_page = 24 if per_page.zero?
+    - %w[ 5 10 24 20 50 100 125 200 300 400 500 ].map(&:to_i).each do |num|
+      span.mr10(class=('b' if num == per_page))= link_to num, url_for(per_page: num)
+
+    span.ml50= link_to 'Сбросить сортировку', url_for(reset_simple_sort)
 
 .ptz--theme-0
 
   - if @products.any?
-    .clearfix.mb10
-      .pull-right.fs12
-        = link_to 'Сбросить фильтры', url_for( reset_simple_sort )
-
     .mb20
       table.ptz--table-0.w100p
         thead
           tr.fs15.tal
+            th
+            th.pl0.pt20.pr20.pb20.b.br-off= link_to 'ID ↕',  simple_sort_url(:id)
             th.p20
-            th.p20.br-off= link_to 'Название ↕',  simple_sort_url(:title)
-            th.p20.br-off= link_to 'Цена ↕',      simple_sort_url(:active_price)
-            th.p20.br-off= link_to 'На складе ↕', simple_sort_url(:amount)
-            th.p20.br-off= link_to 'Артикул ↕',   simple_sort_url(:sku)
-            th.w50
+            th.p20.br-off= link_to 'Название ↕',   simple_sort_url(:title)
+            th.p20.br-off= link_to 'Цена ↕',       simple_sort_url(:price)
+            th.p20.br-off= link_to 'Скидка ↕',     simple_sort_url(:discount_percent)
+            th.p20.br-off= link_to 'На складе ↕',  simple_sort_url(:amount)
+            th.p20.br-off= link_to 'Статус ↕',     simple_sort_url(:state)
+            th.p20.br-off= link_to 'В Маркете? ↕', simple_sort_url(:ym_available)
+            th.p20.br-off= link_to 'UPD ↕',        simple_sort_url(:updated_at)
 
-        - @products.each do |product|
-          tr
+        - @products.each_with_index do |product, index|
+
+          tr(class="products-manage--status-#{ product.state }")
+            td.vam.p10.fs16= index.next
+            td.vam.pl0.pt20.pr20.pb20
+              .fs16.b= product.id
             td.vam.w100.p20
               = image_tag product.main_image_url(:v100x100), width: 50
             td.vam.p20
               = link_to product.title, [:edit, product], class: 'link--block fs15 pt0 lh120'
             td.vam.w100.p20
-              .fs15= money_to_text product.active_price
+              - if product.has_discount?
+                .fs15
+                  span.mr5.s= money_to_text product.price
+                  span= money_to_text product.discounted_price
+              - else
+                .fs15= money_to_text product.price
             td.vam.w100.p20.tac
-              .fs15= product.amount
+              .fs15= product.discount_percent
+            td.vam.w100.p20.tac
+              = form_for product, remote: true, data: { type: :json }, html: { class: 'js--products-manage--update-field-form' } do |f|
+                = f.text_field :amount, autocomplete: :off, class: 'ptz--input size--15 w45 js--products-manage--update-field'
             td.vam.w100.p20
-              .fs15= product.sku
-            td.vam.p20.tac
-              = link_to product, method: :delete, data: { confirm: 'Удалить товар?' } do
-                i.fs14.fa.fa-trash
+              .fs15= t "products.state.#{ product.state }"
+            td.vam.tac.w100.p20
+              ruby:
+                delivery_error_flag = !product.ym_receiving_delivery && !product.ym_receiving_pickup && !product.ym_receiving_store
 
-  = render template: 'rails_shop/common/paginator', locals: { items: @products }
+              .mb5
+                = form_tag yandex_market_switch_path(product.id), remote: true, method: :patch do
+                  = hidden_field_tag 'yandex', 0
+                  = check_box_tag 'yandex', '1', product.ym_available, autocomplete: :off, class: 'js--ya-market--checkbox'
+
+              - if delivery_error_flag
+                .mb5.b.fs12(title='ВСЕ ОПЦИИ ДОСТАВКИ FALSE') !Доставка
+
+            td.vam.w100.p20
+              ruby:
+                full_date  = product.updated_at.strftime("%Y.%m.%-d %H:%M")
+                short_date = product.updated_at.strftime("%-d %b")
+              .fs15(title="ОБНОВЛЕНО #{full_date}")= short_date
+
+  = render template: 'common/paginator', locals: { items: @products }

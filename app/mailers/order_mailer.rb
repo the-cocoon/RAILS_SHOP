@@ -1,22 +1,46 @@
 class OrderMailer < ActionMailer::Base
   include ::RailsShop::MailerSettingsConcern
+  include ::RailsShopStringBeautifiersHelper
+
+  # Add View Helper for Mailer Preview Fix
+  add_template_helper(MailerImageTagHelper)
+  add_template_helper(RailsShopStringBeautifiersHelper)
 
   prepend_view_path "#{ ::RailsShop::Engine.root }/app/views/rails_shop"
-  prepend_view_path 'app/views/rails_shop'
-  layout 'mailers/layout'
+  prepend_view_path 'views/rails_shop'
+
+  layout 'mailers/app_layout'
 
   default bcc: ::Settings.rails_shop.mailer.admin_email
-  default template_path: 'rails_shop/mailers'
-
-  before_action :set_attachments!
+  default template_path: 'rails_shop/mailers/orders'
 
   # OrderMailer.unexpected_transition(Order.last, %w[paid draft]).deliver_now
   # OrderMailer.delay_for(2.seconds).unexpected_transition(Order.last, %w[paid draft])
 
-  def created(order_id)
-    @order   = Order.find(order_id)
+  # OrderMailer.one_click('+7910001122', 'Product', '12')
+  def one_click(phone, item_klass = nil, item_id = nil)
+    @phone = phone
 
-    @subject = I18n.t(:created, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    if item_id = item_id
+      klass = item_klass.constantize
+      @item = klass.find(item_id)
+    end
+
+    @subject = I18n.t(:one_click, scope: %w[ rails_shop orders ], phone: phone)
+    @subject = "#{ env_prefix }#{ @subject }"
+
+    @to = ::Settings.rails_shop.mailer.admin_email
+
+    mail(to: @to, subject: @subject)
+  end
+
+  def created(order_id)
+    @order = Order.find(order_id)
+
+    _mailer = ::Settings.rails_shop.mailer
+    @from   = _mailer.smtp.default.user_name
+
+    @subject = I18n.t(:created, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = ::Settings.rails_shop.mailer.admin_email
@@ -27,13 +51,13 @@ class OrderMailer < ActionMailer::Base
       end
     end
 
-    mail(to: @to, subject: @subject)
+    mail(to: @to, subject: @subject, from: @from)
   end
 
   def moderation(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:moderation, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:moderation, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to  = ::Settings.rails_shop.mailer.admin_email
@@ -45,7 +69,7 @@ class OrderMailer < ActionMailer::Base
   def ready_to_payment(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:ready_to_payment, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:ready_to_payment, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = ::Settings.rails_shop.mailer.admin_email
@@ -57,7 +81,7 @@ class OrderMailer < ActionMailer::Base
   def paid(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:paid, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:paid, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = ::Settings.rails_shop.mailer.admin_email
@@ -69,7 +93,7 @@ class OrderMailer < ActionMailer::Base
   def delivery(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:delivery, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:delivery, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = 'admin@open-cook.ru'
@@ -81,7 +105,7 @@ class OrderMailer < ActionMailer::Base
   def completed(order_id)
     @order   = Order.find(order_id)
 
-    @subject = I18n.t(:completed, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:completed, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @to = ::Settings.rails_shop.mailer.admin_email
@@ -93,7 +117,7 @@ class OrderMailer < ActionMailer::Base
   def unexpected_transition(order_id, state_changed)
     @order = Order.find(order_id)
 
-    @subject = I18n.t(:unexpected_transition, scope: %w[ rails_shop orders state_changed ], uid: @order.uid.upcase)
+    @subject = I18n.t(:unexpected_transition, scope: %w[ rails_shop orders state_changed ], uid: string_in_groups_by(@order.uid.upcase))
     @subject = "#{ env_prefix }#{ @subject }"
 
     @state_changed = state_changed
@@ -102,15 +126,14 @@ class OrderMailer < ActionMailer::Base
     mail(to: @to, subject: @subject)
   end
 
-  private
-
-  def set_attachments!
-    @images = {
-      'logo_w130_h130.png' => 'images/logos/logo_w130_h130.png'
-    }
-
-    @images.each_pair do |name, path|
-      attachments.inline[name] = File.read("#{ Rails.root }/public/#{ path }")
-    end
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # INJECT FROM APP VIEW ENGINE
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  voiceless do
+    prepend_view_path "#{ ::AppViewEngine::Engine.root }/app/views"
+    include ::AppViewEngine::MailerAttachments
   end
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # ~ INJECT FROM APP VIEW ENGINE
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 end

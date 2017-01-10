@@ -38,4 +38,4 @@ table.table-light--table.w100p
       td.table-light--td.vam
         .fs15= order.created_at.strftime('%d.%m.%Y %H:%M')
 
-= render template: 'rails_shop/common/paginator', locals: { items: @orders }
+= render template: 'common/paginator', locals: { items: @orders }

@@ -1,0 +1,6 @@
+- content_for :layout_assets do
+  = stylesheet_link_tag    :rails_shop_login, media: :all, 'data-turbolinks-track' => true
+  = javascript_include_tag :rails_shop_login, 'data-turbolinks-track' => true
+
+- @its_frontend = true
+= render template: 'app_view/layouts/app_layout'

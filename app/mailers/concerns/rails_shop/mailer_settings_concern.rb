@@ -2,17 +2,22 @@ module RailsShop
   module MailerSettingsConcern
     extend ActiveSupport::Concern
 
-    included do
-      default from: Settings.rails_shop.mailer.admin_email
-
-      def self.smtp?
-        Settings.app.mailer.service == 'smtp'
+    class_methods do
+      def smtp?
+        ['smtp', 'letter_opener'].include?(::Settings.rails_shop.mailer.service)
       end
+    end
 
-      # SomeMailer.test_mail.delivery_method.settings
+    # SomeMailer.test_mail.delivery_method.settings
+    included do
       if smtp?
+        _mailer = ::Settings.rails_shop.mailer
+
+        default bcc:  _mailer.admin_email
+        default from: _mailer.smtp.default.user_name
+
         def self.smtp_settings
-          Settings.rails_shop.mailer.smtp.to_h
+          ::Settings.rails_shop.mailer.smtp.default.to_h
         end
       end
     end
@@ -21,14 +26,6 @@ module RailsShop
 
     def env_prefix
       'DEV => ' if Rails.env.development?
-    end
-
-    def smtp?
-      Settings.app.mailer.service == 'smtp'
-    end
-
-    def default_from
-      Settings.app.mailer.smtp.rails_shop.user_name if smtp?
     end
   end
 end

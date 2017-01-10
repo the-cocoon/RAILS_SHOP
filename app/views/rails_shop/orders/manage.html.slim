@@ -12,6 +12,8 @@
   table.ptz--table-0.w100p
     thead
       tr
+        th.p10.fs15.br-off
+          = link_to 'ID ↕', simple_sort_url(:id)
         th.p10.fs15.br-off Номер заказа
         th.p10.fs15.br-off= link_to 'Кол-во ↕', simple_sort_url(:order_items_counter)
 
@@ -29,8 +31,10 @@
     tbody
       - @orders.each do |order|
         tr
-          td.p10.vam
-            = link_to order.uid.upcase, order, class: 'link--block fs15 pt0 lh120'
+          td.p10.fs18.vam.upcase
+            = order.id
+          td.p10.vam.nobr
+            = link_to string_in_groups_by(order.uid), order, class: 'link--block fs15 pt0 lh120'
 
           td.p10.vam
             .fs15.pt0.lh120 = order.order_items_counter
@@ -61,4 +65,4 @@
             = link_to order, method: :delete, data: { confirm: 'Удалить заказ?' } do
               i.fs14.fa.fa-trash
 
-  = render template: 'rails_shop/common/paginator', locals: { items: @orders }
+  = render template: 'common/paginator', locals: { items: @orders }

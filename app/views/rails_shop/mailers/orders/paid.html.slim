@@ -1,0 +1,27 @@
+.letter--header.tac.arial.p15.fs20
+  = @subject
+
+.letter--body.m20.tal.arial
+
+  .letter-body--text.mb15
+    p.mb15.lh130 Ура! Ваш заказ номер: <b>#{ @order.uid.upcase }</b> успешно оплачен.
+    p.mb15.lh130 Теперь вам осталось только запастись терпением и дождаться пока мы соберем ваш заказ и отправим его по указанному адресу.
+    p.mb25.lh130 Мы будем информировать вас об изменении состояний вашего заказа на этот email.
+
+    p.mb10 Так же вы можете следить за состоянием вашего заказа на следующей странице:
+
+  .letter-body--activation.tac
+    table.w100p
+      tr
+        td.w50p
+        td
+          .app-mailer--activation-btn-border
+            span.nobr= link_to "Перейти к заказу #{ @order.uid.upcase }", order_url(@order), class: 'app-mailer--activation-btn block p20'
+        td.w50p
+
+  .letter-body--text.mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:
+
+  .app-mailer--activation-text.p10.mb20.tac
+    = order_url(@order)
+
+  = render partial: 'rails_shop/mailers/products_list', locals: { order: @order }

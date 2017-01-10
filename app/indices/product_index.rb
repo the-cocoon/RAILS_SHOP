@@ -9,5 +9,6 @@ ThinkingSphinx::Index.define :product, with: :active_record do
   indexes fts_auto_data
   indexes fts_manual_data
 
-  where "state = 'published' AND amount > 0"
+  # AND amount > 0
+  where "state = 'published'"
 end

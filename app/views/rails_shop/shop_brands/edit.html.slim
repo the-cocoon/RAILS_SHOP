@@ -1,4 +1,4 @@
-- item = @shop_brand
+- item = @shop_category
 
 = render template: 'rails_shop/layouts/items/header_footer'
 
@@ -16,30 +16,50 @@
   .m20
     h3.mt20.mb20.fs18 Редактировать бренд
 
-    .ptz--div-0
-      = render partial: 'notifications/form', locals: { object: item }
+    = render partial: 'notifications/form', locals: { object: item }
 
-      = form_for item, html: { class: '' } do |f|
-        .m20
-          .mb15
-            = f.label :title, 'Название', class: 'block fs13 mb5'
-            = f.text_field :title, class: 'ptz--input ptz--size-15 w500'
+    .ptz--tabs(ptz--tabs-scope='brand_edit')
+      .ptz--tabs--holder
+        .ptz--tabs--item.ptz--tabs--active(ptz--tab-id='form')
+          | Основная форма
+        .ptz--tabs--item(ptz--tab-id='delete')
+          i.fs14.fa.fa-trash
 
-          .mb15
-            = f.label :url, 'Ссылка на сайт', class: 'block fs13 mb5'
-            = f.text_field :url, class: 'ptz--input ptz--size-15 w500'
+      .m20
+        .ptz--tabs--content-item.ptz--tabs--active(ptz--tab-content='form')
+          .ptz--div-0
+            = form_for item, html: { class: '' } do |f|
+              .m20
+                .mb15
+                  = f.label :title, 'Название', class: 'block fs13 mb5'
+                  = f.text_field :title, class: 'ptz--input ptz--size-15 w500'
 
-          .mb20
-            = f.label :raw_content, 'Подробное описание бренда', class: 'block fs13 mb10'
-            = f.text_area :raw_content, rows: 7, id: 'redactor_content', class: 'ptz--textarea ptz--size-15 w100p'
+                .mb15
+                  = f.label :url, 'Ссылка на сайт', class: 'block fs13 mb5'
+                  = f.text_field :url, class: 'ptz--input ptz--size-15 w500'
 
-          .mb15
-            = f.label :state, 'Видимость', class: 'block fs13 mb10'
-            - options = options_for_select({ 'Черновик' => :draft, 'Опубликовано' => :published }, item.state)
-            = f.select :state, options, {}, autocomplete: :off, class: 'ptz--size-15 w150 ptz--select'
+                .mb20
+                  = f.label :raw_intro, 'Короткое описание бренда', class: 'block fs13 mb10'
+                  = f.text_area :raw_intro, rows: 3, id: 'redactor_intro', class: 'ptz--textarea ptz--size-15 w100p'
 
-          hr.ptz--hr-0
+                .mb20
+                  = f.label :raw_content, 'Подробное описание бренда', class: 'block fs13 mb10'
+                  = f.text_area :raw_content, rows: 7, id: 'redactor_content', class: 'ptz--textarea ptz--size-15 w100p'
 
-          .clearfix
-            .pull-right
-              = f.submit 'Обновить бренд', class: 'ptz--btn ptz--size-22'
+                .mb15
+                  = f.label :state, 'Видимость', class: 'block fs13 mb10'
+                  - options = options_for_select({ 'Черновик' => :draft, 'Опубликовано' => :published }, item.state)
+                  = f.select :state, options, {}, autocomplete: :off, class: 'ptz--size-15 w150 ptz--select'
+
+                hr.ptz--hr-0
+
+                .clearfix
+                  .pull-right
+                    = f.submit 'Обновить бренд', class: 'ptz--btn ptz--size-22'
+
+        .ptz--tabs--content-item(ptz--tab-content='delete')
+          .ptz--div-0
+            .m20
+              = link_to item, method: :delete, class: 'ptz--btn ptz--size-18', data: { confirm: 'Вы уверены что хотите УДАЛИТЬ бренд?' } do
+                i.fs19.fa.fa-trash>
+                | Удалить бренд

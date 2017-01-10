@@ -5,7 +5,10 @@
 # ::ThinkingSphinx.search("canon", star: true, classes: [ Product ], indices: %w[ admin_product_core ]).count
 
 class ShopSearchController < RailsShopController
-  layout 'rails_shop_layout'
+  layout ->{ layout_for_action }
+
+  skip_before_filter :authenticate_user!,   only: %w[ shop_search ]
+  skip_before_filter :shop_admin_required!, only: %w[ shop_search ]
 
   def shop_search
     @sq = params[:sq].to_s.strip
@@ -15,6 +18,7 @@ class ShopSearchController < RailsShopController
       to_search,
       star: true,
       classes: [ Product ],
+      indices: %w[ product_core ],
       field_weights: {
         fts_manual_data: 10,
         fts_auto_data: 7,
@@ -28,6 +32,7 @@ class ShopSearchController < RailsShopController
       to_search,
       star: false,
       classes: [ Product ],
+      indices: %w[ product_core ],
       field_weights: { title: 10, content: 5 },
       per_page: 24
     )
@@ -37,7 +42,7 @@ class ShopSearchController < RailsShopController
                    @shop_items_1
 
     if request.format.json?
-      render template: 'shop_search/json/shop_search'
+      render layout: false, template: 'rails_shop/shop_search/json/shop_search'
     end
   end
 
@@ -49,37 +54,17 @@ class ShopSearchController < RailsShopController
       to_search,
       star: true,
       classes: [ Product ],
+      indices: %w[ product_core ],
       field_weights: { title: 10, content: 5 },
       order: "created_at DESC",
       per_page: 24
     )
 
-    render json: res
+    render layout: false, json: res
   end
 
-  def psql_products_search
-    @squery = params[:term].to_s.strip
-
-    res = ::Product
-      .psql_search_base(@squery)
-      .published
-      .in_stock
-      .simple_sort(params)
-      .pagination(params)
-
-    render json: res
-  end
-
-  def psql_products_search2
-    @squery = params[:term].to_s.strip
-
-    res = ::Product
-      .psql_search_simple(@squery)
-      .published
-      .in_stock
-      .simple_sort(params)
-      .pagination(params)
-
-    render json: res
+  def layout_for_action
+    return 'rails_shop_frontend' if %w[ shop_search ].include?(action_name)
+    'rails_shop_backend'
   end
 end

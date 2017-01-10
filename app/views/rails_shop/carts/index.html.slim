@@ -34,4 +34,4 @@
           = link_to cart, method: :delete, data: { confirm: 'Удалить корзину?' } do
             i.fs14.fa.fa-trash
 
-  = render template: 'rails_shop/common/paginator', locals: { items: @carts }
+  = render template: 'common/paginator', locals: { items: @carts }

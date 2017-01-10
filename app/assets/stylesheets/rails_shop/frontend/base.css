@@ -1,0 +1,39 @@
+/*
+  #= require ptz/reset
+  #= require ptz/base
+  #= require ptz/framework
+
+  #= require ptz/inputs-buttons/base
+  #= require ptz/inputs-buttons/sizes
+  #= require ptz/inputs-buttons/icons
+
+  #= require ptz-tabs/ptz-tabs
+
+  #= require notifications/vendors/toastr
+  #= require components/toastr/style
+  #= require notifications
+
+  #= require protozaur_theme/theme-0/divs
+  #= require protozaur_theme/theme-0/tables
+
+  #= require rails_shop/frontend/shop-search
+
+  #= require rails_shop/frontend/products-list
+  #= require rails_shop/frontend/link-marker
+
+  #= require rails_shop/frontend/product-breadcrumbs
+  #= require rails_shop/frontend/product-card
+  #= require rails_shop/frontend/product-delivery
+
+  #= require rails_shop/frontend/shop-cart
+  #= require rails_shop/frontend/cart-delivery-info
+
+  #= require rails_shop/frontend/order-process-steps
+  #= require rails_shop/frontend/payment-systems
+
+  #= require rails_shop/frontend/jq--autocomplete
+
+  #= require shop_filters/frontend/shop_filter_form
+  #= require components/ion.rangeSlider-2.1.4/ion.rangeSlider
+  #= require components/ion.rangeSlider-2.1.4/ion.rangeSlider.skinModern
+*/
