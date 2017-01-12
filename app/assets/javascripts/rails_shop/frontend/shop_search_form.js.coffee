@@ -49,10 +49,10 @@
         li.data('element', ac.element)
 
         li.append """
-          <div class='ptz--table w100p'>
-            <div class='ptz--tbody'>
-              <div class='ptz--tr'>
-                <div class='ptz--td p10 w100p fs15 lh130'>
+          <div class='ptz_table w100p'>
+            <div class='ptz_tbody'>
+              <div class='ptz_tr'>
+                <div class='ptz_td p10 w100p fs15 lh130'>
                   Все результаты
                 </div>
               </div>
@@ -69,13 +69,13 @@
 
     ac._renderItem = (ul, item) ->
       $("<li>").append("""
-        <div class='ptz--table w100p'>
-          <div class='ptz--tbody'>
-            <div class='ptz--tr'>
-              <div class='ptz--td p10'>
+        <div class='ptz_table w100p'>
+          <div class='ptz_tbody'>
+            <div class='ptz_tr'>
+              <div class='ptz_td p10'>
                 <img src='#{ item.main_image_url }' style='width:100px;height:100px'>
               </div>
-              <div class='ptz--td p10 w100p fs15 lh130'>
+              <div class='ptz_td p10 w100p fs15 lh130'>
                 #{ item.label }
               </div>
             </div>

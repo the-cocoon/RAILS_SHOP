@@ -16,9 +16,9 @@ ul.product-breadcrumbs.mt20.mb10
 
 h1.fs24.mt10.mb20= @product.title
 
-.product-card.ptz--table.w100p
-  .ptz--trrow
-    .product-card--image-block.ptz--td
+.product-card.ptz_table.w100p
+  .ptz_trrow
+    .product-card--image-block.ptz_td
       - img = @product.main_image_url(:v500x500)
       .product-card--image(style="background-image:url(#{ img })")
 
@@ -30,9 +30,9 @@ h1.fs24.mt10.mb20= @product.title
 
       - if current_user.try(:rails_shop_admin?)
         .mt20.mb20
-          = link_to 'Редактировать товар', [:edit, @product], class: 'ptz--btn ptz--size-12'
+          = link_to 'Редактировать товар', [:edit, @product], class: 'ptz_btn ptz_size-12'
 
-    .product-card--text.ptz--td.w75p
+    .product-card--text.ptz_td.w75p
       .content-style-default
         = raw @product.content
 
@@ -61,7 +61,7 @@ h1.fs24.mt10.mb20= @product.title
                 td.table-light--td Артикул
                 td.table-light--td.w50p= @product.sku
 
-    .product-card--price-block.ptz--td.w25p
+    .product-card--price-block.ptz_td.w25p
       .product-card--price-title.fs20.mb20 цена:
       .product-card--price-val.mt20.mb20.fs24.pl15
 
@@ -78,17 +78,17 @@ h1.fs24.mt10.mb20= @product.title
         - if @product.amount > 0
           - if current_cart
             - if current_cart.cart_items.where(item: @product).blank?
-              = link_to add_to_cart_path(@product, cart_id: current_cart), method: :post, class: 'ptz--btn ptz--size-18 ptz--style-0--btn' do
-                i.fa.fa-cart-plus.ptz--btn--icon
+              = link_to add_to_cart_path(@product, cart_id: current_cart), method: :post, class: 'ptz_btn ptz_size-18 ptz_style-0--btn' do
+                i.fa.fa-cart-plus.ptz_btn--icon
                 | В корзину
             - else
-              .ptz--btn.ptz--size-18 Уже в корзине
+              .ptz_btn.ptz_size-18 Уже в корзине
           - else
-            = link_to add_to_cart_path(@product, cart_id: current_cart), method: :post, class: 'ptz--btn ptz--size-18 ptz--style-0--btn' do
-              i.fa.fa-cart-plus.ptz--btn--icon
+            = link_to add_to_cart_path(@product, cart_id: current_cart), method: :post, class: 'ptz_btn ptz_size-18 ptz_style-0--btn' do
+              i.fa.fa-cart-plus.ptz_btn--icon
               | В корзину
         - else
-          .ptz--btn.ptz--size-18 Нет в наличии
+          .ptz_btn.ptz_size-18 Нет в наличии
 
       - if @product.price_text.present?
         .product-card--price-val-ext.fs15= @product.price_text

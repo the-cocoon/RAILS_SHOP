@@ -3,9 +3,9 @@
   #= require ptz/base
   #= require ptz/framework
 
-  #= require ptz/inputs-buttons/base
-  #= require ptz/inputs-buttons/sizes
-  #= require ptz/inputs-buttons/icons
+  #= require ptz/inputs_buttons/all
+  # require ptz/inputs-buttons/sizes
+  # require ptz/inputs-buttons/icons
 
   #= require ptz-tabs/ptz-tabs
 

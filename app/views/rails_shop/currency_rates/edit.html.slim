@@ -5,25 +5,25 @@
 - content_for :left_sidebar do
 
   .mt25.mb20
-    .mb10= link_to 'Главная', '/shop', class: 'ptz--btn ptz--size-12'
+    .mb10= link_to 'Главная', '/shop', class: 'ptz_btn ptz_size-12'
 
-.w800.ptz--theme-0
+.w800.ptz_theme-0
   .m20
     = render partial: 'notifications/form', locals: { object: item }
 
-    .ptz--div-0.p20
+    .ptz_div-0.p20
       = form_for item, html: { class: '' } do |f|
         .clearfix
           .pull-left.mr30
             = f.label :rur_eur, 'EURO', class: 'block fs13 mb10'
-            = f.number_field :rur_eur, min: 0, max: 100000, step: 0.0001, class: 'ptz--input ptz--size-15 w100p'
+            = f.number_field :rur_eur, min: 0, max: 100000, step: 0.0001, class: 'ptz_input ptz_size-15 w100p'
 
           .pull-left
             = f.label :rur_usd, 'USD', class: 'block fs13 mb10'
-            = f.number_field :rur_usd, min: 0, max: 100000, step: 0.0001, class: 'ptz--input ptz--size-15 w100p'
+            = f.number_field :rur_usd, min: 0, max: 100000, step: 0.0001, class: 'ptz_input ptz_size-15 w100p'
 
-        hr.ptz--hr-0.mt25.mb25
+        hr.ptz_hr-0.mt25.mb25
 
         .clearfix
           .pull-right
-            = f.submit 'Обновить курс', class: 'ptz--btn ptz--size-22'
+            = f.submit 'Обновить курс', class: 'ptz_btn ptz_size-22'

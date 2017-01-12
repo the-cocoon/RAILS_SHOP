@@ -1,80 +1,80 @@
-.ptz--div-0.p20
+.ptz_div-0.p20
   = form_for product, html: { class: '' } do |f|
-    = hidden_field_tag :anchor, 'ptz--tabs--page_edit_2--yml-form'
+    = hidden_field_tag :anchor, 'ptz_tabs--page_edit_2--yml-form'
 
     .fs18.mb40 Участие в Яндекс Маркет
 
     .clearfix
       .pull-left.mr50
         = f.label :ym_available, 'Доступно для выгрузки в Маркет', class: 'fs13 mr10'
-        = f.check_box :ym_available, class: 'ptz--input', autocomplete: :off
+        = f.check_box :ym_available, class: 'ptz_input', autocomplete: :off
 
       .pull-left
         = f.label :ym_cpa, 'Заказ с Маркета', class: 'fs13 mr10'
-        = f.check_box :ym_cpa, class: 'ptz--input', autocomplete: :off
+        = f.check_box :ym_cpa, class: 'ptz_input', autocomplete: :off
 
       .pull-right
         = link_to 'Выгрузить ЭТОТ в YML', yandex_market_export_this_path(product.id), class: 'fs15'
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
     .clearfix.mb20
       .pull-left.mr30
         .block.fs13.mb10
           | Вендор (Vendor)
           =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/elements/vendor-name-model.xml', target: :_blank
-        = f.text_field :ym_vendor, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Canon'
+        = f.text_field :ym_vendor, class: 'ptz_input ptz_size-15 w200 ', maxlength: 100, placeholder: 'Canon'
 
       .pull-left.mr30
         .block.fs13.mb10
           | Модель (Model)
           =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/elements/vendor-name-model.xml', target: :_blank
 
-        = f.text_field :ym_model, class: 'ptz--input ptz--size-15 w200', maxlength: 100, placeholder: 'Mark 2'
+        = f.text_field :ym_model, class: 'ptz_input ptz_size-15 w200', maxlength: 100, placeholder: 'Mark 2'
 
       .pull-left
         .block.fs13.mb10
           | Код модели (VendorCode)
           =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/export/vendor-model.xml', target: :_blank
-        = f.text_field :ym_vendor_code, class: 'ptz--input ptz--size-15 w200', maxlength: 100, placeholder: 'СM-2'
+        = f.text_field :ym_vendor_code, class: 'ptz_input ptz_size-15 w200', maxlength: 100, placeholder: 'СM-2'
 
     .clearfix
       .pull-left.mr30
         .block.fs13.mb10
           | Тип товара (Type Prefix)
           =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/export/vendor-model.xml', target: :_blank
-        = f.text_field :ym_type_prefix, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Фотоаппарат'
+        = f.text_field :ym_type_prefix, class: 'ptz_input ptz_size-15 w200 ', maxlength: 100, placeholder: 'Фотоаппарат'
 
       .pull-left.mr30
         .block.fs13.mb10
           | Страна производитель (Country of Origin)
           =< link_to '(читать)', 'https://yandex.ru/support/partnermarket/export/vendor-model.xml', target: :_blank
-        = f.text_field :ym_country_of_origin, class: 'ptz--input ptz--size-15 w200 ', maxlength: 100, placeholder: 'Китай'
+        = f.text_field :ym_country_of_origin, class: 'ptz_input ptz_size-15 w200 ', maxlength: 100, placeholder: 'Китай'
 
       .pull-left
         .block.fs13.mb10
           | Гарантия производителя
         .pt20
           span.b TRUE
-          / = f.check_box :ym_manufacturer_warranty, class: 'ptz--input', autocomplete: :off
+          / = f.check_box :ym_manufacturer_warranty, class: 'ptz_input', autocomplete: :off
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
     .mb25
-      = f.check_box :ym_receiving_delivery, class: 'ptz--input mr10', autocomplete: :off
+      = f.check_box :ym_receiving_delivery, class: 'ptz_input mr10', autocomplete: :off
       = f.label :ym_receiving_delivery, 'Возможность Доставки', class: 'fs13'
 
     .fs12.mb15.u Убедитесь, что в партнерском интерфейсе заданы точки продаж
 
     .mb15
-      = f.check_box :ym_receiving_pickup, class: 'ptz--input mr10', autocomplete: :off
+      = f.check_box :ym_receiving_pickup, class: 'ptz_input mr10', autocomplete: :off
       = f.label :ym_receiving_pickup, 'Самовывоз по предзаказу из пункта выдачи', class: 'fs13'
 
     .mb15
-      = f.check_box :ym_receiving_store, class: 'ptz--input mr10', autocomplete: :off
+      = f.check_box :ym_receiving_store, class: 'ptz_input mr10', autocomplete: :off
       = f.label :ym_receiving_store, 'Покупка в магазине без предзаказа', class: 'fs13'
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
     .clearfix
       .mb20
@@ -83,7 +83,7 @@
           opts = raw options_for_select(ShopCategory.published.nested_set.map{|sc| [raw("______")*sc.level + sc.title, sc.id]}, selected_cat)
 
         .mb10.fs13= f.label :ym_main_shop_category, 'Главная категория товара'
-        .mb10= f.select :ym_main_shop_category, raw(opts), { include_blank: true }, autocomplete: :off, class: 'ptz--input ptz--size-15 w80p form-classic--select'
+        .mb10= f.select :ym_main_shop_category, raw(opts), { include_blank: true }, autocomplete: :off, class: 'ptz_input ptz_size-15 w80p form-classic--select'
 
         ruby:
           prod_cat_ids = @product.shop_categories.pluck(:id)
@@ -97,13 +97,13 @@
 
       .mb20
         = f.label :ym_sales_notes, 'Заметки продавца', class: 'block fs13 mb10'
-        = f.text_field :ym_sales_notes, class: 'ptz--input ptz--size-15 w500', maxlength: 50, placeholder: 'Оплата курьеру, безналичный расчет'
+        = f.text_field :ym_sales_notes, class: 'ptz_input ptz_size-15 w500', maxlength: 50, placeholder: 'Оплата курьеру, безналичный расчет'
 
       .mb20
         = f.label :ym_barcode, 'Цифры штрихкода', class: 'block fs13 mb10'
-        = f.text_field :ym_barcode, class: 'ptz--input ptz--size-15 w500', maxlength: 100, placeholder: '49009903482'
+        = f.text_field :ym_barcode, class: 'ptz_input ptz_size-15 w500', maxlength: 100, placeholder: '49009903482'
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
     - weight_exists = !product.weight.to_f.zero?
     - dims_exists   = !product.dimension_x.to_f.zero? && !product.dimension_y.to_f.zero? && !product.dimension_z.to_f.zero?
@@ -120,8 +120,8 @@
             span.fs14.mr10 Габариты (см):
             span.fs15= [product.dimension_x, product.dimension_y, product.dimension_z].join '/'
 
-      hr.ptz--hr-0.mt25.mb25
+      hr.ptz_hr-0.mt25.mb25
 
     .clearfix
       .pull-right
-        = f.submit 'Обновить товар', class: 'ptz--btn ptz--size-22'
+        = f.submit 'Обновить товар', class: 'ptz_btn ptz_size-22'

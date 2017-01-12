@@ -4,41 +4,41 @@
 .fs20.mb20.mt20 Выгрузка в Яндекс Маркет
 
 .table.w100p.ffa.fs15
-  .ptz--tr.ym-index-header
-    .ptz--td.p10.w50
+  .ptz_tr.ym-index-header
+    .ptz_td.p10.w50
       | &nbsp;
-    .ptz--td.p10.br-off
+    .ptz_td.p10.br-off
       = link_to 'ID ↕', simple_sort_url(:id)
-    .ptz--td.p10
-    .ptz--td.p10.br-off.w500
+    .ptz_td.p10
+    .ptz_td.p10.br-off.w500
       = link_to 'Название ↕', simple_sort_url(:title)
-    .ptz--td.p10.br-off
+    .ptz_td.p10.br-off
       = link_to 'Создан ↕', simple_sort_url(:created_at)
-    .ptz--td.p10.br-off
+    .ptz_td.p10.br-off
       = link_to 'Статус ↕', simple_sort_url(:state)
-    .ptz--td.p10
+    .ptz_td.p10
       = link_to 'На складе ↕', simple_sort_url(:amount)
-    .ptz--td.p10.w40.br-off
+    .ptz_td.p10.w40.br-off
       = link_to 'Цена ↕', simple_sort_url(:price)
 
   - @products.each_with_index do |product, index|
     - line_type = index.odd? ? :odd : :even
-    .ptz--tr(class='ym-index-line' class=line_type)
-      .ptz--td.p10.w50.vam
+    .ptz_tr(class='ym-index-line' class=line_type)
+      .ptz_td.p10.w50.vam
         = index.next
-      .ptz--td.p10.w50.vam
+      .ptz_td.p10.w50.vam
         = link_to product.id, product, target: :_blank
-      .ptz--td.p10
+      .ptz_td.p10
         = image_tag product.main_image_url(:v100x100), class: 'w40'
-      .ptz--td.p10.lh120.vam.w500
+      .ptz_td.p10.lh120.vam.w500
         = product.title
-      .ptz--td.p10.br-off.vam
+      .ptz_td.p10.br-off.vam
         = raw I18n.l(product.created_at, format: raw("%d.%m.%Y"))
-      .ptz--td.p10.lh120.vam
+      .ptz_td.p10.lh120.vam
         = t product.state, scope: :state
-      .ptz--td.p10.lh120.vam
+      .ptz_td.p10.lh120.vam
         = product.amount
-      .ptz--td.p10.w40.vam.elco-rb
+      .ptz_td.p10.w40.vam.elco-rb
         .br-off
           - if product.has_discount?
             span.s.mr10= money_to_text product.price

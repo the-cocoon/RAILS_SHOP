@@ -47,7 +47,7 @@
         - dkind = @order.delivery.delivery_kind
         = render partial: "delivery_types/required_fields/#{ dkind }", locals: { f: f, order: @order }
 
-      li.ptz--table.w100p
+      li.ptz_table.w100p
         h3.fs24.ml15.mr15.mt15.mb0 Ваш заказ:
 
       li.shop-cart--headers
@@ -90,9 +90,9 @@
 
           .shop-cart--position-cell.w5p
 
-      li.shop-cart--total.ptz--table.pb0
-        .ptz--tr
-          .ptz--td
+      li.shop-cart--total.ptz_table.pb0
+        .ptz_tr
+          .ptz_td
             .clearfix.pt20
               .pull-left.mr100
                 - if @order.delivery.moderation_required?
@@ -119,7 +119,7 @@
                     'руб.
 
                 - unless @order.discount.to_f.zero?
-                  .fs14.mt5.ptz--highlight
+                  .fs14.mt5.ptz_highlight
                     | Ваша скидка:
                     '
                     span.b= money_to_text(@order.discount)
@@ -142,12 +142,12 @@
                         'руб.
             hr
 
-        .ptz--tr
-          .ptz--td
+        .ptz_tr
+          .ptz_td
             .fs12.lh120.mb20 Переходя к оплате заказа вы подтверждаете, что ознакомились с <a href='http://localhost:3000/pages/user-agreement' class='u' target='_blank'>пользовательским соглашением</a> и подтверждаете согласие на обработку персональных данных:
 
-        .ptz--tr
-          .ptz--td.tac
+        .ptz_tr
+          .ptz_td.tac
 
             / SUBMIT BUTTONS
             - if @order.moderation?
@@ -156,10 +156,10 @@
                 .mb5 В будние дни наш оператор перезвонит Вам в течение часа
                 .mb5 Мы работаем с 10 до 18 часов по московскому времени
 
-              .ptz--btn.ptz--size-22.app--btn-1 Заказ на Модарации
+              .ptz_btn.ptz_size-22.app--btn-1 Заказ на Модарации
 
             - elsif @order.paid?
-              .ptz--btn.ptz--size-22.app--btn-1 Заказ уже оплачен
+              .ptz_btn.ptz_size-22.app--btn-1 Заказ уже оплачен
 
             - else
               - if @order.delivery && @order.delivery.moderation_required?
@@ -168,17 +168,17 @@
                   .mb5 В будние дни наш оператор перезвонит Вам в течение часа
                   .mb5 Мы работаем с 10 до 18 часов по московскому времени
 
-                = f.submit 'Отправить заказ на обработку', class: 'ptz--btn ptz--size-22 ptz--style-0--btn app--btn-1'
+                = f.submit 'Отправить заказ на обработку', class: 'ptz_btn ptz_size-22 ptz_style-0--btn app--btn-1'
               - else
                 .mt10.mb20.fs13.lh130
                   .mb5 Доступны способы оплаты картами VISA, MASTER CARD, а так же Яндекс Деньги, Сбербанк Онлайн и др.
 
                 .ma.w100p
                   = hidden_field_tag :order_payment_type, :online
-                  .ma.ptz--table
-                    .ptz--td.tar
-                      = button_tag 'Оплатить заказ ONLINE', class: 'js--order-payment-type--online ptz--btn ptz--size-22 app--btn-1'
-                    .ptz--td.vam.fs18.pl10.pr10
+                  .ma.ptz_table
+                    .ptz_td.tar
+                      = button_tag 'Оплатить заказ ONLINE', class: 'js--order-payment-type--online ptz_btn ptz_size-22 app--btn-1'
+                    .ptz_td.vam.fs18.pl10.pr10
                       | или
-                    .ptz--td.tal
-                      = button_tag 'ЗАКАЗАТЬ', class: 'js--order-payment-type--manual ptz--btn app--btn-1 ptz--size-22'
+                    .ptz_td.tal
+                      = button_tag 'ЗАКАЗАТЬ', class: 'js--order-payment-type--manual ptz_btn app--btn-1 ptz_size-22'

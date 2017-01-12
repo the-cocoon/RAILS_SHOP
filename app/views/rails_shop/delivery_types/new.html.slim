@@ -2,19 +2,19 @@
 
 - content_for :left_sidebar do
   .mt20.mb20
-    = link_to 'Все типы доставки', manage_delivery_types_path, class: 'ptz--btn size-16'
+    = link_to 'Все типы доставки', manage_delivery_types_path, class: 'ptz_btn size-16'
 
-.ptz--theme-0.m20
+.ptz_theme-0.m20
   h3.mt20.mb20.fs18 Новый тип доставки
 
   = render partial: 'notifications/form', locals: { object: @delivery_type, format: :json }
 
-  .ptz--div-0.w600
+  .ptz_div-0.w600
     = form_for @delivery_type, html: { class: '' } do |f|
       .m20
         .mb15
           = f.label :title, 'Название', class: 'block fs13 mb5'
-          = f.text_field :title, class: 'ptz--input ptz--size-15 w500'
+          = f.text_field :title, class: 'ptz_input ptz_size-15 w500'
 
         div
-          = f.submit 'Создать тип доставки', class: 'ptz--btn ptz--size-14'
+          = f.submit 'Создать тип доставки', class: 'ptz_btn ptz_size-14'

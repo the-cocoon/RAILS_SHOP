@@ -21,7 +21,7 @@ ruby:
   .mb15.fs15 Выбрать категории витрины из списка
   = select_tag :shop_categories_selector, tag_options, { multiple: :multiple, autocomplete: :off, class: 'shop-category-rels-select2 js--shop-category-rels-select2 w80p', placeholder: 'Выбор категорий товаров' }.merge(options)
 
-.ptz--theme-0
+.ptz_theme-0
   .mb15.fs15 Выбрать категории витрины
   ol.the-sortable-tree.the-sortable-tree--list(data={ max_levels: 5 })
     = sortable_tree all_categories, render_module: ShopCategoryRelsManagerHelper, used_in_ids: products_used_categories_ids

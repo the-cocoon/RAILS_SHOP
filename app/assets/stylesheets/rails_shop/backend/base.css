@@ -3,8 +3,7 @@
   #= require ptz/base
   #= require ptz/framework
 
-  #= require ptz/inputs-buttons/base
-  #= require ptz/inputs-buttons/sizes
+  #= require ptz/inputs_buttons/all
 
   #= require protozaur_theme/theme-0/divs
   #= require protozaur_theme/theme-0/tables
@@ -24,7 +23,7 @@
   #= require components/select2-4.0.2/select2_custom
 
   #= require attached_images/attached_images
-  #= require the_sortable_tree/sortable_ui/base
+  # require the_sortable_tree/sortable_ui/base
 
   #= require app_view/layout/common_styles
 

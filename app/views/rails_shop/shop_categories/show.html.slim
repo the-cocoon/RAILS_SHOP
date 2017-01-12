@@ -4,9 +4,9 @@
   .mb20
     - if current_user.try(:rails_shop_admin?)
       .clearfix.p20
-        .pull-left.mr20= link_to 'Кабинет',  cabinet_path, class: 'ptz--btn ptz--size-16'
-        .pull-left.mr20= link_to 'Редактировать категорию', [:edit, @shop_category], class: 'ptz--btn ptz--size-16'
-        .pull-left.mr20= link_to 'Порядок элементов', shop_ordering_path(@shop_category.class, @shop_category.to_param), class: 'ptz--btn ptz--size-16'
+        .pull-left.mr20= link_to 'Кабинет',  cabinet_path, class: 'ptz_btn ptz_size-16'
+        .pull-left.mr20= link_to 'Редактировать категорию', [:edit, @shop_category], class: 'ptz_btn ptz_size-16'
+        .pull-left.mr20= link_to 'Порядок элементов', shop_ordering_path(@shop_category.class, @shop_category.to_param), class: 'ptz_btn ptz_size-16'
 
   .m20
     h1.fs20.mb20.mt20= @shop_category.title

@@ -243,4 +243,4 @@ ruby:
   opts = options_for_select(ym_categories.map{|yc| [yc, yc]}, selected: selected_cat)
 
 = f.label :ym_market_category, 'Категория по классификатору Яндекс Маркета', class: 'block fs13 mb10'
-= f.select :ym_market_category, opts, {include_blank: true}, autocomplete: :off, class: 'ptz--input ptz--size-15 w80p form-classic--select'
+= f.select :ym_market_category, opts, {include_blank: true}, autocomplete: :off, class: 'ptz_input ptz_size-15 w80p form-classic--select'

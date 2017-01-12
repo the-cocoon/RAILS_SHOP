@@ -6,22 +6,22 @@ li.table.w100p
 
       .pull-left.mr20.mb5
         = f.label :phone, 'Ваш номер телефона', class: 'block fs13 mb5'
-        = f.text_field :phone, class: 'ptz--input ptz--size-15 w250 ', placeholder: '+7 XXX XXX XX XX'
+        = f.text_field :phone, class: 'ptz_input ptz_size-15 w250 ', placeholder: '+7 XXX XXX XX XX'
 
     .mb15.clearfix
       .pull-left.mr20.mb5
         = f.label :full_name, 'Ваше полное имя', class: 'block fs13 mb5'
-        = f.text_field :full_name, class: 'ptz--input ptz--size-15 w520 ', placeholder: 'Иванова Мария Николаевна'
+        = f.text_field :full_name, class: 'ptz_input ptz_size-15 w520 ', placeholder: 'Иванова Мария Николаевна'
 
     .mb15.mb30.clearfix
       = f.label :delivery_comment, raw('Укажите здесь резервный способы связи и контактные данные'), class: 'block fs13 mb5 lh130'
-      = f.text_area :delivery_comment, rows: 3, class: 'ptz--input ptz--size-15 w520 '
+      = f.text_area :delivery_comment, rows: 3, class: 'ptz_input ptz_size-15 w520 '
 
     .clearfix
       .mb10.fs13
         | Хотите следить за состоянием заказа? Мы будем присылать вам уведомления.
       .mb5
         = f.label :email, 'Ваш email (не обязательно)', class: 'block fs13 mb5'
-        = f.text_field :email, autofocus: true, class: 'ptz--input ptz--size-15 w250 ', placeholder: 'name@example.ru'
+        = f.text_field :email, autofocus: true, class: 'ptz_input ptz_size-15 w250 ', placeholder: 'name@example.ru'
         - if (email = current_user.try!(:actual_email)).present?
           .mt5.fs11(style='color:#aaa')= email

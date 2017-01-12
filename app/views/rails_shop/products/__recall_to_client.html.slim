@@ -1,4 +1,4 @@
-a.ptz--btn.ptz--size-15(href=jsvoid data-remodal-target='one-click-order-modal') Заказ в 1 клик
+a.ptz_btn.ptz_size-15(href=jsvoid data-remodal-target='one-click-order-modal') Заказ в 1 клик
 
 .remodal(data={'remodal-id' => 'one-click-order-modal', 'remodal-options' => 'hashTracking:false'})
   button.remodal-close(data={'remodal-action' => 'close' })
@@ -10,22 +10,22 @@ a.ptz--btn.ptz--size-15(href=jsvoid data-remodal-target='one-click-order-modal')
     br
     | Наш сотрудник перезвонит Вам и уточнит детали
 
-  .ptz--theme-0
+  .ptz_theme-0
     = form_tag one_click_orders_path, { remote: true, class: 'one-click-order--form' } do
       - if item
         = hidden_field_tag :item_id,    item.id
         = hidden_field_tag :item_klass, item.class
         = hidden_field_tag :item_title, item.title
 
-      .mb15= text_field_tag :phone, '', class: 'ptz--input ptz--size-18', placeholder: '+7 911 000 11 22', maxlength: 20
-      .mb15= submit_tag 'Перезвоните мне', class: 'ptz--btn ptz--size-20'
+      .mb15= text_field_tag :phone, '', class: 'ptz_input ptz_size-18', placeholder: '+7 911 000 11 22', maxlength: 20
+      .mb15= submit_tag 'Перезвоните мне', class: 'ptz_btn ptz_size-20'
 
       - if item
-        .ptz--hr-0.mt15.mb15
+        .ptz_hr-0.mt15.mb15
         .fs13= item.title
-        .ptz--hr-0.mt15.mb15
+        .ptz_hr-0.mt15.mb15
       - else
-        .ptz--hr-0.mt15.mb15
+        .ptz_hr-0.mt15.mb15
 
   .fs13.lh130
     .mb5 В будние дни наш оператор перезвонит Вам в течении часа

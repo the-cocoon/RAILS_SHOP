@@ -4,13 +4,13 @@ h3.mt20.mb20.fs18
   | Редактировать товары:
   =< @products_count
 
-.ptz--table.w100p.mb20.fs15
-  .ptz--td.vam.tal
-    span.mr30= link_to 'Кабинет', cabinet_url, class: 'ptz--btn ptz--size-14'
-    span.mr30= link_to 'Новый товар', new_product_url, class: 'ptz--btn ptz--size-14'
-    span.mr30= link_to 'Выгрузить в YML', yandex_market_export_path, class: 'ptz--btn ptz--size-14'
+.ptz_table.w100p.mb20.fs15
+  .ptz_td.vam.tal
+    span.mr30= link_to 'Кабинет', cabinet_url, class: 'ptz_btn ptz_size-14'
+    span.mr30= link_to 'Новый товар', new_product_url, class: 'ptz_btn ptz_size-14'
+    span.mr30= link_to 'Выгрузить в YML', yandex_market_export_path, class: 'ptz_btn ptz_size-14'
 
-  .ptz--td.vam.tar
+  .ptz_td.vam.tar
     span.mr10 элементов на стр:
     ruby:
       per_page = params[:per_page].to_i
@@ -20,11 +20,11 @@ h3.mt20.mb20.fs18
 
     span.ml50= link_to 'Сбросить сортировку', url_for(reset_simple_sort)
 
-.ptz--theme-0
+.ptz_theme-0
 
   - if @products.any?
     .mb20
-      table.ptz--table-0.w100p
+      table.ptz_table-0.w100p
         thead
           tr.fs15.tal
             th
@@ -59,7 +59,7 @@ h3.mt20.mb20.fs18
               .fs15= product.discount_percent
             td.vam.w100.p20.tac
               = form_for product, remote: true, data: { type: :json }, html: { class: 'js--products-manage--update-field-form' } do |f|
-                = f.text_field :amount, autocomplete: :off, class: 'ptz--input size--15 w45 js--products-manage--update-field'
+                = f.text_field :amount, autocomplete: :off, class: 'ptz_input size--15 w45 js--products-manage--update-field'
             td.vam.w100.p20
               .fs15= t "products.state.#{ product.state }"
             td.vam.tac.w100.p20

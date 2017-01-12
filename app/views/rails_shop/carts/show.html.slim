@@ -46,13 +46,13 @@
 
             .mb10.nobr
               - minus_disabled = :disabled if cart_item.amount == 1
-              = button_to amount_decrement_cart_path(@cart, product_id: product), method: :patch, disabled: minus_disabled, form_class: 'iblock amount-manager--form', class: 'ptz--btn ptz--size-14 ptz--btn--side-left w40 b' do
+              = button_to amount_decrement_cart_path(@cart, product_id: product), method: :patch, disabled: minus_disabled, form_class: 'iblock amount-manager--form', class: 'ptz_btn ptz_size-14 ptz_btn--side-left w40 b' do
                 |&ndash;
 
-              = text_field_tag :count, cart_item.amount, maxlength: 1, min: 0, max: 9, readonly: :readonly, autocomplete: :off, class: 'ptz--input ptz--size-14 brn w40 tac'
+              = text_field_tag :count, cart_item.amount, maxlength: 1, min: 0, max: 9, readonly: :readonly, autocomplete: :off, class: 'ptz_input ptz_size-14 brn w40 tac'
 
               - plus_disabled = :disabled if product.amount < cart_item.amount.next
-              = button_to amount_increment_cart_path(@cart, product_id: product), method: :patch, disabled: plus_disabled, form_class: 'iblock amount-manager--form', class: 'iblock  ptz--btn ptz--size-14 ptz--btn--side-right w40 b' do
+              = button_to amount_increment_cart_path(@cart, product_id: product), method: :patch, disabled: plus_disabled, form_class: 'iblock amount-manager--form', class: 'iblock  ptz_btn ptz_size-14 ptz_btn--side-right w40 b' do
                 |+
 
             .mt10.fs13
@@ -100,9 +100,9 @@
                 span.fs12.pl25.lh130= dt.intro
 
       li.shop-cart--total
-        .ptz--table.w100p
-          .ptz--tr
-            .ptz--td
+        .ptz_table.w100p
+          .ptz_tr
+            .ptz_td
               .fs15.mt10.mb10
                 - products_count = @cart.products.count
                 - positions_plur = t(:positions_count_text, scope: %w[ rails_shop ], count: products_count)
@@ -122,8 +122,8 @@
                   'руб.
 
 
-          .ptz--tr
-            .ptz--td
+          .ptz_tr
+            .ptz_td
               .fs15.mt30.mb30
                 - if @cart.delivery.moderation_required?
                   b>
@@ -135,16 +135,16 @@
                   '
                   'руб.
 
-          .ptz--tr
-            .ptz--td.tac
+          .ptz_tr
+            .ptz_td.tac
               .mt20
                 - if @cart.active?
-                  = link_to 'Оформить заказ', orders_path(cart_id: @cart), method: :post, class: 'ptz--btn ptz--size-22 ptz--style-0--btn app--btn-1'
+                  = link_to 'Оформить заказ', orders_path(cart_id: @cart), method: :post, class: 'ptz_btn ptz_size-22 ptz_style-0--btn app--btn-1'
                 - else
-                  .ptz--btn.ptz--size-22 Корзина Просрочена
+                  .ptz_btn.ptz_size-22 Корзина Просрочена
 
   .w900.ma.mb20.clearfix
     .pull-right
-      = link_to reset_cart_path, method: :delete, data: { confirm: "Вы действительно хотите полностью очистить корзину?" }, class: 'ptz--btn ptz--size-14' do
-        i.fa.fa-ban.ptz--btn--icon
+      = link_to reset_cart_path, method: :delete, data: { confirm: "Вы действительно хотите полностью очистить корзину?" }, class: 'ptz_btn ptz_size-14' do
+        i.fa.fa-ban.ptz_btn--icon
         | Начать новую корзину

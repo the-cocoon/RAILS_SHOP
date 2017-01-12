@@ -3,18 +3,18 @@
 h3.mt20.mb20.fs18 Курсы Валют
 
 .clearfix.mb20
-  .pull-left= link_to 'Получить курс из ЦБРФ', cbr_get_rate_currency_rates_url, class: 'ptz--btn ptz--size-14'
+  .pull-left= link_to 'Получить курс из ЦБРФ', cbr_get_rate_currency_rates_url, class: 'ptz_btn ptz_size-14'
 
 - items = @currency_rates
 
-.ptz--theme-0
+.ptz_theme-0
   - if @currency_rates.any?
     .clearfix.mb25
       .pull-right
         .fs15= render template: 'common/pages_and_reset'
 
     .ma.w600
-      table.ptz--table.ptz--table-0.mb20
+      table.ptz_table.ptz_table-0.mb20
         tr.tal.fs18
           th.w150.p20= link_to 'EURO ↕',     simple_sort_url(:rur_eur)
           th.w150.p20= link_to 'USD ↕',      simple_sort_url(:rur_usd)

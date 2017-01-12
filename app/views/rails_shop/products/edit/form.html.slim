@@ -4,7 +4,7 @@
 - if product.editor_type == 'ptz_editor'
   = render template: 'common/editor/ptz_editor'
 
-.ptz--div-0.p20
+.ptz_div-0.p20
   = form_for product, html: { class: '' } do |f|
     = render partial: 'notifications/form', locals: { object: product }
 
@@ -12,84 +12,84 @@
 
     .mb30
       = f.label :title, 'Название', class: 'block fs13 mb10'
-      = f.text_field :title, class: 'ptz--input ptz--size-15 w100p'
+      = f.text_field :title, class: 'ptz_input ptz_size-15 w100p'
 
     .mb20
       = f.label :raw_intro, 'Краткое описание товара', class: 'block fs13 mb10'
-      = f.text_area :raw_intro, rows: 7, id: 'redactor_intro', class: 'ptz--textarea ptz--size-15 w100p'
+      = f.text_area :raw_intro, rows: 7, id: 'redactor_intro', class: 'ptz_textarea ptz_size-15 w100p'
 
     .mb20
       = f.label :raw_content, 'Подробное описание товара', class: 'block fs13 mb10'
-      = f.text_area :raw_content, rows: 7, id: 'redactor_content', class: 'ptz--textarea ptz--size-15 w100p'
+      = f.text_area :raw_content, rows: 7, id: 'redactor_content', class: 'ptz_textarea ptz_size-15 w100p'
 
     div
       = f.label :equipment, 'Комплектация', class: 'block fs13 mb10'
-      = f.text_area :equipment, class: 'ptz--textarea ptz--size-15 w100p'
+      = f.text_area :equipment, class: 'ptz_textarea ptz_size-15 w100p'
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
     .clearfix
       .pull-left.mr30
         = f.label :sku, 'Артикул', class: 'block fs13 mb10'
-        = f.text_field :sku, class: 'ptz--input ptz--size-15 w200 ', maxlength: 10, placeholder: 'SSA-000001'
+        = f.text_field :sku, class: 'ptz_input ptz_size-15 w200 ', maxlength: 10, placeholder: 'SSA-000001'
 
       .pull-left.mr30
         = f.label :vendor_sku, 'Артикул производителя', class: 'block fs13 mb10'
-        = f.text_field :vendor_sku, class: 'ptz--input ptz--size-15 w400 ', maxlength: 10, placeholder: ''
+        = f.text_field :vendor_sku, class: 'ptz_input ptz_size-15 w400 ', maxlength: 10, placeholder: ''
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
     .clearfix
       .pull-left.mr30
         = f.label :amount, 'В наличии', class: 'block fs13 mb10'
-        = f.number_field :amount, class: 'ptz--input ptz--size-15 w150 ', maxlength: 10, min: 0, max: 100000, placeholder: '0', autocomplete: :off
+        = f.number_field :amount, class: 'ptz_input ptz_size-15 w150 ', maxlength: 10, min: 0, max: 100000, placeholder: '0', autocomplete: :off
 
       .pull-left.mr30
         = f.label :weight, 'Вес (кило)', class: 'block fs13 mb10'
-        = f.number_field :weight, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '15', autocomplete: :off
+        = f.number_field :weight, class: 'ptz_input ptz_size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '15', autocomplete: :off
 
       .pull-left.mr30
         = f.label :warranty_time_units, 'Месяцев гарантии', class: 'block fs13 mb10'
-        = f.number_field :warranty_time_units, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.1, placeholder: '8', autocomplete: :off
+        = f.number_field :warranty_time_units, class: 'ptz_input ptz_size-15 w150 ', min: 0, max: 100000, step: 0.1, placeholder: '8', autocomplete: :off
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
     .clearfix.mb20
       .pull-left.mr30
         = f.label        :dimension_x, 'Размер X (см)', class: 'block fs13 mb10'
-        = f.number_field :dimension_x, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '5'
+        = f.number_field :dimension_x, class: 'ptz_input ptz_size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '5'
 
       .pull-left.mr30
         = f.label        :dimension_y, 'Размер Y (см)', class: 'block fs13 mb10'
-        = f.number_field :dimension_y, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '10'
+        = f.number_field :dimension_y, class: 'ptz_input ptz_size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '10'
 
       .pull-left
         = f.label        :dimension_z, 'Размер Z (см)', class: 'block fs13 mb10'
-        = f.number_field :dimension_z, class: 'ptz--input ptz--size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '15'
+        = f.number_field :dimension_z, class: 'ptz_input ptz_size-15 w150 ', min: 0, max: 100000, step: 0.01, placeholder: '15'
 
     .clearfix.mb30
       .pull-left
         = f.label      :dimensions, 'Размеры текстом', class: 'block fs13 mb10'
-        = f.text_field :dimensions, class: 'ptz--input ptz--size-15 w510', placeholder: 'Ширина 5 см, Высота 10 см, Глубина 15 см'
+        = f.text_field :dimensions, class: 'ptz_input ptz_size-15 w510', placeholder: 'Ширина 5 см, Высота 10 см, Глубина 15 см'
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
     .clearfix
       .pull-left.mr30
         = f.label :state, 'Видимость', class: 'block fs13 mb10'
         - options = options_for_select({ 'Черновик' => :draft, 'Опубликовано' => :published }, product.state)
-        = f.select :state, options, {}, autocomplete: :off, class: 'ptz--size-15 w150 ptz--select'
+        = f.select :state, options, {}, autocomplete: :off, class: 'ptz_size-15 w150 ptz_select'
 
       .pull-left
         = f.label :special_marker, 'Специальная отметка', class: 'block fs13 mb10'
         - options = options_for_select({ 'Нет отметки' => '', 'Новинка' => :new, 'Рекомендуемое' => :recommended }, product.special_marker)
-        = f.select :special_marker, options, {}, autocomplete: :off, class: 'ptz--input ptz--size-15 w200 ptz--select'
+        = f.select :special_marker, options, {}, autocomplete: :off, class: 'ptz_input ptz_size-15 w200 ptz_select'
 
-    hr.ptz--hr-0.mt25.mb25
+    hr.ptz_hr-0.mt25.mb25
 
-    .ptz--table.w100p
-      .ptz--td.w50p.tal.vam
-        = link_to 'Клонировать товар', clone_product_path(product), method: :post, class: 'ptz--btn size--16', data: { confirm: 'Вы уверены, что хотите КЛОНИРОВАТЬ товар?' }
-      .ptz--td.tar.vam
-        = f.submit 'Обновить товар', class: 'ptz--btn ptz--size-22'
+    .ptz_table.w100p
+      .ptz_td.w50p.tal.vam
+        = link_to 'Клонировать товар', clone_product_path(product), method: :post, class: 'ptz_btn size--16', data: { confirm: 'Вы уверены, что хотите КЛОНИРОВАТЬ товар?' }
+      .ptz_td.tar.vam
+        = f.submit 'Обновить товар', class: 'ptz_btn ptz_size-22'
 

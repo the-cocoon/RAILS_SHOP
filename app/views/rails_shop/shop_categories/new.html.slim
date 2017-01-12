@@ -5,14 +5,14 @@
 
 h3.mt20.mb20.fs18 Новая категория товаров
 
-.w800.ptz--theme-0
-  .ptz--div-0.p20
+.w800.ptz_theme-0
+  .ptz_div-0.p20
     = form_for @shop_category, html: { class: '' } do |f|
       = render partial: 'notifications/form', locals: { object: @shop_category }
 
       .mb15
         = f.label :title, 'Название', class: 'block fs13 mb5'
-        = f.text_field :title, class: 'ptz--input ptz--size-15 w500 '
+        = f.text_field :title, class: 'ptz_input ptz_size-15 w500 '
 
       div
-        = f.submit 'Создать категорию', class: 'ptz--btn ptz--size-14'
+        = f.submit 'Создать категорию', class: 'ptz_btn ptz_size-14'

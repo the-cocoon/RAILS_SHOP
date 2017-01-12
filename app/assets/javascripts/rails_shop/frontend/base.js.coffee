@@ -2,7 +2,7 @@
 
 #= require jquery-ui
 #= require jquery-ui/core
-#= require jquery-ui/autocomplete
+#= require jquery-ui/widgets/autocomplete
 
 #= require jquery_ujs
 #= require turbolinks
