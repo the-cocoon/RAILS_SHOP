@@ -10,9 +10,8 @@ class Product < ActiveRecord::Base
   include ::AttachedImages::ItemModel
   include ::Notifications::LocalizedErrors
 
-  include ::TheCommentsBase::Commentable
-
   voiceless_include { ::ElcoProductAddon }
+  voiceless_include { ::TheCommentsBase::Commentable }
 
   paginates_per 24
 
