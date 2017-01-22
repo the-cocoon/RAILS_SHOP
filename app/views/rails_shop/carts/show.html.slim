@@ -31,6 +31,8 @@
         .shop-cart--header.w15p Цена
         .shop-cart--header.w5p
 
+      = render template: 'rails_shop/products/price_ru/added_to_cart'
+
       - @cart.cart_items.products.min2max(:created_at).each do |cart_item|
         - product = cart_item.item
         li.shop-cart--position

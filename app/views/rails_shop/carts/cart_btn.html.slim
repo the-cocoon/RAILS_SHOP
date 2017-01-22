@@ -1,10 +1,10 @@
 - if try :current_cart
   = link_to cart_path(current_cart), class: 'ptz_btn ptz_size-15' do
-    i.fa.fa-shopping-cart.ptz_btn--icon
+    i.fa.fa-shopping-cart.ptz_btn--icon.mr10
     - products_count = current_cart.cart_items.products.count
     - products_plur  = t(:products_count_text, scope: %w[ rails_shop ], count: products_count)
     = t(:products_count, scope: %w[ rails_shop cart cart_btn ], count: current_cart.cart_items.products.count, products_plur: products_plur)
 - else
   .ptz_btn.ptz_size-15
-    i.fa.fa-shopping-cart.ptz_btn--icon
+    i.fa.fa-shopping-cart.ptz_btn--icon.mr10
     = t(:blank, scope: %w[ rails_shop cart ])

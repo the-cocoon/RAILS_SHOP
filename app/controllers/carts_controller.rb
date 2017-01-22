@@ -60,6 +60,7 @@ class CartsController < RailsShopController
     ::CartService.add_default_delivery_if_need(@cart)
     ::RailsShopLogger.product_added_to_cart(@cart.id, @product.id)
 
+    session[:product_added] = true
     redirect_to :back, notice: 'Товар помещен в корзину'
   end
 
@@ -77,6 +78,7 @@ class CartsController < RailsShopController
     cart_item = @cart.cart_items.where(item: @product).first
 
     if cart_item.amount < @product.amount
+      session[:product_added] = true
       cart_item.update(amount: cart_item.amount.next)
       redirect_to :back, notice: 'Количество данного товара в корзине увеличено'
     else
@@ -88,6 +90,7 @@ class CartsController < RailsShopController
     cart_item = @cart.cart_items.where(item: @product).first
 
     if cart_item.amount > 1
+      session[:product_added] = true
       cart_item.update(amount: cart_item.amount.pred)
       redirect_to :back, notice: 'Количество данного товара в корзине уменьшено'
     else
