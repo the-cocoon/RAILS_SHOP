@@ -30,7 +30,7 @@ table.table-light--table.w100p
 
             = image_tag product.main_image_url(:v100x100), width: '30', title: product.title
       td.table-light--td.vam
-        .fs15.nobr= t order.state, scope: %w[ rails_shop orders state ]
+        .fs15.br-off= t order.state, scope: %w[ rails_shop orders state ]
       td.table-light--td.vam
         .fs15
           span.ml10(title='Полная цена')= money_to_text order.total_price

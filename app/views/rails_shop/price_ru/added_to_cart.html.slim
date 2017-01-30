@@ -1,0 +1,23 @@
+- if @cart ||= current_cart
+  - if session[:product_added]
+    - session[:product_added] = false
+
+    - @cart.cart_items.products.min2max(:created_at).each_with_index do |cart_item, index|
+      - item = cart_item.item
+
+      ruby:
+        added_products = [{
+          id: item.id,
+          name: item.title,
+          brand: item.shop_brands.try(:first).try(:title),
+          price: ('%.2f' % item.discounted_price),
+          quantity: cart_item.amount
+        }]
+
+      div(data-products=added_products.to_json class="js-price_added_products_#{index}")
+
+      javascript:
+        $(function(){
+          var products = $('.js-price_added_products_#{index}').data('products')
+          PriceRu.ProductsAdded(products)
+        })

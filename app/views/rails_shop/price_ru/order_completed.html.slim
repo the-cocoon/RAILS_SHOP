@@ -1,0 +1,23 @@
+- if @order
+  ruby:
+    purchased_products = []
+
+    @order.order_items.products.each do |cart_item|
+      product = cart_item.item
+
+      purchased_products << {
+        id: product.id,
+        name: product.title,
+        brand: product.shop_brands.try(:first).try(:title),
+        price: ('%.2f' % product.discounted_price),
+        quantity: cart_item.amount
+      }
+    end
+
+  .js-price_purchased_products(data-products=purchased_products.to_json)
+
+  javascript:
+    $(function(){
+      var products = $('.js-price_purchased_products').data('products')
+      PriceRu.ProductsPurchased(products)
+    })

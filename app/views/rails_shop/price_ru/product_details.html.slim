@@ -1,0 +1,16 @@
+- if @product
+  ruby:
+    products_data = [{
+      id: @product.id,
+      name: @product.title,
+      brand: @product.shop_brands.try(:first).try(:title),
+      price: ('%.2f' % @product.discounted_price)
+    }]
+
+  .js-price_products_details.hidden(data-products=products_data.to_json)
+
+  javascript:
+    $(function(){
+      var products = $('.js-price_products_details').data('products')
+      PriceRu.ProductsDetails(products)
+    })

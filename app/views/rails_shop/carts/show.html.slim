@@ -31,7 +31,7 @@
         .shop-cart--header.w15p Цена
         .shop-cart--header.w5p
 
-      = render template: 'rails_shop/products/price_ru/added_to_cart'
+      = render template: 'rails_shop/price_ru/added_to_cart'
 
       - @cart.cart_items.products.min2max(:created_at).each do |cart_item|
         - product = cart_item.item
@@ -46,7 +46,7 @@
 
           .shop-cart--position-cell.w20p
 
-            .mb10.nobr
+            .mb10.br-off
               - minus_disabled = :disabled if cart_item.amount == 1
               = button_to amount_decrement_cart_path(@cart, product_id: product), method: :patch, disabled: minus_disabled, form_class: 'iblock amount-manager--form', class: 'ptz_btn ptz_size-14 ptz_btn--side-left w40 b' do
                 |&ndash;

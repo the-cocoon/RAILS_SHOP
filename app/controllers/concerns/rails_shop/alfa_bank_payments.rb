@@ -27,16 +27,17 @@ module RailsShop
   module AlfaBankPayments
     extend ActiveSupport::Concern
 
-    ALFA_GATEWAY_URL = 'https://pay.alfabank.ru/payment/rest/'
-    ALFA_RETURN_URL  = 'https://stereo-shop.ru/alfa_callback'
+    ALFA_GATEWAY_URL = Settings.rails_shop.alfa_payments.api.url      # https://pay.alfabank.ru/payment/rest/
+    ALFA_RETURN_URL  = Settings.rails_shop.alfa_payments.api.callback # https://example.com/alfa_callback
 
-    ALFA_API_USER = 'stereo_shop-api'
-    ALFA_API_PASS = 'Stereo1Shop$'
+    ALFA_API_USER = Settings.rails_shop.alfa_payments.api.login
+    ALFA_API_PASS = Settings.rails_shop.alfa_payments.api.password
 
     ALFA_AUTH_DATA = { userName: ALFA_API_USER, password: ALFA_API_PASS }
 
     included do
       SHOP_PUBLIC_ACTIONS = %w[ alfa_before alfa_callback alfa_success alfa_failure ]
+      layout 'rails_shop_frontend'
 
       skip_before_action :authenticate_user!,        only: SHOP_PUBLIC_ACTIONS
       skip_before_action :shop_admin_required!,      only: SHOP_PUBLIC_ACTIONS

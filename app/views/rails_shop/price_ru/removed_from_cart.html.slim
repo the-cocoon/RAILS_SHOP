@@ -1,0 +1,23 @@
+ruby:
+  if session[:product_removed]
+    if session[:product_removed_id]
+      if product = Product.find_by(id: 1414)
+        removed_products = [{
+          id: product.id,
+          name: product.title
+        }]
+      end
+    end
+
+    session.delete(:product_removed)
+    session.delete(:product_removed_id)
+  end
+
+- if product
+  .js-price_removed_products(data-products=removed_products.to_json)
+
+  javascript:
+    $(function(){
+      var products = $('.js-price_removed_products').data('products')
+      PriceRu.ProductsRemoved(products)
+    })

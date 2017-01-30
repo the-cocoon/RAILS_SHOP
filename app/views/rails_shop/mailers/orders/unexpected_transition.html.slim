@@ -24,7 +24,7 @@
         td.w50p
         td
           .app-mailer--activation-btn-border
-            span.nobr= link_to "Перейти к заказу #{ @order.uid.upcase }", order_url(@order), class: 'app-mailer--activation-btn block p20'
+            span.br-off= link_to "Перейти к заказу #{ @order.uid.upcase }", order_url(@order), class: 'app-mailer--activation-btn block p20'
         td.w50p
 
   .letter-body--text.mt20.mb15 Если ссылка не активна, то скопируйте следующий адрес в адресную строку своего браузера:

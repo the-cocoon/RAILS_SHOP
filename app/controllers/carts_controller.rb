@@ -61,6 +61,7 @@ class CartsController < RailsShopController
     ::RailsShopLogger.product_added_to_cart(@cart.id, @product.id)
 
     session[:product_added] = true
+
     redirect_to :back, notice: 'Товар помещен в корзину'
   end
 
@@ -70,6 +71,9 @@ class CartsController < RailsShopController
 
     ::CartService.delete_cart_if_need(@cart, cookies)
     ::RailsShopLogger.product_removed_from_cart(@cart.id, @product.id)
+
+    session[:product_removed] = true
+    session[:product_removed_id] = @product.id
 
     redirect_to :back, notice: 'Товар удален из корзины'
   end
