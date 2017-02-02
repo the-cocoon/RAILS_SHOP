@@ -19,5 +19,5 @@
   javascript:
     $(function(){
       var products = $('.js-price_purchased_products').data('products')
-      PriceRu.ProductsPurchased(products)
+      PriceRu.ProductsPurchased('#{@order.uid}', products)
     })
