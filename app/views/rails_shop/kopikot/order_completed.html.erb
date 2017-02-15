@@ -1,0 +1,12 @@
+<%
+  if @order
+
+  amount = @order.total_price.to_i
+  sub_id = @order.uid
+%>
+
+<iframe
+src="https://tracking.bonusway.com/aff_l?offer_id=287&adv_sub=<%= sub_id %>&amount=<%= amount %>"
+scrolling="no" frameborder="0" width="1" height="1"></iframe>
+
+<% end %>
